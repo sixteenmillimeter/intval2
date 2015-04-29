@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+	<link rel="apple-touch-icon" href="ios-icon.png" />
+	<meta name="apple-mobile-web-app-title" content="intval" />
+	<meta name="format-detection" content="telephone=no" />
+	<title>INTVAL ctrl</title>
+	<link href="css/intval.css" rel="stylesheet" />
+	<script type="text/javascript" src="js/base64-binary.js"></script>
+	<script type="text/javascript" src="js/fsk.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="js/fastclick.js"></script>
+	<script type="text/javascript" src="js/intval.js"></script>
+</head>
+<body onload="ctrl.onload();">
+	<div class="cmd forward" title="f" onclick="ctrl.sendCmd(this);">+1</div>
+	<div class="cmd backward" title="b" onclick="ctrl.sendCmd(this);">-1</div>
+	<div class="cmd seq" title="Sequence" id="seq" style="width: 10000px;">
+		<div class="row_f">
+			<div class="for" title="f" onclick="ctrl.set(this);">0</div>
+		</div>
+		<div class="row_B">
+			<div class="back" title="b" onclick="ctrl.set(this);">0</div>
+		</div>
+		<div class="row_x">
+			<div class="pause" title="x" onclick="ctrl.set(this);">0</div>
+		</div>
+	</div>
+	<div class="cmd delay" onclick="ctrl.changeDelay();">DELAY <span id="delayVal">1</span><span> sec</span></div>
+	<div class="cmd loop off" title="Loop" onclick="ctrl.setLoop();">LOOP off</div>
+	<div class="cmd run" title="Run" onclick="ctrl.run.start();">RUN</div>
+	<div id="monitor" onclick="ctrl.setPos();">0</div>
+</body>
+</html>
