@@ -1,4 +1,4 @@
-var dataURI, audio, myAudioContext, mySource, myBuffer;
+var dataURI, audio, myAudioContext, mySource, myBuffer, bufferArray={};
 
 if ('AudioContext' in window) {
 	myAudioContext = new AudioContext();
@@ -51,6 +51,7 @@ var fsk = {};
 
 fsk.generate = function (str) {
 	if (str.length === 0) return;
+	//console.time('generate');
 	var utf8 = toUTF8(str);
 	//console.log(utf8);
 	
@@ -66,7 +67,7 @@ fsk.generate = function (str) {
 	var data = "RIFF" + chr32(size + 36) + "WAVE" +
 			"fmt " + chr32(16, 0x00010001, sampleRate, sampleRate, 0x00080001) +
 			"data" + chr32(size);
-	
+
 	var pushData = function (freq, samples) {
 		for (var i = 0; i < samples; i++) {
 			var v = 128 + 127 * Math.sin((2 * Math.PI) * (i / sampleRate) * freq);
@@ -87,13 +88,17 @@ fsk.generate = function (str) {
 
 	var arrayBuff = Base64Binary.decodeArrayBuffer(dataURI);
 	myAudioContext.decodeAudioData(arrayBuff, function (audioData) {
-		myBuffer = audioData;
+		bufferArray[str] = audioData;
 	});
 }
 
-fsk.play = function () {
+fsk.play = function (str) {
 	mySource = myAudioContext.createBufferSource();
-	mySource.buffer = myBuffer;
+	if (typeof str !== 'undefined') {
+		mySource.buffer = bufferArray[str];
+	} else {
+		console.error('No AudioBuffer found for string "' + str + '"');
+	}
 	mySource.connect(myAudioContext.destination);
 	if ('AudioContext' in window) {
 		mySource.start(0);

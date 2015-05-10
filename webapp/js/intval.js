@@ -9,17 +9,23 @@ ctrl.pos 			= 0;
 ctrl.loop 			= false;
 
 ctrl.delay = {
-	f : 500,
-	B : 700,
+	f : 1100,
+	b : 1200,
 	x : 1000
 };
 
 ctrl.play = function (val) {
-	fsk.generate(val);
-	setTimeout(function () {
-		fsk.play();
-		ctrl.posCmd(val);
-	}, 10);
+	fsk.play(val);
+	fsk.play(val);
+	ctrl.posCmd(val);
+};
+
+ctrl.generate = function () {
+	var cmds = Object.keys(ctrl.delay);
+	for (var i = 0; i < cmds.length; i++) {
+		console.log('Generating AudioBuffer for ' + cmds[i]);
+		fsk.generate(cmds[i]);
+	}
 };
 
 ctrl.sendCmd = function (elem) {
@@ -97,7 +103,7 @@ ctrl.highlight = function (i) {
 	if (i !== undefined && i !== false) {
 		//console.log(i);
 		$('.seq .row_f > div').eq(i).addClass('highlight');
-		$('.seq .row_B > div').eq(i).addClass('highlight');
+		$('.seq .row_b > div').eq(i).addClass('highlight');
 		$('.seq .row_x > div').eq(i).addClass('highlight');
 	}
 };
@@ -229,6 +235,10 @@ ctrl.onload = function () {
 	if (seq !== undefined && seq !== false) {
 		ctrl.seq = seq;
 	}
+
+	//pre-generate audiobuffers for more responsive buttons
+	ctrl.generate();
+
 	ctrl.layout();
 	//FastClick.attach(document.body);
 };
