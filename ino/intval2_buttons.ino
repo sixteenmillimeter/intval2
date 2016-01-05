@@ -3,8 +3,6 @@
 //HBridge for motor control
 //Microswitch for control
 
-//BUTTON MODEL, NO FSK
-
 /*
 ----------------------------------------------------
 Microswitch (use INPUT_PULLUP!!)
@@ -12,27 +10,30 @@ GND-----\ | \-----PIN
 ----------------------------------------------------
 */
 
-/* ------------------------------------------------
- *  cmd - for Serial
- * ------------------------------------------------*/
-volatile int cmd_input = 0;
-const int CMD_FORWARD = 102; //f
-const int CMD_BACKWARD = 98; //b
-const int CMD_BLACK = 110; //n
-
-/* ------------------------------------------------
- *  buttons
- * ------------------------------------------------*/
 
 /* ------------------------------------------------
  *  pins
  * ------------------------------------------------*/
+//Trinket Pro
 const int PIN_INDICATOR = 13;
+const int PIN_MOTOR_FORWARD = 9;
+const int PIN_MOTOR_BACKWARD = 10;
+//const int PIN_MICRO = 12;
+const int PIN_MICRO = 19; //laser cut version
+const int BUTTON[4] = {3, 6, 5, 4};  //trigger, direction, speed, delay
+/*
+//Trinket
+const int PIN_INDICATOR = 13;
+const int PIN_MOTOR_FORWARD = 9;
+const int PIN_MOTOR_BACKWARD = 10;
+const int PIN_MICRO = 12;
+const int BUTTON[4] = {3, 6, 5, 4};  //trigger, direction, speed, delay
+*/
 
-const int PIN_MOTOR_FORWARD = 10;
-const int PIN_MOTOR_BACKWARD = 11;
 
-const int PIN_MICRO = 8;
+volatile int button_state[4] = {1, 1, 1, 1};
+volatile long button_time[4] = {0, 0, 0, 0};
+volatile long buttontime = 0;
 
 /* ------------------------------------------------
  *  loop
@@ -42,11 +43,10 @@ const int LOOP_DELAY = 10;
 /* ------------------------------------------------
  *  state
  * ------------------------------------------------*/
-const int FWD_SPEED = 255;
-const int BWD_SPEED = 255;
+volatile int FWD_SPEED = 255;
+volatile int BWD_SPEED = 255;
 
-volatile boolean direction = true;
-
+volatile boolean sequence = false;
 volatile boolean running = false;
 volatile boolean cam_dir = true;
 
@@ -59,34 +59,21 @@ volatile int timer_int = 0;
 volatile int cam_count = 0;
 volatile int cam_pos = 0;
 
+volatile long seq_delay = 42;
+
 void setup () {
-  Serial.begin(9600);
-  Serial.flush();
-  modem.begin();
   Pins_init();
-  Serial.println("Welcome to intval2.");
+  Buttons_init();
 }
 
 void loop () {
-  if (Serial.available() > 0 && !running){
-    cmd_input = Serial.read();
-  }
-  if (cmd_input == CMD_FORWARD 
-    && !running) {
-    Frame(true);
-  }
-  if (cmd_input == CMD_BACKWARD
-    && !running) {
-    Frame(false);
-  }
-      
-  if (cmd_input != 0) {      
-    cmd_input = 0;
-  }
+  Btn(0);
+  Btn(1);
+  Btn(2);
+  Btn(3);
   if (running) {
     Read_micro();
-  } else {
-    Read_buttons();
+  } else { 
     delay(LOOP_DELAY);
   }
 }
@@ -99,46 +86,41 @@ void Pins_init () {
 }
 
 void Frame (boolean dir) {
-  //Serial.println("Starting Frame()...");
   Time_start();
   cam_dir = dir;
   if (cam_dir) {
-   // Serial.println("Forward");
     analogWrite(PIN_MOTOR_FORWARD, FWD_SPEED);
     analogWrite(PIN_MOTOR_BACKWARD, 0);
   } else {
-    //Serial.println("Backwards");
     analogWrite(PIN_MOTOR_BACKWARD, BWD_SPEED);
     analogWrite(PIN_MOTOR_FORWARD, 0);
   }
-  Indicator(true);
   running = true;
+  if (FWD_SPEED == 255) {
+      delay(300);
+  } else {
+      delay(600);
+  }
   micro_primed = false;
 }
 
 void Read_micro () {
   micro_position = digitalRead(PIN_MICRO);
-  //Serial.println(micro_position);
   if (micro_position == LOW 
       && micro_primed == false) {
     micro_primed = true;
-    //Serial.println("Frame micro_primed");
   } else if (micro_position == HIGH 
             && micro_primed == true) {
     Stop();
   }
-  delay(1);//smooths out signal
-}
-
-void Read_buttons () {
-
+  delay(2);//smooths out signal
 }
 
 void Stop () {
+  delay(10);
   analogWrite(PIN_MOTOR_FORWARD, 0);
   analogWrite(PIN_MOTOR_BACKWARD, 0);
   
-  //Serial.println("Frame ran");
   Time_end();
  
   cam_count++;
@@ -150,7 +132,11 @@ void Stop () {
   
   running = false;
   micro_primed = false;
-  Indicator(false);
+  
+  if (sequence) {
+    delay(seq_delay);
+    Trigger();
+  }
 }
 
 void Time_start () {
@@ -160,8 +146,6 @@ void Time_start () {
 void Time_end () {
   timer = millis() - timer;
   timer_int = int(timer);
-  //Serial.print(timer_int);
-  //Serial.println("ms");
 }
 
 void Indicator (boolean state) {
@@ -169,5 +153,88 @@ void Indicator (boolean state) {
     digitalWrite(PIN_INDICATOR, HIGH);
   } else {
     digitalWrite(PIN_INDICATOR, LOW);
+  }
+}
+
+void Buttons_init () {
+  for (int i = 0; i < 4; i++) {
+    pinMode(BUTTON[i], INPUT_PULLUP);
+  }
+}
+
+void Btn (int index) {
+  int val = digitalRead(BUTTON[index]);
+  if (val != button_state[index]) {
+    if (val == LOW) { // pressed
+      button_time[index] = millis();
+      button_start(index);
+    } else if (val == HIGH) { // not pressed
+      buttontime = millis() - button_time[index];
+      button_end(index, buttontime);
+    }
+  }
+  button_state[index] = val;
+}
+
+void button_start (int index) {
+  if (index == 0) {
+    if (sequence) {
+      sequence = false;
+      Output(2, 250);
+    } else  {
+      Trigger();
+    }
+  }
+}
+
+void button_end (int index, long buttontime) {
+  if (index == 0) {
+    if (buttontime > 1000) {
+      if (!sequence) {
+        sequence = true;
+        Output(2, 250);
+      }
+      Trigger();
+    }
+  } else if (index == 1) { //set direction
+    if (buttontime < 1000) {
+      cam_dir = true;
+      Output(1, 500);
+    } else if (buttontime > 1000) {
+      cam_dir = false;
+      Output(2, 250);
+    }
+  } else if (index == 2) { // set speed
+    if (buttontime <= 1000) {
+      FWD_SPEED = 255;
+      BWD_SPEED = 255;
+      Output(1, 500);
+    } else if (buttontime > 1000) {
+      FWD_SPEED = 127;
+      BWD_SPEED = 127;
+      Output(2, 250);    
+    }
+  } else if (index == 3) { //set delay
+    if (buttontime < 42) {
+      seq_delay = 42;
+      Output(1, 500);
+    } else {
+      seq_delay = buttontime;
+      Output(2, 250);
+    }
+  }
+  buttontime = 0;
+}
+
+void Trigger () {
+  Frame(cam_dir);
+}
+
+void Output (int number, int len) {
+  for (int i = 0; i < number; i++) {
+    Indicator(true);
+    delay(len);
+    Indicator(false);
+    delay(42);
   }
 }
