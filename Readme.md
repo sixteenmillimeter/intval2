@@ -8,7 +8,7 @@
  4. Power
  5. Maintainance
  6. Assembly
- 
+
 ----
 ### 1) Overview
 
@@ -55,7 +55,11 @@ Delay refers to the time the intervalometer pauses between frames and only matte
 Power the INTVAL 2.0 with 12VDC to the 2.1mm DC power jack located on the bottom of the case.
 The maximum draw of the motor is under 1 Amp, so that much current should be ample to run the
 intervalometer. Portable batteries, such as those used as supplimental cellphone power supplies, 
-can be used to as mobile power sources, but they must be able to provide 12V and not the typical 5V that many of these batteries provide. One example: [Anker 2nd Gen Astro Pro2 20000mAh 4-Port Aluminum Portable External Battery Charger with 9V/12V Multi-Voltage Port](http://www.amazon.com/gp/product/B005NGLTZQ/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B005NGLTZQ&linkCode=as2&tag=sixteentools-20&linkId=HXO6TQG5JADIRZCZ))
+can be used to as mobile power sources, but they must be able to provide 12V and not the typical 5V that many of these batteries provide. Two examples: 
+
+[Anker 2nd Gen Astro Pro2 20000mAh 4-Port Aluminum Portable External Battery Charger with 9V/12V Multi-Voltage Port](http://www.amazon.com/gp/product/B005NGLTZQ/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B005NGLTZQ&linkCode=as2&tag=sixteentools-20&linkId=HXO6TQG5JADIRZCZ)
+
+[ Rechargeable 3800mAh Lithium Ion Battery Pack with DC Connector, 12 volt](http://www.amazon.com/gp/product/B007RQW5WG/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B007RQW5WG&linkCode=as2&tag=sixteentools-20&linkId=JJV427F7SOAMASZV)
 
 ----
 ### 6) Assembly
