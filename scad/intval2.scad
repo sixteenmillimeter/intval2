@@ -779,10 +779,10 @@ module plunger_plate () {
     plunger();
         
     //decoys
-    translate([44,20,-13]) cube([4, 4, 4], center = true);
+    /*translate([44,20,-13]) cube([4, 4, 4], center = true);
     translate([44,-20,-13]) cube([4, 4, 4], center = true);
     translate([-23,20,-13]) cube([4, 4, 4], center = true);
-    translate([-23,-20,-13]) cube([4, 4, 4], center = true);
+    translate([-23,-20,-13]) cube([4, 4, 4], center = true);*/
 }
 
 module trinket_mount (decoys = false) {
@@ -990,11 +990,10 @@ module bearing_calibrate (val = 0) {
 //intval_laser_standoffs_plate();
 //intval_electronics_mount();
 //motor_mount_bottom();
-//intval_panel_laser();
 //projection () intval_panel_laser();
 //intval_laser_panel_cover(true, ALL_RED=true);
-//intval_laser_panel_cover();
-//intval_laser_panel_cover_standoff();
 //key_cap();
 //geared_motor_mount();
 //motor_key();
+//plunger_plate();
+//motor_cap(false);
