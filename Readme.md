@@ -70,12 +70,12 @@ that powers the INTVAL 2.0.
 
 All of the purchasable parts for this build:
 
-1) [Arduino Trinket Pro 5V](http://www.amazon.com/gp/product/B0131VM9I0/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B0131VM9I0&linkCode=as2&tag=sixteentools-20&linkId=PK57RTRI2YRJVT2E)
-2) [Nextrox Mini 12V DC 60 RPM High Torque Gear Box Electric Motor](http://www.amazon.com/gp/product/B00BX54O8A/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00BX54O8A&linkCode=as2&tag=sixteentools-20&linkId=DFU3L54JZ3KQJMPU)
-3) [L298N Motor Drive Controller Board Module Dual H Bridge DC Stepper For Arduino](http://www.amazon.com/gp/product/B014KMHSW6/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B014KMHSW6&linkCode=as2&tag=sixteentools-20&linkId=QZUX2HKYZAL23WGD)
-4) [(5 Pcs) DC 3 Terminals PCB Mount 2.1x5.5mm Jacks Connectors Socket](http://www.amazon.com/gp/product/B00CQMGWIO/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00CQMGWIO&linkCode=as2&tag=sixteentools-20&linkId=KMF43HLB5IS2CIFO) - need 1
-5) [(10 Pcs) Plastic PCB Mount 5-Pin Stereo 3.5mm Socket Audio Connector]() - need 1
-6) [3.5mm Stereo Audio Cable](http://www.amazon.com/gp/product/B004G3UK5C/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B004G3UK5C&linkCode=as2&tag=sixteentools-20&linkId=RVH32COHMFACT46V)
-7) [(10 Pcs) Mini Push Button Momentary OFF-ON Switch 7mm Black](http://www.amazon.com/gp/product/B00RMGSCPA/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00RMGSCPA&linkCode=as2&tag=sixteentools-20&linkId=66EL3G5J4ZXONMNK) - need 4
+ 1. [Arduino Trinket Pro 5V](http://www.amazon.com/gp/product/B0131VM9I0/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B0131VM9I0&linkCode=as2&tag=sixteentools-20&linkId=PK57RTRI2YRJVT2E)
+ 2. [Nextrox Mini 12V DC 60 RPM High Torque Gear Box Electric Motor](http://www.amazon.com/gp/product/B00BX54O8A/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00BX54O8A&linkCode=as2&tag=sixteentools-20&linkId=DFU3L54JZ3KQJMPU)
+ 3. [L298N Motor Drive Controller Board Module Dual H Bridge DC Stepper For Arduino](http://www.amazon.com/gp/product/B014KMHSW6/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B014KMHSW6&linkCode=as2&tag=sixteentools-20&linkId=QZUX2HKYZAL23WGD)
+ 4. [(5 Pcs) DC 3 Terminals PCB Mount 2.1x5.5mm Jacks Connectors Socket](http://www.amazon.com/gp/product/B00CQMGWIO/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00CQMGWIO&linkCode=as2&tag=sixteentools-20&linkId=KMF43HLB5IS2CIFO) - need 1
+ 5. [(10 Pcs) Plastic PCB Mount 5-Pin Stereo 3.5mm Socket Audio Connector]() - need 1
+ 6. [3.5mm Stereo Audio Cable](http://www.amazon.com/gp/product/B004G3UK5C/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B004G3UK5C&linkCode=as2&tag=sixteentools-20&linkId=RVH32COHMFACT46V)
+ 7. [(10 Pcs) Mini Push Button Momentary OFF-ON Switch 7mm Black](http://www.amazon.com/gp/product/B00RMGSCPA/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00RMGSCPA&linkCode=as2&tag=sixteentools-20&linkId=66EL3G5J4ZXONMNK) - need 4
 
 Additionally you'll need wire and solder of your choosing.
