@@ -3,11 +3,11 @@
 ----
 
  1. [Overview](#Overview)
- 2. Attachment
- 3. Usage
- 4. Power
- 5. Maintainance
- 6. Assembly
+ 2. [Attachment](#Attachment)
+ 3. [Usage](#Usage)
+ 4. [Power](#Power)
+ 5. [Maintainance](#Maintainance)
+ 6. [Assembly](#Assembly)
 
 ----
 ### 1) <a name="Overview"></a>Overview 
@@ -20,7 +20,7 @@ in either 1 or 2 seconds. This allows for a range of long exposure options when
 used in conjuncture with the Rexofader.
 
 ----
-### 2) Attachment
+### 2) <a name="Attachment"></a>Attachment
 
 To attach the INTVAL 2.0 to a Bolex camera, disable the motor and line up the four standoffs
 with the mounting holes on the body of the camera and insert the key into the 1:1 shaft. 
@@ -31,7 +31,7 @@ the screws that will hold the intervalometer in place. There are four standoffs
 and screws, but only three need to be attached to maintain the hold required for operation.
 
 ----
-### 3) Usage
+### 3) <a name="Usage">Usage
 
 The INTVAL 2.0 has two physical interfaces: the buttons on the case and the shutter
 release cable. The shutter release cable plugs into the underside of the case, next
@@ -50,7 +50,7 @@ during the 1 or 2 seconds that the shutter is rotating, exposure only occurs for
 Delay refers to the time the intervalometer pauses between frames and only matters when running a sequence. The delay is set to ``42 ms`` by default and will be set to however long you hold it down for; holding the button for``10 seconds`` will set the delay between each frame to ``10 seconds``. Pressing the button quickly will reset the timer to the default ``42 ms``.
 
 ----
-### 4) Power
+### 4) <a name="Power">Power
 
 Power the INTVAL 2.0 with 12VDC to the 2.1mm DC power jack located on the bottom of the case.
 The maximum draw of the motor is under 1 Amp, so that much current should be ample to run the
@@ -62,7 +62,10 @@ can be used to as mobile power sources, but they must be able to provide 12V and
 [ Rechargeable 3800mAh Lithium Ion Battery Pack with DC Connector, 12 volt](http://www.amazon.com/gp/product/B007RQW5WG/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B007RQW5WG&linkCode=as2&tag=sixteentools-20&linkId=JJV427F7SOAMASZV)
 
 ----
-### 6) Assembly
+### 5) <a name="Maintainance">Maintainance
+
+----
+### 6) <a name="Assembly">Assembly
 
 All parts of the INTVAL 2.0 are reproducible via 3D printing, laser cutting or purchasable for a total build cost of ~$50. The files in this repository consist of .SCAD, .STL, .DXF and .INO files. The .SCAD files contain all the elements needed to generate the physical body of the intervalometer with .DXF files for
 laser cutting and .STL files for 3D printing. The .INO file contains the source code for the Arduino sketch
