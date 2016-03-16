@@ -2,7 +2,7 @@
 ##### Intervalometer for Bolex 16mm Cameras
 ----
 
- 1. Overview
+ 1. [Overview](#Overview)
  2. Attachment
  3. Usage
  4. Power
@@ -10,7 +10,7 @@
  6. Assembly
 
 ----
-### 1) Overview <a name="Overview"></a>
+### 1) <a name="Overview"></a>Overview 
 
 The INTVAL 2.0 is an open-source/hardware intervalometer for Bolex 
 16mm cameras. It enables you to expose single frames of film
