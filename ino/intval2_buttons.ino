@@ -1,6 +1,6 @@
 //Intval for pro trinket arduinos
 //Using 12vdc motors in place of a stepper
-//HBridge for motor control
+//L289N HBridge for motor control
 //Microswitch for control
 
 /*
@@ -18,22 +18,8 @@ GND-----\ | \-----PIN
 const int PIN_INDICATOR = 13;
 const int PIN_MOTOR_FORWARD = 9;
 const int PIN_MOTOR_BACKWARD = 10;
-//const int PIN_MICRO = 12;
 const int PIN_MICRO = 19; //laser cut version
 const int BUTTON[4] = {3, 6, 5, 4};  //trigger, direction, speed, delay
-/*
-//Trinket
-const int PIN_INDICATOR = 13;
-const int PIN_MOTOR_FORWARD = 9;
-const int PIN_MOTOR_BACKWARD = 10;
-const int PIN_MICRO = 12;
-const int BUTTON[4] = {3, 6, 5, 4};  //trigger, direction, speed, delay
-*/
-
-
-volatile int button_state[4] = {1, 1, 1, 1};
-volatile long button_time[4] = {0, 0, 0, 0};
-volatile long buttontime = 0;
 
 /* ------------------------------------------------
  *  loop
@@ -43,8 +29,12 @@ const int LOOP_DELAY = 10;
 /* ------------------------------------------------
  *  state
  * ------------------------------------------------*/
-volatile int FWD_SPEED = 255;
-volatile int BWD_SPEED = 255;
+volatile int button_state[4] = {1, 1, 1, 1};
+volatile long button_time[4] = {0, 0, 0, 0};
+volatile long buttontime = 0;
+
+volatile int fwd_speed = 255;
+volatile int bwd_speed = 255;
 
 volatile boolean sequence = false;
 volatile boolean running = false;
@@ -89,14 +79,14 @@ void Frame (boolean dir) {
   Time_start();
   cam_dir = dir;
   if (cam_dir) {
-    analogWrite(PIN_MOTOR_FORWARD, FWD_SPEED);
+    analogWrite(PIN_MOTOR_FORWARD, fwd_speed);
     analogWrite(PIN_MOTOR_BACKWARD, 0);
   } else {
-    analogWrite(PIN_MOTOR_BACKWARD, BWD_SPEED);
+    analogWrite(PIN_MOTOR_BACKWARD, bwd_speed);
     analogWrite(PIN_MOTOR_FORWARD, 0);
   }
   running = true;
-  if (FWD_SPEED == 255) {
+  if (fwd_speed == 255) {
       delay(300);
   } else {
       delay(600);
@@ -206,12 +196,12 @@ void button_end (int index, long buttontime) {
     }
   } else if (index == 2) { // set speed
     if (buttontime <= 1000) {
-      FWD_SPEED = 255;
-      BWD_SPEED = 255;
+      fwd_speed = 255;
+      bwd_speed = 255;
       Output(1, 500);
     } else if (buttontime > 1000) {
-      FWD_SPEED = 127;
-      BWD_SPEED = 127;
+      fwd_speed = 127;
+      bwd_speed = 127;
       Output(2, 250);    
     }
   } else if (index == 3) { //set delay
