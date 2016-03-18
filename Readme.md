@@ -16,7 +16,7 @@ The INTVAL 2.0 is an open-source open-hardware intervalometer for Bolex
 at a regulated interval. Utilizing the 1:1 shaft in Bolex cameras (Rex
 3 and later models) the INTVAL 2.0 can complete a full rotation of the shutter
 in either 1 or 2 seconds. This allows for a range of long exposure options when
-used in conjuncture with the Rexofader.
+used in concert with the Rexofader.
 
 ----
 ### 2) <a name="Attachment"></a>Attachment
