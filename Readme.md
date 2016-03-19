@@ -1,5 +1,8 @@
 # INTVAL 2.0
 ##### Intervalometer for Bolex 16mm Cameras
+
+[Photo of finished INTVAL]
+
 ----
 
  1. [Overview](#Overview)
@@ -124,32 +127,67 @@ Additionally you'll need wire and solder of your choosing.
 
 #### D. Assembly
 
+[Photo of exploded view]
+
 Assembling the INTVAL 2.0 can be done in an hour or so, much quicker if practiced. As mentioned, the largest amount of time should be in fabricating the parts or acquiring electronics/parts. There are 2 things I don't like about this design that I'll be addressing in subsequent builds: complexity of the electronics and crowding inside the case.
 
-##### Mounting the electronics
+##### **Mounting the electronics**
+
+[Photo of L298N mounted to panel]
 
 The L298N is attached to the panel via the three M2 bolts. The space cut in the panel where the fourth would go is to prevent the Bolex's handle from rubbing against the panel. At this point I usually flash the Arduino Trinket Pro with the latest firmware, as in the ["Programming"](#Programming) section, prior to soldering and mounting. It can be done after, though, and can be reprogrammed after it is built.
 
-##### Mounting the motor's base and microswitch
+##### **Mounting the motor's base and microswitch**
+
+[Photo of Microswitch and modification made to it]
 
 Modify the microswitch as shown in the photos. At this point, I usually solder leads onto the two tabs as shown to save a cramped soldering job later. Insert the microswitch into the ``motor_mount_bottom`` and line the piece up with the 6 holes cut in the panel according to the pictures and rendering. It then gets attached to the panel with 4 of the M5 bolts and attached on the bottom with the corresponding M5 nuts.
 
-##### Mounting the motor
+
+
+##### **Mounting the motor**
 
 The motor should fit snugly into the ``motor_mount`` piece and can be attached with 2 screws that usually accompany the motor (when bought from Amazon). At this point, I usually solder 2 leads onto the top of the motor and cap it so that the fragile tabs wont break off. I use red and black wires so that I can easily switch their position in the L298N if the intervalometer is functioning backwards.
 
-##### Attach buttons
+##### **Attach buttons**
 
 Three of the buttons are attached to the corresponding holes in the panel. When cutting them, I will add an etched-in label for each specifying (left to right) that they control ``direction``, ``speed``, and ``delay``.
 
-##### Building the plunger
+##### **Building the plunger**
 
 To trigger the intervalometer and to start/stop sequences, the INTVAL 2.0 uses a simple switch that I found is handily made from cheap audio parts. In a pinch, this switch can be hard-wired into the design, but for the safety of the electronics inside I decided on using a 3.5mm socket and 3.5mm cable with a simple momentary button closing the circuit. For this, I buy a 6' cable and cut it in two.
 
-##### Attaching the bearing
+Pull the cable through the small bottom cap of the plunger body (important) and solder both of the leads to the two tabs of the button. The bottom cap might have to be modified to better accommodate the size of the 3.5mm audio cable you end up using. Insert the button into the plunger body and fasten with the nut provided with the button. Then attach the bottom cap to the body. At this point, I usually use hot glue to prevent too much force being applied to the solder points.
 
-##### Attaching the DC and 3.5mm sockets
+##### **Attaching the bearing**
+
+##### **Attaching the DC and 3.5mm sockets**
 
 #### E. Soldering
 
+Use of the $10 [Arduino Trinket Pro 5V](https://www.adafruit.com/products/2000) is explicitly due to the number of buttons required for the user interface. If you wanted to drop one of the buttons, say the speed control, you could re-write the sketch to use a $7 [Arduino Trinket 5V](https://www.adafruit.com/products/1501) (or get them in bulk for more savings). I mention this because it was the target microcontroller breakout for the project but had to be upgraded to the pro model to support all of the features in the design.
+
+Digital pin utilization is as follows:
+
+- **PIN 3** - Shutter release
+- **PIN 4** - Delay button
+- **PIN 5** - Speed button
+- **PIN 6** - Direction button
+- **PIN 9** - Motor forward (L298N)
+- **PIN 10** - Motor backward (L298N)
+- **PIN 13** - LED indicator (built in to Trinket Pro)
+- **PIN 19** - Microswitch (aka A5)
+
+[Fritzing diagram]
+
+The Fritzing project requires the following libraries:
+
+ 1. [Adafruit Fritzing library](https://github.com/adafruit/Fritzing-Library)
+ 2. [L298N Dual H-Bridge library](https://github.com/yohendry/arduino_L298N)
+
+[Photo of soldered trinket]
+
 #### F. <a name="Programming"></a>Programming
+
+This step should be done carefully, and with some practice. For a good primer on the basics of programming the microcontroller, check out Adafruit's [tutorial on it](https://learn.adafruit.com/introducing-pro-trinket/starting-the-bootloader). Arduino Trinket Pros enter into a short firmware-writable state when first plugged into a USB source. This is marked by the pulsing of the red indicator LED on the board.
+
