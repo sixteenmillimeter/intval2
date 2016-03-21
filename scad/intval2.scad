@@ -202,7 +202,7 @@ module intval_laser_standoffs_plate () {
     bolex_pin_laser(0, 15);
     bolex_pin_laser(15, 15);
     //decoys
-    translate([7, 7, 0]) decoys(23, 5.5, 6);
+    //translate([7, 7, 0]) decoys(23, 5.5, 6);
 }
 
 module bolex_pin_inner_laser (x, y) {
@@ -894,7 +894,7 @@ module key_cap () {
         cylinder(r = outerD / 2 + fuzz + 1, h = 18, center = true); 
         translate([0, 0, -1]) cylinder(r = outerD / 2, h = 16, center = true); 
     }
-    decoys(23, 7);
+    //decoys(23, 7);
 }
 
 module motor_cap (DECOYS = false, HALF = false) {
@@ -922,6 +922,19 @@ module bearing_calibrate (val = 0) {
         bearing(0, 0, 0, hole = false, calval = val);
     }
 }
+
+module stl_plate () {
+    translate([0, 0, -0.5]) cube([150, 150, 1], center = true);
+    translate([-50, 50, 7.5]) rotate([0, 180, 0]) intval_laser_standoffs_plate();
+    translate([-30, 10, -9.5]) rotate([0, 0, 13]) intval_electronics_mount();
+    translate([28, 0, -5.75]) rotate([0, 0, 90]) motor_mount_bottom();
+    translate([-25, 58, 9]) rotate([0, 180, 0]) key_cap();
+    translate([-5, -10, 3]) rotate([0, 0, 180]) geared_motor_mount();
+    translate([70, 45, 22.5]) rotate([0, 180, 0]) motor_key();
+    translate([-45, -42, 15]) plunger_plate();
+    translate([30, -50, 66]) rotate([0, 180, 0]) motor_cap(false);
+};
+
 //translate([-11, -36, 11.5]) rotate([0, 0, -90]) trinket_mount();
 //button_nuts_plate(true);
 //plunger_plate();
@@ -986,7 +999,6 @@ module bearing_calibrate (val = 0) {
 
 */
 
-//intval_laser_standoffs();
 //intval_laser_standoffs_plate();
 //intval_electronics_mount();
 //motor_mount_bottom();
@@ -997,3 +1009,6 @@ module bearing_calibrate (val = 0) {
 //motor_key();
 //plunger_plate();
 //motor_cap(false);
+
+
+stl_plate();
