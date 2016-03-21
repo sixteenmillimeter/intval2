@@ -178,7 +178,7 @@ Digital pin utilization is as follows:
 - **PIN 13** - LED indicator (built in to Trinket Pro)
 - **PIN 19** - Microswitch (aka A5)
 
-[Fritzing diagram]
+[![Fritzing schematic](http://sixteenmillimeter.com/projects/imgs/intval2/intval2_schem_512.png)](http://sixteenmillimeter.com/projects/imgs/intval2/intval2_schem.png)
 
 The Fritzing project requires the following libraries:
 
@@ -190,4 +190,3 @@ The Fritzing project requires the following libraries:
 #### F. <a name="Programming"></a>Programming
 
 This step should be done carefully, and with some practice. For a good primer on the basics of programming the microcontroller, check out Adafruit's [tutorial on it](https://learn.adafruit.com/introducing-pro-trinket/starting-the-bootloader). Arduino Trinket Pros enter into a short firmware-writable state when first plugged into a USB source. This is marked by the pulsing of the red indicator LED on the board.
-
