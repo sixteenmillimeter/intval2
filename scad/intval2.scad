@@ -924,15 +924,16 @@ module bearing_calibrate (val = 0) {
 }
 
 module stl_plate () {
-    translate([0, 0, -0.5]) cube([150, 150, 1], center = true);
-    translate([-50, 50, 7.5]) rotate([0, 180, 0]) intval_laser_standoffs_plate();
-    translate([-30, 10, -9.5]) rotate([0, 0, 13]) intval_electronics_mount();
-    translate([28, 0, -5.75]) rotate([0, 0, 90]) motor_mount_bottom();
-    translate([-25, 58, 9]) rotate([0, 180, 0]) key_cap();
-    translate([-5, -10, 3]) rotate([0, 0, 180]) geared_motor_mount();
-    translate([70, 45, 22.5]) rotate([0, 180, 0]) motor_key();
-    translate([-45, -42, 15]) plunger_plate();
-    translate([30, -50, 66]) rotate([0, 180, 0]) motor_cap(false);
+    //translate([0, 0, -0.5]) cube([150, 150, 1], center = true);
+    translate([-38, 41, 7.5]) rotate([0, 180, 0]) intval_laser_standoffs_plate();
+    translate([-27, 40, -9.5]) rotate([0, 0, 13]) intval_electronics_mount();
+    
+    translate([23, 1, -5.75]) rotate([0, 0, 90]) motor_mount_bottom();
+    translate([48, -13, 9]) rotate([0, 180, 0]) key_cap();
+    translate([-5, -11, 3]) rotate([0, 0, 190]) geared_motor_mount();
+    translate([65, 44, 22.5]) rotate([0, 180, 0]) motor_key();
+    translate([0, -42, 15]) plunger_plate();
+    translate([-52, -20, 66]) rotate([0, 180, 0]) motor_cap(false);
 };
 
 //translate([-11, -36, 11.5]) rotate([0, 0, -90]) trinket_mount();
