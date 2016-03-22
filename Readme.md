@@ -1,7 +1,7 @@
 # INTVAL 2.0
 ##### Intervalometer for Bolex 16mm Cameras
 
-[Photo of finished INTVAL]
+![Photo of finished INTVAL]()
 
 ----
 
@@ -16,8 +16,8 @@
 
 The INTVAL 2.0 is an open-source open-hardware intervalometer for Bolex 
 16mm cameras. It enables you to expose single frames of film
-at a regulated interval. Utilizing the 1:1 shaft in Bolex cameras (Rex
-3 and later models) the INTVAL 2.0 can complete a full rotation of the shutter
+at a regulated interval. Utilizing the 1:1 shaft in Bolex cameras (**Rex
+4 and later models**) the INTVAL 2.0 can complete a full rotation of the shutter
 in either 1 or 2 seconds. This allows for a range of long exposure options when
 used in concert with the Rexofader.
 
@@ -75,6 +75,8 @@ laser cutting and .STL files for 3D printing. The .INO file contains the source 
 
 #### A. 3D Printing
 
+![Plate of all 3D printed components](http://sixteenmillimeter.com/projects/imgs/intval2/plate_render.png)
+
 The most time-consuming part of this build *should* be 3D printing the parts for the INTVAL 2.0. Depending on the size of your printing bed it is most likely possible to print all parts in one convenient plate. As will be addressed later, the laser-cuttable elements can also be 3D printed if you lack access to a laser cutter. 
 
 In the ``/dist`` directory of the repo, you will find all of the .STL files needed to build the intervalometer. If needed, the .SCAD file can be used to generate additional .STL models, or it can be modified to produce unique parts to your own specifications.
@@ -83,11 +85,13 @@ The most delicate and integral piece to be fabricated on a 3D printer is the ``m
 
 #### B. Laser Cutting
 
+![Plate of all laser cut components]()
+
 The INTVAL 2.0 has a flat panel on which all parts and electronics are mounted. For this reason, and to reduce production time, a laser cutting component has been added. See the much earlier--and now deprecated--attempt to have an entirely printable model in the original [INTVAL](https://github.com/sixteenmillimeter/INTVAL) (or [INTVAL Next](http://www.thingiverse.com/thing:151944) as I had taken to calling it on [Thingiverse](http://thingiverse.com)). Printing the flat base of this version took upwards of 3 hours on my modest printer, and with the accessibility of laser cutters at hacker/maker spaces becoming more common I decided this was feasible to include in my design.
 
-Important to note: **A laser cutter is not required to make this intervalometer.** If you have access to a 3D printer, it's very possible to use the .SCAD files to generate .STLs of the files designated for cutting. Make sure that they are all set to 3.175mm thickness as the design requires 1/8" materials for assembly. A clever person could even improve the design to remove the need for bolts to attach the ``motor_mount_bottom`` and ``electronics_mount`` pieces when making a 3D printed version.
+Important to note: **A laser cutter is not required to make this intervalometer.** If you have access to a 3D printer, it's very possible to use the .SCAD files to generate .STLs of the parts designated for cutting. Make sure that they are all set to 3.175mm thickness as the design requires 1/8" materials for assembly. A clever person could even improve the design to remove the need for bolts to attach the ``motor_mount_bottom`` and ``electronics_mount`` pieces when making a 3D printed version.
 
-Another note: When cutting the base of the intervalometer, named the ``panel_laser`` there is a circular cut for a skateboard wheel bearing to be inserted. These are made with slightly different tolerances, so do some tests before you cut your final panel. When properly scaled, the bearing should fit snugly so that it can be glued to the panel. The positioning of the bearing is vital to the functionality, so it's best to test the bearing fit using the ``bearing_calibrate`` module and then edit the size of the bearing by changing the  ``fuzz`` variable of the ``bearing_laser`` module. Export a new .DXF of the ``intval_panel_laser`` module by using the ``projection()`` function and cut that.
+Another note: When cutting the base of the intervalometer, named the ``panel_laser`` there is a circular cut for a skateboard wheel bearing to be inserted. These are made with slightly different tolerances, so do some tests before you cut your final panel. When properly scaled, the bearing should fit tightly so that it can be glued to the panel. The positioning of the bearing is vital to the functionality, so it's best to test the bearing fit using the ``bearing_calibrate`` module and then edit the size of the bearing by changing the  ``fuzz`` variable of the ``bearing_laser`` module. Export a new .DXF of the ``intval_panel_laser`` module by using the ``projection()`` function and cut that.
 
 ##### Materials
 
@@ -127,39 +131,39 @@ Additionally you'll need wire and solder of your choosing.
 
 #### D. Assembly
 
-[Photo of exploded view]
+![Photo of exploded view](http://sixteenmillimeter.com/projects/imgs/intval2/exploded_view.png)
 
 Assembling the INTVAL 2.0 can be done in an hour or so, much quicker if practiced. As mentioned, the largest amount of time should be in fabricating the parts or acquiring electronics/parts. There are 2 things I don't like about this design that I'll be addressing in subsequent builds: complexity of the electronics and crowding inside the case.
 
 ##### **Mounting the electronics**
 
-[Photo of L298N mounted to panel]
+![Photo of L298N mounted to panel]()
 
 The L298N is attached to the panel via the three M2 bolts. The space cut in the panel where the fourth would go is to prevent the Bolex's handle from rubbing against the panel. At this point I usually flash the Arduino Trinket Pro with the latest firmware, as in the ["Programming"](#Programming) section, prior to soldering and mounting. It can be done after, though, and can be reprogrammed after it is built.
 
+##### **Attaching the bearing**
+
+![Photo of panel with bearing attached]()
+
 ##### **Mounting the motor's base and microswitch**
 
-[Photo of Microswitch and modification made to it]
+![Photo of Microswitch and modification made to it]()
 
-Modify the microswitch as shown in the photos. At this point, I usually solder leads onto the two tabs as shown to save a cramped soldering job later. Insert the microswitch into the ``motor_mount_bottom`` and line the piece up with the 6 holes cut in the panel according to the pictures and rendering. It then gets attached to the panel with 4 of the M5 bolts and attached on the bottom with the corresponding M5 nuts.
+Modify the microswitch as shown in the photos. Be careful not to break the tab by over-exerting it at the bend. At this point, I usually solder leads onto the two tabs as shown below to save a cramped soldering job later. Insert the microswitch into the ``motor_mount_bottom`` and line the piece up with the 6 holes cut in the panel according to the pictures and rendering. It then gets attached to the panel with 4 of the M5 bolts and attached on the bottom with the corresponding M5 nuts.
 
-
+![Photo of panel with motor mount bottom attached]()
 
 ##### **Mounting the motor**
+
+![Photo of motor ready to mount on panel]()
 
 The motor should fit snugly into the ``motor_mount`` piece and can be attached with 2 screws that usually accompany the motor (when bought from Amazon). At this point, I usually solder 2 leads onto the top of the motor and cap it so that the fragile tabs wont break off. I use red and black wires so that I can easily switch their position in the L298N if the intervalometer is functioning backwards.
 
 ##### **Attach buttons**
 
-Three of the buttons are attached to the corresponding holes in the panel. When cutting them, I will add an etched-in label for each specifying (left to right) that they control ``direction``, ``speed``, and ``delay``.
+![Photo of buttons attached to panel cover]()
 
-##### **Building the plunger**
-
-To trigger the intervalometer and to start/stop sequences, the INTVAL 2.0 uses a simple switch that I found is handily made from cheap audio parts. In a pinch, this switch can be hard-wired into the design, but for the safety of the electronics inside I decided on using a 3.5mm socket and 3.5mm cable with a simple momentary button closing the circuit. For this, I buy a 6' cable and cut it in two.
-
-Pull the cable through the small bottom cap of the plunger body (important) and solder both of the leads to the two tabs of the button. The bottom cap might have to be modified to better accommodate the size of the 3.5mm audio cable you end up using. Insert the button into the plunger body and fasten with the nut provided with the button. Then attach the bottom cap to the body. At this point, I usually use hot glue to prevent too much force being applied to the solder points.
-
-##### **Attaching the bearing**
+Three of the buttons are attached to the corresponding holes in the panel. The size of these holes might have to be modified depending on the type of momentary buttons you settle on. When cutting the panel cover, I will also add an etched-in label for each specifying (left to right) that they control ``direction``, ``speed``, and ``delay``.
 
 ##### **Attaching the DC and 3.5mm sockets**
 
@@ -185,8 +189,20 @@ The Fritzing project requires the following libraries:
  1. [Adafruit Fritzing library](https://github.com/adafruit/Fritzing-Library)
  2. [L298N Dual H-Bridge library](https://github.com/yohendry/arduino_L298N)
 
-[Photo of soldered trinket]
+![Photo of soldered trinket]()
 
-#### F. <a name="Programming"></a>Programming
+#### E. Building the shutter release (plunger)
+
+![Photo of finished shutter release]()
+
+To trigger the intervalometer and to start/stop sequences, the INTVAL 2.0 uses a simple switch that I found is handily made from cheap audio parts. In a pinch, this switch can be hard-wired into the design, but for the safety of the electronics inside I decided on using a 3.5mm socket and 3.5mm cable with a simple momentary button closing the circuit. For this, I buy a 6' cable and cut it in two.
+
+![Photo of cut cable]()
+
+Pull the cable through the small bottom cap of the plunger body (important) and solder both of the leads to the two tabs of the button. The bottom cap might have to be modified to better accommodate the size of the 3.5mm audio cable you end up using. Insert the button into the plunger body and fasten with the nut provided with the button. Then attach the bottom cap to the body. At this point, I usually use hot glue to prevent too much force being applied to the solder points.
+
+![Photo of ]()
+
+#### G. <a name="Programming"></a>Programming
 
 This step should be done carefully, and with some practice. For a good primer on the basics of programming the microcontroller, check out Adafruit's [tutorial on it](https://learn.adafruit.com/introducing-pro-trinket/starting-the-bootloader). Arduino Trinket Pros enter into a short firmware-writable state when first plugged into a USB source. This is marked by the pulsing of the red indicator LED on the board.
