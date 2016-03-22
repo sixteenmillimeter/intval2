@@ -936,6 +936,11 @@ module stl_plate () {
     translate([-52, -20, 66]) rotate([0, 180, 0]) motor_cap(false);
 };
 
+module dxf_plate () {
+    translate([105, 0, 0]) rotate([0, 0, 13]) projection() intval_panel_laser();
+    rotate([0, 0, 13]) intval_laser_panel_cover(LASER=true, ALL_RED=true);
+};
+
 //translate([-11, -36, 11.5]) rotate([0, 0, -90]) trinket_mount();
 //button_nuts_plate(true);
 //plunger_plate();
@@ -1012,4 +1017,5 @@ module stl_plate () {
 //motor_cap(false);
 
 
-stl_plate();
+//stl_plate();
+dxf_plate();
