@@ -941,6 +941,16 @@ module dxf_plate () {
     rotate([0, 0, 13]) intval_laser_panel_cover(LASER=true, ALL_RED=true);
 };
 
+module exploded_view () {
+    intval_panel_laser();
+    translate([0, 0, 5]) intval_electronics_mount();
+    translate([0, 0, 5]) motor_mount_bottom();
+    translate([0, 0, 20]) motor_key();
+    translate([one_to_one_x, one_to_one_y, 50]) geared_motor_mount();
+    translate([one_to_one_x, one_to_one_y, 50]) motor_cap(false);
+    translate([0, 0, 60]) intval_laser_panel_cover(false, ALL_RED=true);
+}
+
 //translate([-11, -36, 11.5]) rotate([0, 0, -90]) trinket_mount();
 //button_nuts_plate(true);
 //plunger_plate();
@@ -1016,6 +1026,6 @@ module dxf_plate () {
 //plunger_plate();
 //motor_cap(false);
 
-
+exploded_view();
 //stl_plate();
-dxf_plate();
+//dxf_plate();
