@@ -197,11 +197,11 @@ The Fritzing project requires the following libraries:
 
 To trigger the intervalometer and to start/stop sequences, the INTVAL 2.0 uses a simple switch that I found is handily made from cheap audio parts. In a pinch, this switch can be hard-wired into the design, but for the safety of the electronics inside I decided on using a 3.5mm socket and 3.5mm cable with a simple momentary button closing the circuit. For this, I buy a 6' cable and cut it in two.
 
-![Photo of cut cable]()
+![Photo of cut cable]() 
 
 Pull the cable through the small bottom cap of the plunger body (important) and solder both of the leads to the two tabs of the button. The bottom cap might have to be modified to better accommodate the size of the 3.5mm audio cable you end up using. Insert the button into the plunger body and fasten with the nut provided with the button. Then attach the bottom cap to the body. At this point, I usually use hot glue to prevent too much force being applied to the solder points.
 
-![Photo of ]()
+![Photo of ]
 
 #### G. <a name="Programming"></a>Programming
 
