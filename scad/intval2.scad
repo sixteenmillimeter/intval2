@@ -452,7 +452,7 @@ module motor_key (half = false, DECOYS = false, sides = 1) {
     $fn = 60;
 	difference () {
 		union () {
-			translate([one_to_one_x, one_to_one_y, 12.1]) cylinder(r = 12 / 2, h = 5, center = true);// padding against bearing
+			translate([one_to_one_x, one_to_one_y, 12.1]) cylinder(r1 = 12 / 2, r2 = 12/2 + 4, h = 5, center = true);// padding against bearing
 			translate([one_to_one_x, one_to_one_y, diff + 1]) cylinder(r=outer_d/2, h= height -2, center= true, $fn=200); //large cylinder
 			translate([one_to_one_x, one_to_one_y, 6]) cylinder(r=innerD/2, h= 10, center= true);
 			//key_end([0, 180, 0], [one_to_one_x, one_to_one_y, -2.5]); //thicker-than-key_end cylinder for inner bearing
@@ -480,10 +480,10 @@ module motor_key (half = false, DECOYS = false, sides = 1) {
         }
         
 		//slot for hobbled(?) end
-        translate([one_to_one_x, one_to_one_y, 18]) {
+        translate([one_to_one_x, one_to_one_y, 17]) {
             difference () {
-                translate([0, 0, 0]) cylinder(r=3.1, h = 11, center = true, $fn = 24);
-                translate([5.4, 0, 0]) cube([6, 6, 11], center = true);
+                translate([0, 0, 0]) cylinder(r=3.1, h = 12, center = true, $fn = 24);
+                translate([5.4, 0, 0]) cube([6, 6, 12], center = true);
             }
         }
 		//translate([one_to_one_x, one_to_one_y, 20.5]) cylinder(r = 11.5/2, h = 10, center = true);
