@@ -396,13 +396,17 @@ module keyHole () {
 		cube([10, 2, 3.5], center = true);
 	}
 }
-module key_end (rotArr = [0, 0, 0], transArr = [0, 0, 0]) {
+module key_end (rotArr = [0, 0, 0], transArr = [0, 0, 0], ALT = true) {
 	translate(transArr) {
 		rotate (rotArr) {
 			difference () {
 				key();
 				keyHole();
+                if (ALT) {
+                    translate([-2.5, 0, 1.75]) cube([5, 3, 3.5], center= true);
+                }
 			}
+
 		}
 	}
 }
@@ -1022,10 +1026,10 @@ module exploded_view () {
 //intval_laser_panel_cover(true, ALL_RED=true);
 //key_cap();
 //geared_motor_mount();
-//motor_key();
+motor_key();
 //plunger_plate();
 //motor_cap(false);
 
-exploded_view();
+//exploded_view();
 //stl_plate();
 //dxf_plate();
