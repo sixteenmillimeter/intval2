@@ -85,7 +85,7 @@ The most delicate and integral piece to be fabricated on a 3D printer is the ``m
 
 #### B. Laser Cutting
 
-![Plate of all laser cut components]()
+![Plate of all laser cut components](http://sixteenmillimeter.com/projects/imgs/intval2/dxf_plate_render.png)
 
 The INTVAL 2.0 has a flat panel on which all parts and electronics are mounted. For this reason, and to reduce production time, a laser cutting component has been added. See the much earlier--and now deprecated--attempt to have an entirely printable model in the original [INTVAL](https://github.com/sixteenmillimeter/INTVAL) (or [INTVAL Next](http://www.thingiverse.com/thing:151944) as I had taken to calling it on [Thingiverse](http://thingiverse.com)). Printing the flat base of this version took upwards of 3 hours on my modest printer, and with the accessibility of laser cutters at hacker/maker spaces becoming more common I decided this was feasible to include in my design.
 
@@ -137,35 +137,39 @@ Assembling the INTVAL 2.0 can be done in an hour or so, much quicker if practice
 
 ##### **Mounting the electronics**
 
-![Photo of L298N mounted to panel]()
+![Photo of L298N mounted to panel](http://sixteenmillimeter.com/projects/imgs/intval2/L298N_mounted.jpg)
 
 The L298N is attached to the panel via the three M2 bolts. The space cut in the panel where the fourth would go is to prevent the Bolex's handle from rubbing against the panel. At this point I usually flash the Arduino Trinket Pro with the latest firmware, as in the ["Programming"](#Programming) section, prior to soldering and mounting. It can be done after, though, and can be reprogrammed after it is built.
 
 ##### **Attaching the bearing**
 
-![Photo of panel with bearing attached]()
+![Photo of panel with bearing attached](http://sixteenmillimeter.com/projects/imgs/intval2/bearing_mounted.jpg)
 
 ##### **Mounting the motor's base and microswitch**
 
-![Photo of Microswitch and modification made to it]()
+![Photo of Microswitch and modification made to it](http://sixteenmillimeter.com/projects/imgs/intval2/microswitch_modified.jpg)
 
 Modify the microswitch as shown in the photos. Be careful not to break the tab by over-exerting it at the bend. At this point, I usually solder leads onto the two tabs as shown below to save a cramped soldering job later. Insert the microswitch into the ``motor_mount_bottom`` and line the piece up with the 6 holes cut in the panel according to the pictures and rendering. It then gets attached to the panel with 4 of the M5 bolts and attached on the bottom with the corresponding M5 nuts.
 
-![Photo of panel with motor mount bottom attached]()
+![Photo of panel with motor mount bottom attached](http://sixteenmillimeter.com/projects/imgs/intval2/motor_bottom_mounted.jpg)
 
 ##### **Mounting the motor**
 
-![Photo of motor ready to mount on panel]()
+![Photo of motor ready to mount on panel](http://sixteenmillimeter.com/projects/imgs/intval2/motor_mounted.jpg)
 
 The motor should fit snugly into the ``motor_mount`` piece and can be attached with 2 screws that usually accompany the motor (when bought from Amazon). At this point, I usually solder 2 leads onto the top of the motor and cap it so that the fragile tabs wont break off. I use red and black wires so that I can easily switch their position in the L298N if the intervalometer is functioning backwards.
 
 ##### **Attach buttons**
 
-![Photo of buttons attached to panel cover]()
+![Photo of buttons attached to panel cover](http://sixteenmillimeter.com/projects/imgs/intval2/buttons_attached.jpg)
 
 Three of the buttons are attached to the corresponding holes in the panel. The size of these holes might have to be modified depending on the type of momentary buttons you settle on. When cutting the panel cover, I will also add an etched-in label for each specifying (left to right) that they control ``direction``, ``speed``, and ``delay``.
 
 ##### **Attaching the DC and 3.5mm sockets**
+
+![Photo of DC and 3.5mm sockets on](http://sixteenmillimeter.com/projects/imgs/intval2/dc_audio_mounted.jpg)
+
+Attach the 2.1mm DC socket and the 3.5mm audio socket to the bottom panel of the board, using the bolts to secure them. 
 
 #### E. Soldering
 
@@ -189,20 +193,15 @@ The Fritzing project requires the following libraries:
  1. [Adafruit Fritzing library](https://github.com/adafruit/Fritzing-Library)
  2. [L298N Dual H-Bridge library](https://github.com/yohendry/arduino_L298N)
 
-![Photo of soldered trinket]()
 
 #### E. Building the shutter release (plunger)
 
-![Photo of finished shutter release]()
-
 To trigger the intervalometer and to start/stop sequences, the INTVAL 2.0 uses a simple switch that I found is handily made from cheap audio parts. In a pinch, this switch can be hard-wired into the design, but for the safety of the electronics inside I decided on using a 3.5mm socket and 3.5mm cable with a simple momentary button closing the circuit. For this, I buy a 6' cable and cut it in two.
 
-![Photo of cut cable]() 
-
 Pull the cable through the small bottom cap of the plunger body (important) and solder both of the leads to the two tabs of the button. The bottom cap might have to be modified to better accommodate the size of the 3.5mm audio cable you end up using. Insert the button into the plunger body and fasten with the nut provided with the button. Then attach the bottom cap to the body. At this point, I usually use hot glue to prevent too much force being applied to the solder points.
-
-![Photo of ]
 
 #### G. <a name="Programming"></a>Programming
 
 This step should be done carefully, and with some practice. For a good primer on the basics of programming the microcontroller, check out Adafruit's [tutorial on it](https://learn.adafruit.com/introducing-pro-trinket/starting-the-bootloader). Arduino Trinket Pros enter into a short firmware-writable state when first plugged into a USB source. This is marked by the pulsing of the red indicator LED on the board.
+
+If using the Arduino IDE, make sure you have the latest version and have read through [this primer](https://learn.adafruit.com/introducing-pro-trinket/setting-up-arduino-ide) before you try to upload the sketch to the Trinket Pro. While the red LED is flashing, upload the sketch provided in this repository and that's it. Any modifications to the code can be made and flashed onto the board as many times as you'd like. Please feel free to submit pull requests if you make any improvements!
