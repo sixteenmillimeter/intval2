@@ -669,7 +669,7 @@ module geared_motor_mount (DECOYS = false) {
 }
 
 module geared_motor_mount_120 (DECOYS = false) {
-    $fn = 60;
+    $fn = 160;
 	base_d = 45;
 	base_inner = 24.1;
 	base_thickness = 3;
