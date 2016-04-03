@@ -396,7 +396,7 @@ module keyHole () {
 		cube([10, 2, 3.5], center = true);
 	}
 }
-module key_end (rotArr = [0, 0, 0], transArr = [0, 0, 0], ALT = true) {
+module key_end (rotArr = [0, 0, 0], transArr = [0, 0, 0], ALT = false) {
 	translate(transArr) {
 		rotate (rotArr) {
 			difference () {
@@ -447,7 +447,7 @@ module bearing (x, y, z, width= 8, hole = true, calval = 0) {
 		}
 	}
 }
-module motor_key (half = false, DECOYS = false, sides = 1) {
+module motor_key (half = false, DECOYS = false, sides = 1, ALT = false) {
 	innerD = 7.85;
 	outer_d = 27.5 + 2;
 	notch_d = 10;
@@ -460,7 +460,7 @@ module motor_key (half = false, DECOYS = false, sides = 1) {
 			translate([one_to_one_x, one_to_one_y, diff + 1]) cylinder(r=outer_d/2, h= height -2, center= true, $fn=200); //large cylinder
 			translate([one_to_one_x, one_to_one_y, 6]) cylinder(r=innerD/2, h= 10, center= true);
 			//key_end([0, 180, 0], [one_to_one_x, one_to_one_y, -2.5]); //thicker-than-key_end cylinder for inner bearing
-            key_end([0, 180, -20], [one_to_one_x, one_to_one_y, -3.5]); // longer for laser cut board
+            key_end([0, 180, -20], [one_to_one_x, one_to_one_y, -3.5], ALT = ALT); // longer for laser cut board
             //key_end([0, 180, 0], [one_to_one_x, one_to_one_y, -4.5]); //experimental length
 		}
         //1 notch
@@ -507,6 +507,80 @@ module motor_key (half = false, DECOYS = false, sides = 1) {
         translate([one_to_one_x, one_to_one_y, 20.5]) decoys(24);
     }
 }
+
+module motor_key_120 (half = false, DECOYS = false, sides = 1, ALT = false) {
+    innerD = 7.85;
+	outer_d = 27.5 + 2;
+	notch_d = 10;
+	height = 7 + 5;
+	diff = 14 + 2.5;
+    $fn = 60;
+	difference () {
+		union () {
+			translate([one_to_one_x, one_to_one_y, 12.1]) cylinder(r1 = 12 / 2, r2 = 12/2 + 4, h = 5, center = true);// padding against bearing
+			translate([one_to_one_x, one_to_one_y, diff + 1]) cylinder(r=outer_d/2, h= height -2, center= true, $fn=200); //large cylinder
+			translate([one_to_one_x, one_to_one_y, 6]) cylinder(r=innerD/2, h= 10, center= true);
+			//key_end([0, 180, 0], [one_to_one_x, one_to_one_y, -2.5]); //thicker-than-key_end cylinder for inner bearing
+            key_end([0, 180, -20], [one_to_one_x, one_to_one_y, -3.5], ALT = ALT); // longer for laser cut board
+            //key_end([0, 180, 0], [one_to_one_x, one_to_one_y, -4.5]); //experimental length
+		}
+        //1 notch
+		translate([one_to_one_x, one_to_one_y, diff]) {
+			translate ([-outer_d/2 - 2.5, 0, 0]) cylinder(r=notch_d/2, h= height, center= true); //notch
+		}
+		translate([one_to_one_x, one_to_one_y, diff]) {
+			translate ([-outer_d/2  -.5, -3.5, 0]) rotate([0, 0, 100]) cube([15, 5, height], center = true); // smooth notch
+			translate ([-outer_d/2  -.5, 3.5, 0]) rotate([0, 0, -100]) cube([15, 5, height], center = true); // smooth notch
+		}
+        
+        if (sides == 2) {
+            //2 notch
+            translate([one_to_one_x, one_to_one_y, diff]) {
+                translate ([outer_d/2 + 2.5, 0, 0]) cylinder(r=notch_d/2, h= height, center= true); //notch
+            }
+            translate([one_to_one_x, one_to_one_y, diff]) {
+                translate ([outer_d/2  +.5, -3.5, 0]) rotate([0, 0, -100]) cube([15, 5, height], center = true); // smooth notch
+                translate ([outer_d/2  +.5, 3.5, 0]) rotate([0, 0, 100]) cube([15, 5, height], center = true); // smooth notch
+            }
+        }
+        
+		//slot for hobbled(?) end
+        translate([one_to_one_x, one_to_one_y, 17]) {
+            hobbled_rod_120(12);
+            translate([6.42, 0, 6 - 1.7]) motor_set_screw_120();
+        }
+		//translate([one_to_one_x, one_to_one_y, 20.5]) cylinder(r = 11.5/2, h = 10, center = true);
+
+		translate([one_to_one_x, one_to_one_y, 17.5]) {
+			difference() {
+				//cylinder(r = 7.5/2, h = 2, center = true);
+				//translate([5, 0, 0]) cube([10, 10, 10], center = true);
+			}
+		}
+		if (half) {
+			translate([one_to_one_x - 50 , one_to_one_y, -50]) cube([100, 100, 200]);
+		}
+	}
+    if (DECOYS) {
+        translate([one_to_one_x, one_to_one_y, 20.5]) decoys(24);
+    }
+}
+
+module motor_set_screw_120 () {
+    cube([10.19, 2.95, 2.95], center = true);
+    translate([(10.19 / 2) - (2.56 / 2), 0, 0]) cube([2.56, 5.8, 5.8], center = true);    
+}
+
+module hobbled_rod_120 (h = 10) {
+            d = 4.00;
+        diff = 3.33;
+    difference () {
+        
+        cylinder(r = d/2, h = h, center = true, $fn = 60);
+        translate([d/2 + ((d/2) - (d - diff)), 0, 0]) cube([d, d, h + 1], center = true);
+    }
+}
+
 module motor_12v () {
 	motor_d = 37;
 	motor_h = 63;
@@ -593,6 +667,45 @@ module geared_motor_mount (DECOYS = false) {
         translate([-9, -2, 0]) rotate([0, 0, 49]) decoys(37, -1, 4);
     }
 }
+
+module geared_motor_mount_120 (DECOYS = false) {
+    $fn = 60;
+	base_d = 45;
+	base_inner = 24.1;
+	base_thickness = 3;
+	hole_d = 7;
+	screw_d = 3.2;
+	height = 6;
+    screw_distance = 17;
+	difference () {
+		difference () {
+			translate([-6, 0, 2.5]) cylinder(r=base_d/2, h=height + 5, center = true); //outer cylinder
+			//translate([-6, 0, base_thickness + 2.5]) cylinder(r=base_inner/2, h=height + 5, center = true); //inder cylinder
+            translate([0, 0, base_thickness + 2.5]) cylinder(r=base_inner/2, h=height + 5, center = true); //inder cylinder
+		}
+		cylinder(r=hole_d/2, h=29, center = true); //center hole
+		//screw holes
+        translate([0, 0, 0]) {
+            translate([0, screw_distance/2, 0]) cylinder(r=screw_d/2, h=29, center = true);
+            translate([0, -screw_distance/2, 0]) cylinder(r=screw_d/2, h=29, center = true);
+            
+            //bolt ends
+            //translate([0, screw_distance/2, 0]) cylinder(r=screw_d/2, h=29, center = true);
+            //translate([0, -screw_distance/2, 0]) cylinder(r=screw_d/2, h=29, center = true);
+        }
+        translate([2, 19, 0]) cylinder(r=5, h = 100, center = true); //hole for panel bolt access
+    }
+	//wings
+	translate ([-one_to_one_x, -one_to_one_y, 0]) bolt_holder([mm_x[0], mm_y[0], 0], mm_r[0], height, mm_l[0]);
+	translate ([-one_to_one_x, -one_to_one_y, 0]) bolt_holder([mm_x[1], mm_y[1], 0], mm_r[1], height, mm_l[1]);
+    //translate ([-one_to_one_x, -one_to_one_y, 0]) bolt_holder([mm_x[5] , mm_y[5], 0], mm_r[5], height, mm_l[5] - 1);
+    if (DECOYS) {
+        translate([-7, -6, 0]) decoys(40, -1, 4);
+        translate([-9, -2, 0]) rotate([0, 0, 49]) decoys(37, -1, 4);
+    }
+}
+
+
 module motor_mount_bottom (DECOYS = false) {
     $fn = 60;
 	mount_d = 45;
@@ -1026,7 +1139,9 @@ module exploded_view () {
 //intval_laser_panel_cover(true, ALL_RED=true);
 //key_cap();
 //geared_motor_mount();
-motor_key();
+translate([one_to_one_x, one_to_one_y, 30]) geared_motor_mount_120();
+//motor_key();
+motor_key_120();
 //plunger_plate();
 //motor_cap(false);
 
