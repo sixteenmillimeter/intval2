@@ -671,7 +671,7 @@ module geared_motor_mount (DECOYS = false) {
 module geared_motor_mount_120 (DECOYS = false) {
     $fn = 160;
 	base_d = 45;
-	base_inner = 24.1;
+	base_inner = 25.2;
 	base_thickness = 3;
 	hole_d = 7;
 	screw_d = 3.2;
@@ -1139,9 +1139,10 @@ module exploded_view () {
 //intval_laser_panel_cover(true, ALL_RED=true);
 //key_cap();
 //geared_motor_mount();
-translate([one_to_one_x, one_to_one_y, 30]) geared_motor_mount_120();
+//translate([one_to_one_x, one_to_one_y, 30]) 
+geared_motor_mount_120();
 //motor_key();
-motor_key_120();
+//motor_key_120();
 //plunger_plate();
 //motor_cap(false);
 
