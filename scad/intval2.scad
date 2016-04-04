@@ -675,13 +675,14 @@ module geared_motor_mount_120 (DECOYS = false) {
 	base_thickness = 3;
 	hole_d = 7;
 	screw_d = 3.2;
+    bolt_end = 5.4;
 	height = 6;
     screw_distance = 17;
 	difference () {
 		difference () {
 			translate([-6, 0, 2.5]) cylinder(r=base_d/2, h=height + 5, center = true); //outer cylinder
-			//translate([-6, 0, base_thickness + 2.5]) cylinder(r=base_inner/2, h=height + 5, center = true); //inder cylinder
-            translate([0, 0, base_thickness + 2.5]) cylinder(r=base_inner/2, h=height + 5, center = true); //inder cylinder
+			//translate([-6, 0, base_thickness + 2.5]) cylinder(r=base_inner/2, h=height + 5, center = true); //inner cylinder
+            translate([0, 0, base_thickness + 1.5]) cylinder(r=base_inner/2, h=height + 5, center = true); //inner cylinder
 		}
 		cylinder(r=hole_d/2, h=29, center = true); //center hole
 		//screw holes
@@ -690,8 +691,8 @@ module geared_motor_mount_120 (DECOYS = false) {
             translate([0, -screw_distance/2, 0]) cylinder(r=screw_d/2, h=29, center = true);
             
             //bolt ends
-            //translate([0, screw_distance/2, 0]) cylinder(r=screw_d/2, h=29, center = true);
-            //translate([0, -screw_distance/2, 0]) cylinder(r=screw_d/2, h=29, center = true);
+            translate([0, screw_distance/2, -3]) cylinder(r=bolt_end/2, h=2, center = true);
+            translate([0, -screw_distance/2, -3]) cylinder(r=bolt_end/2, h=2, center = true);
         }
         translate([2, 19, 0]) cylinder(r=5, h = 100, center = true); //hole for panel bolt access
     }
