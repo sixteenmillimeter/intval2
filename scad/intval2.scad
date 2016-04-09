@@ -547,7 +547,10 @@ module motor_key_120 (half = false, DECOYS = false, sides = 1, ALT = false) {
 		//slot for hobbled(?) end
         translate([one_to_one_x, one_to_one_y, 17]) {
             hobbled_rod_120(12);
-            translate([6.42, 0, 6 - 1.7]) motor_set_screw_120();
+            //translate([6.42, 0, 6 - 1.7]) motor_set_screw_120();
+            translate([6.42 - .2, 0, 4.3 - 2]) rotate([0, 90, 0]) motor_set_screw_120_alt();
+            translate([14, 0, 4.3 - 2]) rotate([0, 90, 0]) cylinder(r2 = 6 / 2, r1 = 5.8 / 2, h = 6, center = true); //extension
+            
         }
 		//translate([one_to_one_x, one_to_one_y, 20.5]) cylinder(r = 11.5/2, h = 10, center = true);
 
@@ -561,6 +564,7 @@ module motor_key_120 (half = false, DECOYS = false, sides = 1, ALT = false) {
 			translate([one_to_one_x - 50 , one_to_one_y, -50]) cube([100, 100, 200]);
 		}
 	}
+  // translate([one_to_one_x, one_to_one_y, 17]) translate([6.42 - .2, 0, 6 - 1.7]) rotate([0, 90, 0]) motor_set_screw_120_alt();
     if (DECOYS) {
         translate([one_to_one_x, one_to_one_y, 20.5]) decoys(24);
     }
@@ -569,6 +573,12 @@ module motor_key_120 (half = false, DECOYS = false, sides = 1, ALT = false) {
 module motor_set_screw_120 () {
     cube([10.19, 2.95, 2.95], center = true);
     translate([(10.19 / 2) - (2.56 / 2), 0, 0]) cube([2.56, 5.8, 5.8], center = true);    
+}
+
+module motor_set_screw_120_alt () {
+    $fn = 60;
+    cylinder(r = 2.95 / 2, h = 10.19, center= true);
+    translate([0, 0, (10.19 / 2) - (2.56 / 2)]) cylinder(r = 5.8 / 2, h = 2.56, center = true);
 }
 
 module hobbled_rod_120 (h = 10) {
@@ -1141,9 +1151,9 @@ module exploded_view () {
 //key_cap();
 //geared_motor_mount();
 //translate([one_to_one_x, one_to_one_y, 30]) 
-geared_motor_mount_120();
+//geared_motor_mount_120();
 //motor_key();
-//motor_key_120();
+motor_key_120();
 //plunger_plate();
 //motor_cap(false);
 
