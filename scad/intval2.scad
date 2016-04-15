@@ -918,7 +918,31 @@ module trinket_mount (decoys = false) {
     TRINKET_L = 37.5;
     TRINKET_W = 18;
     difference () {
-        rounded_cube([42, 21, 3.5], d = 4, center = true); //body
+        rounded_cube([TRINKET_L + 4.5, 21, 3.5], d = 4, center = true); //body
+        translate([0, 0, 1]) cube([TRINKET_L, TRINKET_W, 1.5], center = true); //trinket
+        translate([0, 0, 0]) cube([TRINKET_L - 1, TRINKET_W - 1, 10], center = true); //trinket ridge
+        translate([20, 0, 1]) cube([9, 9, 1.5], center = true);
+        
+    }
+    translate([(TRINKET_L / 2)  -2, 0, -.75]) cube([4, TRINKET_W - 1, 2], center = true);//under usb
+    SPREAD = 14.25;
+    translate([(TRINKET_L / 2)  -2, SPREAD/2,  1]) cylinder(r = 1.75/2, h = 2, center = true);
+    translate([(TRINKET_L / 2)  -2, -SPREAD/2, 1]) cylinder(r = 1.75/2, h = 2, center = true);
+    //decoys
+    if (decoys){
+        translate([23,20,.25]) cube([4, 4, 4], center = true);
+        translate([23,-20,.25]) cube([4, 4, 4], center = true);
+        translate([-23,20,.25]) cube([4, 4, 4], center = true);
+        translate([-23,-20,.25]) cube([4, 4, 4], center = true);
+    }
+}
+
+module metro_mount (decoys = false) {
+    $fn = 60;
+    TRINKET_L = 43.5;
+    TRINKET_W = 18;
+    difference () {
+        rounded_cube([TRINKET_L + 4.5, 21, 3.5], d = 4, center = true); //body
         translate([0, 0, 1]) cube([TRINKET_L, TRINKET_W, 1.5], center = true); //trinket
         translate([0, 0, 0]) cube([TRINKET_L - 1, TRINKET_W - 1, 10], center = true); //trinket ridge
         translate([20, 0, 1]) cube([9, 9, 1.5], center = true);
@@ -1006,11 +1030,12 @@ module button_nuts_plate (decoys = false) {
     }
 }
 
-module intval_electronics_mount (DECOYS = false) {
+module intval_electronics_mount (TYPE = "TRINKET") {
     translate([-40 + 2, -1, 14]) rotate([0, 0, -13]) l289N_mount();
-    translate([-26 + 2, -19, 11.25]) rotate([0, 0, -180 - 13]) trinket_mount();
-    if (DECOYS) {
-       rotate([0, 0, -13]) translate([-19, -2, 0]) scale([.75, 1, 1]) rotate([0, 0, 45]) decoys(52, 12);     
+    if (TYPE == "TRINKET") {
+        translate([-26 + 2, -19, 11.25]) rotate([0, 0, -180 - 13]) trinket_mount();
+    } else if (TYPE == "METRO") {
+        translate([-26 + 2, -19, 11.25]) rotate([0, 0, -180 - 13]) metro_mount();    
     }
 }
 
@@ -1144,7 +1169,7 @@ module exploded_view () {
 */
 
 //intval_laser_standoffs_plate();
-//intval_electronics_mount();
+intval_electronics_mount("METRO");
 //motor_mount_bottom();
 //projection () intval_panel_laser();
 //intval_laser_panel_cover(true, ALL_RED=true);
@@ -1153,7 +1178,7 @@ module exploded_view () {
 //translate([one_to_one_x, one_to_one_y, 30]) 
 //geared_motor_mount_120();
 //motor_key();
-motor_key_120();
+//motor_key_120();
 //plunger_plate();
 //motor_cap(false);
 
