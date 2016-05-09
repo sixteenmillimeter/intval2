@@ -176,14 +176,16 @@ module intval_panel_laser_debug () {
 
 module bolex_pin_laser (x, y) {
 	in = innerD;
+    $fn = 120;
 	translate ([x, y, 1]) {
 		difference () {
 			union () {
-				translate([0, 0, (height / 2) - 3]) cylinder(r = (outerD + 4) / 2, h = 2, center = true);
-				translate([0, 0, -1]) cylinder(r = outerD / 2, h = height - 2, center = true);
+				translate([0, 0, (height / 2) - 3]) cylinder(r = (outerD + 5) / 2, h = 2, center = true);
+				translate([0, 0, 1.175/2]) cylinder(r = outerD / 2, h = height + 1.175 , center = true);
 			}
-			cylinder(r = in / 2, h = height, center = true);
-			translate([0, 0, (height / 2) - 1]) cylinder(r1 =4.5 / 2, r2 = 6.5 / 2, h = 2, center = true);
+			cylinder(r = in / 2, h = height * 2, center = true);
+			translate([0, 0, (height / 2) - 1.9]) cylinder(r1 =4.5 / 2, r2 = 6.7 / 2, h = 2, center = true);
+            translate([0, 0, (height / 2) + 1]) cylinder(r = 6.7 / 2, h = 4, center = true);
 		}
 	}
 }
@@ -207,6 +209,7 @@ module intval_laser_standoffs_plate () {
 
 module bolex_pin_inner_laser (x, y) {
     $fn = 40;
+    innerD = 6.75;
 	translate ([x, y, 1]) {
 		cylinder(r = innerD / 2, h = height * 2, center = true);
 		//translate([0, 0, (height / 2) - 1]) cylinder(r1 =4.5 / 2, r2 = 6.5 / 2, h = 2, center = true);
@@ -1169,9 +1172,9 @@ module exploded_view () {
 */
 
 //intval_laser_standoffs_plate();
-intval_electronics_mount("METRO");
+//intval_electronics_mount("METRO");
 //motor_mount_bottom();
-//projection () intval_panel_laser();
+projection () intval_panel_laser();
 //intval_laser_panel_cover(true, ALL_RED=true);
 //key_cap();
 //geared_motor_mount();
