@@ -171,8 +171,6 @@ void button_start (int index) {
     if (sequence) {
       sequence = false;
       Output(2, 250);
-    } else  {
-      Trigger();
     }
   }
 }
@@ -184,6 +182,8 @@ void button_end (int index, long buttontime) {
         sequence = true;
         Output(2, 250);
       }
+      Trigger();
+    } else {
       Trigger();
     }
   } else if (index == 1) { //set direction
