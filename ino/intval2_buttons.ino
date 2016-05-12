@@ -39,11 +39,14 @@ volatile int bwd_speed = 255;
 volatile boolean sequence = false;
 volatile boolean running = false;
 volatile boolean cam_dir = true;
+volatile boolean delaying = false;
 
 volatile int micro_position = 0;
 volatile boolean micro_primed = false;
 
 unsigned long timer = 0;
+unsigned long frame_start = 0;
+unsigned long delay_start = 0;
 
 volatile int cam_count = 0;
 volatile int cam_pos = 0;
@@ -61,7 +64,12 @@ void loop () {
   Btn(2);
   Btn(3);
   if (running) {
-    Read_micro();
+    timer = millis();
+    if (sequence && delaying) {
+      Watch_delay();
+    } else {
+      Read_micro();
+    }
   } else { 
     delay(LOOP_DELAY);
   }
@@ -74,8 +82,8 @@ void Pins_init () {
   pinMode(PIN_INDICATOR, OUTPUT);
 }
 
-void Frame (boolean dir) {
-  cam_dir = dir;
+void Frame () {
+  frame_start = millis();
   if (cam_dir) {
     analogWrite(PIN_MOTOR_FORWARD, fwd_speed);
     analogWrite(PIN_MOTOR_BACKWARD, 0);
@@ -84,24 +92,41 @@ void Frame (boolean dir) {
     analogWrite(PIN_MOTOR_FORWARD, 0);
   }
   running = true;
-  if (fwd_speed == 255) {
-      delay(300);
-  } else {
-      delay(600);
-  }
   micro_primed = false;
 }
 
-void Read_micro () {
-  micro_position = digitalRead(PIN_MICRO);
-  if (micro_position == LOW 
-      && micro_primed == false) {
-    micro_primed = true;
-  } else if (micro_position == HIGH 
-            && micro_primed == true) {
-    Stop();
+boolean Read_delay () {
+  if (fwd_speed == 255) {
+      if (timer - frame_start >= 300) {
+        return true;
+      }
+  } else {
+      if (timer - frame_start >= 600) {
+        return true;
+      }
   }
-  delay(2);//smooths out signal
+  return false;
+}
+
+void Read_micro () {
+  if (Read_delay()) {
+    micro_position = digitalRead(PIN_MICRO);
+    if (micro_position == LOW 
+        && micro_primed == false) {
+      micro_primed = true;
+    } else if (micro_position == HIGH 
+              && micro_primed == true) {
+      Stop();
+    }
+    delay(2);//smooths out signal
+  }
+}
+
+void Watch_delay () {
+  if (timer - delay_start >= seq_delay) {
+    delaying = false;
+    Frame();
+  }
 }
 
 void Stop () {
@@ -120,8 +145,8 @@ void Stop () {
   micro_primed = false;
   
   if (sequence) {
-    delay(seq_delay);
-    Trigger();
+    delaying = true;
+    delay_start = millis();
   }
 }
 
@@ -169,9 +194,9 @@ void button_end (int index, long buttontime) {
         sequence = true;
         Output(2, 250);
       }
-      Trigger();
+      Frame();
     } else {
-      Trigger();
+      Frame();
     }
   } else if (index == 1) { //set direction
     if (buttontime < 1000) {
@@ -201,10 +226,6 @@ void button_end (int index, long buttontime) {
     }
   }
   buttontime = 0;
-}
-
-void Trigger () {
-  Frame(cam_dir);
 }
 
 void Output (int number, int len) {
