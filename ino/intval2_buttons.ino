@@ -44,7 +44,6 @@ volatile int micro_position = 0;
 volatile boolean micro_primed = false;
 
 unsigned long timer = 0;
-volatile int timer_int = 0;
 
 volatile int cam_count = 0;
 volatile int cam_pos = 0;
@@ -76,7 +75,6 @@ void Pins_init () {
 }
 
 void Frame (boolean dir) {
-  Time_start();
   cam_dir = dir;
   if (cam_dir) {
     analogWrite(PIN_MOTOR_FORWARD, fwd_speed);
@@ -110,8 +108,6 @@ void Stop () {
   delay(10);
   analogWrite(PIN_MOTOR_FORWARD, 0);
   analogWrite(PIN_MOTOR_BACKWARD, 0);
-  
-  Time_end();
  
   cam_count++;
   if (cam_dir) {
@@ -127,15 +123,6 @@ void Stop () {
     delay(seq_delay);
     Trigger();
   }
-}
-
-void Time_start () {
-  timer = millis();
-}
-
-void Time_end () {
-  timer = millis() - timer;
-  timer_int = int(timer);
 }
 
 void Indicator (boolean state) {
