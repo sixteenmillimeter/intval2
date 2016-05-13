@@ -10,6 +10,8 @@ GND-----\ | \-----PIN
 ----------------------------------------------------
 */
 
+const int FAST_PWM = 255;
+const int SLOW_PWM = SLOW_PWM;
 
 /* ------------------------------------------------
  *  pins
@@ -33,8 +35,8 @@ volatile int button_state[4] = {1, 1, 1, 1};
 volatile long button_time[4] = {0, 0, 0, 0};
 volatile long buttontime = 0;
 
-volatile int fwd_speed = 255;
-volatile int bwd_speed = 255;
+volatile int fwd_speed = FAST_PWM;
+volatile int bwd_speed = FAST_PWM;
 
 volatile boolean sequence = false;
 volatile boolean running = false;
@@ -59,17 +61,16 @@ void setup () {
 }
 
 void loop () {
+  timer = millis();
   Btn(0);
   Btn(1);
   Btn(2);
   Btn(3);
+  if (sequence && delaying) {
+    Watch_delay();
+  }
   if (running) {
-    timer = millis();
-    if (sequence && delaying) {
-      Watch_delay();
-    } else {
-      Read_micro();
-    }
+    Read_micro();
   } else { 
     delay(LOOP_DELAY);
   }
@@ -96,7 +97,7 @@ void Frame () {
 }
 
 boolean Read_delay () {
-  if (fwd_speed == 255) {
+  if (fwd_speed == FAST_PWM) {
       if (timer - frame_start >= 300) {
         return true;
       }
@@ -169,7 +170,7 @@ void Btn (int index) {
   if (val != button_state[index]) {
     if (val == LOW) { // pressed
       button_time[index] = millis();
-      button_start(index);
+      //button_start(index);
     } else if (val == HIGH) { // not pressed
       buttontime = millis() - button_time[index];
       button_end(index, buttontime);
@@ -178,25 +179,28 @@ void Btn (int index) {
   button_state[index] = val;
 }
 
-void button_start (int index) {
+/*
+ * dormant for now
+ * void button_start (int index) {
   if (index == 0) {
-    if (sequence) {
-      sequence = false;
-      Output(2, 250);
-    }
   }
-}
+}*/
 
 void button_end (int index, long buttontime) {
   if (index == 0) {
     if (buttontime > 1000) {
       if (!sequence) {
         sequence = true;
-        Output(2, 250);
+        Output(2, 75);
+        Frame();
       }
-      Frame();
     } else {
-      Frame();
+       if (sequence) {
+        sequence = false;
+        //Output(2, 75);
+      } else {
+         Frame();
+      }
     }
   } else if (index == 1) { //set direction
     if (buttontime < 1000) {
@@ -208,12 +212,12 @@ void button_end (int index, long buttontime) {
     }
   } else if (index == 2) { // set speed
     if (buttontime <= 1000) {
-      fwd_speed = 255;
-      bwd_speed = 255;
+      fwd_speed = FAST_PWM;
+      bwd_speed = FAST_PWM;
       Output(1, 500);
     } else if (buttontime > 1000) {
-      fwd_speed = 127;
-      bwd_speed = 127;
+      fwd_speed = SLOW_PWM;
+      bwd_speed = SLOW_PWM;
       Output(2, 250);    
     }
   } else if (index == 3) { //set delay
