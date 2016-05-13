@@ -515,8 +515,8 @@ module motor_key_120 (half = false, DECOYS = false, sides = 1, ALT = false) {
     innerD = 7.85;
 	outer_d = 27.5 + 2;
 	notch_d = 10;
-	height = 7 + 5 + 3;
-	diff = 14 + 2.5 + 1.5;
+	height = 7 + 5 + 4;
+	diff = 14 + 2.5 + 2;
     $fn = 60;
 	difference () {
 		union () {
@@ -549,10 +549,10 @@ module motor_key_120 (half = false, DECOYS = false, sides = 1, ALT = false) {
         
 		//slot for hobbled(?) end
         translate([one_to_one_x, one_to_one_y, 17 + 2]) {
-             translate([0, 0, 3]) hobbled_rod_120(12);
+             translate([0, 0, 6.5]) hobbled_rod_120(12);
             //translate([6.42, 0, 6 - 1.7]) motor_set_screw_120();
-            translate([6.42 - .2, 0, 4.3 - 2]) rotate([0, 90, 0]) motor_set_screw_120_alt();
-            translate([14, 0, 4.3 - 2]) rotate([0, 90, 0]) cylinder(r2 = 6 / 2, r1 = 5.8 / 2, h = 6, center = true); //extension
+            translate([6.42 - .2, 0, 4.3 - 1]) rotate([0, 90, 0]) motor_set_screw_120_alt();
+            translate([14, 0, 4.3 - 1]) rotate([0, 90, 0]) cylinder(r2 = 6 / 2, r1 = 5.8 / 2, h = 6, center = true); //extension
             
         }
 		//translate([one_to_one_x, one_to_one_y, 20.5]) cylinder(r = 11.5/2, h = 10, center = true);
