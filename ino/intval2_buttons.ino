@@ -11,7 +11,7 @@ GND-----\ | \-----PIN
 */
 
 const int FAST_PWM = 255;
-const int SLOW_PWM = SLOW_PWM;
+const int SLOW_PWM = 127;
 
 /* ------------------------------------------------
  *  pins
