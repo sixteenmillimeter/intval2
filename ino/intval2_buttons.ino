@@ -71,7 +71,8 @@ void loop () {
   }
   if (running) {
     Read_micro();
-  } else { 
+  }
+  if (!running && !sequence && !delaying){ 
     delay(LOOP_DELAY);
   }
 }
