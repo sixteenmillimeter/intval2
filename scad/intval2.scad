@@ -515,8 +515,8 @@ module motor_key_120 (half = false, DECOYS = false, sides = 1, ALT = false) {
     innerD = 7.85;
 	outer_d = 27.5 + 2;
 	notch_d = 10;
-	height = 7 + 5;
-	diff = 14 + 2.5;
+	height = 7 + 5 + 3;
+	diff = 14 + 2.5 + 1.5;
     $fn = 60;
 	difference () {
 		union () {
@@ -532,7 +532,7 @@ module motor_key_120 (half = false, DECOYS = false, sides = 1, ALT = false) {
 			translate ([-outer_d/2 - 2.5, 0, 0]) cylinder(r=notch_d/2, h= height, center= true); //notch
 		}
 		translate([one_to_one_x, one_to_one_y, diff]) {
-			translate ([-outer_d/2  -.5, -3.5, 0]) rotate([0, 0, 100]) cube([15, 5, height], center = true); // smooth notch
+			translate ([-outer_d/2  -.5, -3.5 , 0]) rotate([0, 0, 100]) cube([15, 5, height], center = true); // smooth notch
 			translate ([-outer_d/2  -.5, 3.5, 0]) rotate([0, 0, -100]) cube([15, 5, height], center = true); // smooth notch
 		}
         
@@ -548,8 +548,8 @@ module motor_key_120 (half = false, DECOYS = false, sides = 1, ALT = false) {
         }
         
 		//slot for hobbled(?) end
-        translate([one_to_one_x, one_to_one_y, 17]) {
-            hobbled_rod_120(12);
+        translate([one_to_one_x, one_to_one_y, 17 + 2]) {
+             translate([0, 0, 3]) hobbled_rod_120(12);
             //translate([6.42, 0, 6 - 1.7]) motor_set_screw_120();
             translate([6.42 - .2, 0, 4.3 - 2]) rotate([0, 90, 0]) motor_set_screw_120_alt();
             translate([14, 0, 4.3 - 2]) rotate([0, 90, 0]) cylinder(r2 = 6 / 2, r1 = 5.8 / 2, h = 6, center = true); //extension
@@ -1174,14 +1174,14 @@ module exploded_view () {
 //intval_laser_standoffs_plate();
 //intval_electronics_mount("METRO");
 //motor_mount_bottom();
-projection () intval_panel_laser();
+//projection () intval_panel_laser();
 //intval_laser_panel_cover(true, ALL_RED=true);
 //key_cap();
 //geared_motor_mount();
 //translate([one_to_one_x, one_to_one_y, 30]) 
 //geared_motor_mount_120();
 //motor_key();
-//motor_key_120();
+motor_key_120();
 //plunger_plate();
 //motor_cap(false);
 
