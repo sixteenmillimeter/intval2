@@ -199,17 +199,20 @@ module intval_laser_standoffs () {
 
 module intval_laser_standoffs_plate () {
     $fn = 40;
-    bolex_pin_laser(0, 0);
-    bolex_pin_laser(15, 0);
-    bolex_pin_laser(0, 15);
-    bolex_pin_laser(15, 15);
+    rotate ([0, 180, 0]) {
+        bolex_pin_laser(0, 0);
+        bolex_pin_laser(15, 0);
+        bolex_pin_laser(0, 15);
+        bolex_pin_laser(15, 15);
+    }
     //decoys
     //translate([7, 7, 0]) decoys(23, 5.5, 6);
 }
 
 module bolex_pin_inner_laser (x, y) {
     $fn = 40;
-    innerD = 6.75;
+    //innerD = 6.75;
+    innerD = 9;
 	translate ([x, y, 1]) {
 		cylinder(r = innerD / 2, h = height * 2, center = true);
 		//translate([0, 0, (height / 2) - 1]) cylinder(r1 =4.5 / 2, r2 = 6.5 / 2, h = 2, center = true);
@@ -1171,7 +1174,8 @@ module exploded_view () {
 
 */
 
-//intval_laser_standoffs_plate();
+//bolex_pin_laser(0, 0);
+intval_laser_standoffs_plate();
 //intval_electronics_mount("METRO");
 //motor_mount_bottom();
 //projection () intval_panel_laser();
@@ -1181,7 +1185,7 @@ module exploded_view () {
 //translate([one_to_one_x, one_to_one_y, 30]) 
 //geared_motor_mount_120();
 //motor_key();
-motor_key_120();
+//motor_key_120();
 //plunger_plate();
 //motor_cap(false);
 
