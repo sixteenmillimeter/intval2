@@ -1072,7 +1072,29 @@ module motor_cap (DECOYS = false, HALF = false) {
         translate([-6, 0, 0]) decoys(32, 64);
     }
 }
-
+module motor_cap_120 (HALF = false) {
+    $fn = 60;
+	base_d = 47;
+    base_inner = 29;
+    inner_h = 57;
+    difference () {
+        union () {
+            translate([-6, 0, 24]) cylinder(r = base_d/2, h = 15, center = true);
+            translate([0, 0, inner_h]) cylinder(r=(base_inner / 2) + 3, h=inner_h, center = true); 
+        }
+        translate([-6, 0, -5.75]) cylinder(r = base_d/2 - 1, h = 50, center = true); //to grip edge of 
+        translate([-6, 0, 3]) cylinder(r = base_d/2 - 3, h = 50, center = true);
+        translate([-25, 0, 19]) cube([10, 10, 15], center = true); //wire access
+        
+        //120 motor
+        
+        translate([0, 0, inner_h - 2]) cylinder(r=base_inner / 2, h=inner_h, center = true); //inner cylinder
+        
+        if (HALF){
+            translate([100, 0, 0]) cube([200, 200, 200], center = true);
+        }
+    }
+}
 
 module bearing_calibrate (val = 0) {
     mat = 25.4/8;
@@ -1175,19 +1197,19 @@ module exploded_view () {
 */
 
 //bolex_pin_laser(0, 0);
-intval_laser_standoffs_plate();
+//intval_laser_standoffs_plate();
 //intval_electronics_mount("METRO");
 //motor_mount_bottom();
 //projection () intval_panel_laser();
 //intval_laser_panel_cover(true, ALL_RED=true);
 //key_cap();
 //geared_motor_mount();
-//translate([one_to_one_x, one_to_one_y, 30]) 
 //geared_motor_mount_120();
 //motor_key();
 //motor_key_120();
 //plunger_plate();
 //motor_cap(false);
+motor_cap_120(false);
 
 //exploded_view();
 //stl_plate();
