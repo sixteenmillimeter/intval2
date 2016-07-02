@@ -73,16 +73,16 @@ volatile long seq_delay = 42;
  *  serial
  * ------------------------------------------------*/
 
-const char cmd_camera = 'c';
-const char cmd_cam_forward = 'e';
-const char cmd_cam_backward = 'f';
-const char cmd_timed = 'n';
+const char cmd_camera = 'c'; //Trigger the camera to advance or rewind 1 frame
+const char cmd_cam_forward = 'e'; //Set camera direction to FORWARDS
+const char cmd_cam_backward = 'f'; //Set camera direction to BACKWARDS
+const char cmd_timed = 'n'; //Set camera exposure time: follow command immediately with number of millisecions, ie: 1000
 
-const char cmd_debug = 'd';
-const char cmd_connect = 'i';
-volatile char cmd_char = 'z';
-const char cmd_mcopy_identifier = 'm';
-const char cmd_cam_identifier = 'k';
+const char cmd_debug = 'd'; //Turn on debug messages, will break mcopy firmware
+const char cmd_connect = 'i'; //Confirm firmware on Arduino
+volatile char cmd_char = 'z'; //Default null command
+const char cmd_mcopy_identifier = 'm'; //Incoming identification char for mcopy use only
+const char cmd_cam_identifier = 'k'; //Response char for identifying device as camera
 
 const int serialDelay = 5;
 
