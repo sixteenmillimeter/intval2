@@ -316,7 +316,6 @@ void Read_timed () {
   if (!timed_paused) {
     if (timer - frame_start > timed_open 
       && timer - frame_start < timed_open + timed_delay) {
-       timed_paused = true; 
        Pause_timed();
     } else if (timer - frame_start > timed_open + timed_delay) {
       micro_position = digitalRead(PIN_MICRO);
@@ -325,19 +324,20 @@ void Read_timed () {
       }
       delay(2);//smooths out signal  
     }
-  } if (timed_paused && timer - frame_start > timed_open + timed_delay) {
-    timed_paused = false;
+  } 
+  if (timed_paused && timer - frame_start > timed_open + timed_delay) {
     Start_timed();   
   }
-  
 }
 
 void Pause_timed () {
+  timed_paused = true;
   analogWrite(PIN_MOTOR_FORWARD, 0);
   analogWrite(PIN_MOTOR_BACKWARD, 0);
 }
 
 void Start_timed () {
+  timed_paused = false;
    if (cam_dir) {
     analogWrite(PIN_MOTOR_FORWARD, fwd_speed);
     analogWrite(PIN_MOTOR_BACKWARD, 0);
