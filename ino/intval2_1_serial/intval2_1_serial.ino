@@ -241,14 +241,14 @@ void button_end (int index, long buttontime) {
       Output(2, 250);
     }
   } else if (index == 2) { // set speed
-    if (buttontime <= 1000) {
-      fwd_speed = FAST_PWM;
-      bwd_speed = FAST_PWM;
-      Output(1, 500);
-    } else if (buttontime > 1000) {
-      fwd_speed = SLOW_PWM;
-      bwd_speed = SLOW_PWM;
-      Output(2, 250);    
+    if (buttontime >= 1000) {
+      timed_delay = buttontime - BOLEX_C;
+      timed = true;
+      Output(2, 250);
+    } else if (buttontime < 1000) {
+      timed_delay = 0;
+      timed = false;
+      Output(1, 500);    
     }
   } else if (index == 3) { //set delay
     if (buttontime < 42) {
@@ -401,3 +401,4 @@ void log (String msg) {
     Serial.println(msg);
   }
 }
+
