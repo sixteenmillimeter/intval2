@@ -73,16 +73,21 @@ unsigned long timed_avg = 600;
 volatile long seq_delay = 42;
 
 volatile boolean black = true;
-const int black_delay = 250;
+const int black_pin = 11;
+const int black_pulse_width_min = 600; //TowerPro MG995
+const int black_pulse_width_max = 2000; //TowerPro MG995
+const int black_delay = 400;
 const int black_start = 0;
-const int black_end = 90;
+const int black_end = 95;
 const int black_timed = 1;
 volatile boolean black_paused = false;
 
 
 void setup () {
-  blackout.attach(12);
+  blackout.attach(black_pin, black_pulse_width_min, black_pulse_width_max);
   Black_off();
+  delay(1000);
+  Black_on();
   
   Pins_init();
   Buttons_init();
