@@ -233,9 +233,9 @@ module bearing_laser (x, y, z, width= 8, hole = true) {
 	}
 }
 
-module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false) {
+module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, PCB = false) {
     $fn = 60;
-    cover_h = 16 + 3 + 4;
+    cover_h = 16 + 3 + 4 + 15;
     MATERIAL = 25.4 / 8;
 
     module top () {
@@ -275,11 +275,11 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false) 
     module back_side () {
         difference () {
             translate([0, 1.75, 0]) cube([cover_h + 2 + (MATERIAL * 2) + 1 + 3, panel_2_y - 10, MATERIAL], center = true);
-            translate([-13 - 3.1, 20, 0]) cube([MATERIAL, 20, MATERIAL], center = true);
-            translate([-13 - 3.1, -20, 0]) cube([MATERIAL, 20, MATERIAL], center = true);
-            translate([13 + 3.1, 20, 0]) cube([MATERIAL, 20, MATERIAL], center = true);
-            translate([13 + 3.1, -20, 0]) cube([MATERIAL, 20, MATERIAL], center = true);
-            translate([10 , -22 ,0]) cube([10, 15, 30], center = true); //access for usb
+            translate([-13 - 3.1 - 7.5, 20, 0]) cube([MATERIAL, 20, MATERIAL], center = true);
+            translate([-13 - 3.1 -7.5, -20, 0]) cube([MATERIAL, 20, MATERIAL], center = true);
+            translate([13 + 3.1 + 7.5, 20, 0]) cube([MATERIAL, 20, MATERIAL], center = true);
+            translate([13 + 3.1 + 7.5, -20, 0]) cube([MATERIAL, 20, MATERIAL], center = true);
+            translate([10 + 7.5, -22,0]) cube([10, 15, 30], center = true); //access for usb
             translate([0, 50.5, 0]) cube([17.5, MATERIAL, MATERIAL], center = true);
             translate([0, -50.5 + (1.75 / 2) + MATERIAL - 0.25, 0]) cube([17.5, MATERIAL, MATERIAL], center = true);
         }
@@ -289,10 +289,10 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false) 
     module top_side () {
         difference () {
             translate([-2.5, 0, 0]) cube([ panel_2_x - 41, cover_h + 2 + (MATERIAL * 2) + 1  + 3, MATERIAL], center = true);
-            translate([28, -13 - 3.1, 0]) cube([25, MATERIAL, MATERIAL], center = true);
-            translate([-28, -13 - 3.1, 0]) cube([25, MATERIAL, MATERIAL], center = true);
-            translate([28, 13 + 3.1, 0]) cube([25, MATERIAL, MATERIAL], center = true);
-            translate([-28, 13 + 3.1, 0]) cube([25, MATERIAL, MATERIAL], center = true);
+            translate([28, -13 - 3.1 - 7.5, 0]) cube([25, MATERIAL, MATERIAL], center = true);
+            translate([-28, -13 - 3.1 - 7.5, 0]) cube([25, MATERIAL, MATERIAL], center = true);
+            translate([28, 13 + 3.1 + 7.5, 0]) cube([25, MATERIAL, MATERIAL], center = true);
+            translate([-28, 13 + 3.1 + 7.5, 0]) cube([25, MATERIAL, MATERIAL], center = true);
             
             translate([-35.5, -13 - 8.1, 0]) cube([MATERIAL, 25, MATERIAL], center = true); //side tabs
             translate([-35.5, 13 + 8.1, 0]) cube([MATERIAL, 25, MATERIAL], center = true); //side tabs
@@ -303,12 +303,17 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false) 
    module bottom_side () {
         difference () {
             translate([.25, 0, 0]) cube([ panel_2_x - 39.5, cover_h + 2 + (MATERIAL * 2) + 1  + 3, MATERIAL], center = true);
-            translate([25, -13 - 3.1, 0]) cube([25, MATERIAL, MATERIAL], center = true);
-            translate([-25, -13 - 3.1, 0]) cube([25, MATERIAL, MATERIAL], center = true);
-            translate([30, 13 + 3.1, 0]) cube([25, MATERIAL, MATERIAL], center = true);
-            translate([-30, 13 + 3.1, 0]) cube([25, MATERIAL, MATERIAL], center = true);
-            translate([-15, 1, 0]) cylinder(r = 6/2, h = 50, center = true); //hole for audio jack -> add countersink
-            translate([9, 1, 0]) cylinder(r = 8/2, h = 20, center = true); //hole for female DC power jack, 12vdc
+            translate([25, -13 - 3.1 - 7.5, 0]) cube([25, MATERIAL, MATERIAL], center = true);
+            translate([-25, -13 - 3.1 - 7.5, 0]) cube([25, MATERIAL, MATERIAL], center = true);
+            translate([30, 13 + 3.1 + 7.5, 0]) cube([25, MATERIAL, MATERIAL], center = true);
+            translate([-30, 13 + 3.1 + 7.5, 0]) cube([25, MATERIAL, MATERIAL], center = true);
+            if (PCB) {
+                translate([12, 6, 0]) cylinder(r = 6/2, h = 50, center = true); //hole for audio jack -> add countersink
+                translate([25, 4, 0]) cylinder(r = 11.8/2, h = 20, center = true); //hole for female DC power jack, 12vdc
+            } else {
+                translate([-15, 1, 0]) cylinder(r = 6/2, h = 50, center = true); //hole for audio jack -> add countersink
+                translate([9, 1, 0]) cylinder(r = 8/2, h = 20, center = true); //hole for female DC power jack, 12vdc
+            }
             
             translate([-33.5, 17.3, 0]) cube([MATERIAL, 17.5, MATERIAL], center = true);
             translate([-33.5, -17.3, 0]) cube([MATERIAL, 17.5, MATERIAL], center = true);
@@ -320,16 +325,16 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false) 
     if (LASER) {
         projection() top();
         if (!DEBUG) {
-            translate([-75, 0, 0]) rotate([0, 0, -13]) projection() back_side();
+            translate([-75 - 10, 0, 0]) rotate([0, 0, -13]) projection() back_side();
         }
-        translate([0, 80, 0]) rotate([0, 0, -13]) projection() top_side();
-        translate([0, -80, 0])  rotate([0, 0, -13]) projection() bottom_side();
+        translate([0, 80 + 10, 0]) rotate([0, 0, -13]) projection() top_side();
+        translate([0, -80 - 10, 0])  rotate([0, 0, -13]) projection() bottom_side();
     } else {
         translate([0, 0, height + cover_h]) top();
         if (!DEBUG) {
             translate([-44, 8, height + (cover_h / 2 ) - 4.25]) rotate([0, 0, -13]) rotate([0, 90, 0]) back_side();
         }
-        translate([2, 49, height + (cover_h / 2 ) - 4.25]) rotate([0, 0, -13]) rotate([90, 0, 0]) top_side();
+        translate([2, 49 + 10, height + (cover_h / 2 ) - 4.25]) rotate([0, 0, -13]) rotate([90, 0, 0]) top_side();
         translate([-22, -45, height + (cover_h / 2 ) - 4.25]) rotate([0, 0, -13]) rotate([90, 0, 0]) bottom_side();
     }
 } 
@@ -1119,7 +1124,7 @@ module stl_plate () {
 
 module dxf_plate () {
     translate([105, 0, 0]) rotate([0, 0, 13]) projection() intval_panel_laser();
-    rotate([0, 0, 13]) intval_laser_panel_cover(LASER=true, ALL_RED=true);
+    rotate([0, 0, 13]) intval_laser_panel_cover(LASER=true, ALL_RED=true, PCB=true);
 };
 
 module exploded_view () {
@@ -1209,8 +1214,8 @@ module exploded_view () {
 //motor_key_120();
 //plunger_plate();
 //motor_cap(false);
-motor_cap_120(false);
+//motor_cap_120(false);
 
 //exploded_view();
 //stl_plate();
-//dxf_plate();
+dxf_plate();
