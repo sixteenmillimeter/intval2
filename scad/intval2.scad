@@ -334,7 +334,7 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
         if (!DEBUG) {
             translate([-44, 8, height + (cover_h / 2 ) - 4.25]) rotate([0, 0, -13]) rotate([0, 90, 0]) back_side();
         }
-        translate([2, 49 + 10, height + (cover_h / 2 ) - 4.25]) rotate([0, 0, -13]) rotate([90, 0, 0]) top_side();
+        translate([2, 49, height + (cover_h / 2 ) - 4.25]) rotate([0, 0, -13]) rotate([90, 0, 0]) top_side();
         translate([-22, -45, height + (cover_h / 2 ) - 4.25]) rotate([0, 0, -13]) rotate([90, 0, 0]) bottom_side();
     }
 } 
@@ -1205,7 +1205,7 @@ module exploded_view () {
 //intval_laser_standoffs_plate();
 //intval_electronics_mount("METRO");
 //motor_mount_bottom();
-//projection () intval_panel_laser();
+//projection() intval_panel_laser();
 //intval_laser_panel_cover(true, ALL_RED=true);
 //key_cap();
 //geared_motor_mount();
