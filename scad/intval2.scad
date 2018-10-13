@@ -62,9 +62,9 @@ module intval_panel () {
 	}
 }
 
-module l289N_holes (r = 3/2 - .2) {
+module l289N_holes (r = 3/2 - .2, MOD_MOUNT = 0) {
     $fn = 60;
-    DISTANCE = 36.5;
+    DISTANCE = 36.5 + MOD_MOUNT;
     H = 50;
     translate([0, 0, 0]) cylinder(r = r, h = H * 5, center = true);
     translate([DISTANCE, 0, 0]) cylinder(r = r, h = H * 5, center = true);
@@ -1041,12 +1041,15 @@ module button_nuts_plate (decoys = false) {
     }
 }
 
-module intval_electronics_mount (TYPE = "TRINKET") {
-    translate([-40 + 2, -1, 14]) rotate([0, 0, -13]) l289N_mount();
+module intval_electronics_mount (TYPE = "TRINKET", MOD_Y = 5, MOD_MOUNT = 0) {
+    translate([-40 + 2, -1, 14]) rotate([0, 0, -13]) l289N_mount(MOD_MOUNT);
     if (TYPE == "TRINKET") {
-        translate([-26 + 2, -19, 11.25]) rotate([0, 0, -180 - 13]) trinket_mount();
+        translate([-26 + 2, -19 - MOD_Y + 1, 11.25]) rotate([0, 0, -180 - 13]) trinket_mount();
     } else if (TYPE == "METRO") {
-        translate([-26 + 2, -19, 11.25]) rotate([0, 0, -180 - 13]) metro_mount();    
+        translate([-26 + 2, -19 - MOD_Y + 1, 11.25]) rotate([0, 0, -180 - 13]) metro_mount();    
+    }
+    if (MOD_Y != 0) {
+        translate([-26 + 4, -19 + MOD_Y + 3 , 11.25 - .25]) rotate([0, 0, -180 - 13]) cube([40, MOD_Y, 3], center = true);
     }
 }
 
@@ -1203,7 +1206,17 @@ module exploded_view () {
 
 //bolex_pin_laser(0, 0);
 //intval_laser_standoffs_plate();
-//intval_electronics_mount("METRO");
+intersection () {
+    intval_electronics_mount("TRINKET");
+    union () {
+        translate([1, -28, 0]) rotate([0, 0, -13]) translate([-22, 0, 10]) {
+            cube([50, 28, 20], center = true);
+            translate([-5, 4, 0]) cube([5, 28, 20], center = true);
+        }
+    }
+}
+
+
 //motor_mount_bottom();
 //projection() intval_panel_laser();
 //intval_laser_panel_cover(true, ALL_RED=true);
