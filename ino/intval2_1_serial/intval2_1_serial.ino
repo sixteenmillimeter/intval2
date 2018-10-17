@@ -382,6 +382,10 @@ void Stop () {
   Serial.println(cmd_camera);
   log("Frame completed");
   log(String(timed_last));
+  if (sequence) {
+    delaying = true;
+    delay_start = millis();
+  }
 }
 
 void cam_direction (boolean state) {
