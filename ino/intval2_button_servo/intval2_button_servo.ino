@@ -106,7 +106,7 @@ void loop () {
   }
   
   if (running) {
-    if (timed && black) {
+    if (timed && !black) {
      Read_timed();  
     } else {
      Read_micro(); 
