@@ -102,10 +102,12 @@ void loop() {
     cmd_char = 'z';
   }
   timer = millis();
+  
   Btn(0);
   Btn(1);
   Btn(2);
   Btn(3);
+  
   if (sequence && delaying) {
     Watch_delay();
   }
@@ -219,7 +221,7 @@ void Btn (int index) {
 void button_end (int index, long buttontime) {
   if (index == 0) {
     if (buttontime > 1000) {
-      if (!sequence) {
+      if (!sequence && !running) {
         sequence = true;
         Output(2, 75);
         Frame();

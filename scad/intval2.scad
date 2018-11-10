@@ -1112,6 +1112,18 @@ module bearing_calibrate (val = 0) {
     }
 }
 
+module bolt_guide () {
+    $fn = 80;
+    difference () {
+        union () {
+            cylinder(r = 10 /2, h = 38, center = true);
+            translate([0, 0, -(38 / 2) + 1.5]) cylinder(r = 16 /2, h = 3, center = true);
+        }
+        cylinder(r = 7.5 / 2, h = 40, center = true);
+        translate([0, -13, -(38 / 2) + 1.5]) cube([16, 16, 10], center = true);
+    }
+}
+
 module stl_plate () {
     //translate([0, 0, -0.5]) cube([150, 150, 1], center = true);
     translate([-38, 41, 7.5]) rotate([0, 180, 0]) intval_laser_standoffs_plate();
@@ -1139,6 +1151,8 @@ module exploded_view () {
     translate([one_to_one_x, one_to_one_y, 50]) motor_cap(false);
     translate([0, 0, 60]) intval_laser_panel_cover(false, ALL_RED=true);
 }
+
+bolt_guide();
 
 //translate([-11, -36, 11.5]) rotate([0, 0, -90]) trinket_mount();
 //button_nuts_plate(true);
@@ -1206,7 +1220,7 @@ module exploded_view () {
 
 //bolex_pin_laser(0, 0);
 //intval_laser_standoffs_plate();
-intersection () {
+/*intersection () {
     intval_electronics_mount("TRINKET");
     union () {
         translate([1, -28, 0]) rotate([0, 0, -13]) translate([-22, 0, 10]) {
@@ -1214,8 +1228,7 @@ intersection () {
             translate([-5, 4, 0]) cube([5, 28, 20], center = true);
         }
     }
-}
-
+}*/
 
 //motor_mount_bottom();
 //projection() intval_panel_laser();
@@ -1231,4 +1244,4 @@ intersection () {
 
 //exploded_view();
 //stl_plate();
-dxf_plate();
+//dxf_plate();
