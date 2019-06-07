@@ -1,0 +1,22 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=intval2_oshpark
+*Date=18:54:28
+*CreatedBy=Fritzing 0.9.3b.04.19.5c895d327c44a3114e5fcc9d8260daf0cbb52806
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;THT;28.3579;-2.86134;90;Bottom;-5VDC+
+2;;THT;6.97818;-15.0029;-90;Bottom;MCR GND
+3;;THT;17.8294;-2.93001;90;Bottom;SPD DIR
+4;;THT;7.25032;-2.96818;90;Bottom;TGR DLY
+5;;THT;17.3858;-11.7292;-90;Bottom;SERVO
+6;;;16.2675;-8.95734;90;Bottom;intval2
+7;;THT;28.2154;-15.1138;-90;Bottom;MOTOR
