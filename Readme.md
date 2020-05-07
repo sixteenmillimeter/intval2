@@ -113,15 +113,15 @@ The meat of this project are the L298N Dual H-Bridge and the Arduino Trinket 5V.
 
 All of the purchasable parts for this build:
 
- 1. (1x) Arduino Trinket Pro 5V - [[Adafruit](https://www.adafruit.com/products/2000)] [[Amazon](http://www.amazon.com/gp/product/B0131VM9I0/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B0131VM9I0&linkCode=as2&tag=sixteentools-20&linkId=PK57RTRI2YRJVT2E)]
- 2. (1x) Nextrox Mini 12V DC 60 RPM High Torque Gear Box Electric Motor - [[Amazon](http://www.amazon.com/gp/product/B00BX54O8A/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00BX54O8A&linkCode=as2&tag=sixteentools-20&linkId=DFU3L54JZ3KQJMPU)]
- 3. (1x) L298N Motor Drive Controller Board Module Dual H Bridge DC Stepper For Arduino - [[Amazon](http://www.amazon.com/gp/product/B014KMHSW6/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B014KMHSW6&linkCode=as2&tag=sixteentools-20&linkId=QZUX2HKYZAL23WGD)]
- 4. (1x) DC 3 Terminals PCB Mount 2.1x5.5mm Jacks Connectors Socket (5 Pcs) - [[Amazon](http://www.amazon.com/gp/product/B00CQMGWIO/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00CQMGWIO&linkCode=as2&tag=sixteentools-20&linkId=KMF43HLB5IS2CIFO)]
- 5. (1x) Plastic PCB Mount 5-Pin Stereo 3.5mm Socket Audio Connector (10 Pcs) - [[Amazon]()]
- 6. (.5x) 3.5mm Stereo Audio Cable - [[Amazon](http://www.amazon.com/gp/product/B004G3UK5C/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B004G3UK5C&linkCode=as2&tag=sixteentools-20&linkId=RVH32COHMFACT46V)]
- 7. (4x) Mini Push Button Momentary OFF-ON Switch 7mm Black (10 Pcs) - [[Amazon](http://www.amazon.com/gp/product/B00RMGSCPA/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00RMGSCPA&linkCode=as2&tag=sixteentools-20&linkId=66EL3G5J4ZXONMNK)]
- 8. (1x) Micro Switch w/ Roller Lever - [[Adafruit](https://www.adafruit.com/products/819)]
- 9. (1x) Skateboard bearings - [[Amazon](http://www.amazon.com/dp/B00GSKFW36/ref=wl_it_dp_o_pC_nS_ttl?_encoding=UTF8&colid=IEKSU26XDTXI&coliid=I319NCTYBQC35T)]
+1. (1x) Arduino Trinket Pro 5V - [[Adafruit](https://www.adafruit.com/products/2000)] [[Amazon](https://amzn.to/2WdVimL)]
+3. (1x) 120RPM 12VDC Motor - [[Amazon](https://amzn.to/2YDGFe2)]
+4. (1x) L298N Breakout Board - [[BC Robotics](https://www.bc-robotics.com/shop/l298n-motor-driver-board/)] [[Amazon](https://amzn.to/35CRFKa)]
+5. (1x) Microswitch w/ Roller - [[Adafruit](https://www.adafruit.com/product/819)] [[Amazon](https://amzn.to/2YDGFe2)]
+6. (1x) 3.5mm Socket Audio Connector - [[Amazon](https://amzn.to/2SGFVAY)]
+7. (1x) 3.5mm Stereo Audio Cable - [[Amazon](https://amzn.to/3beNPrQ)]
+8. (4x) Momentary Push Button 7mm Diameter - [[Amazon](https://amzn.to/2LavqBK)]
+ 8. (1x) Micro Switch w/ Roller Lever 28mm x 30.2mm x 10.2mm - [[Adafruit](https://www.adafruit.com/products/819)] [[Amazon](https://amzn.to/2SMBFzX)]
+ 9. (1x) Skateboard bearing 608-2RS - [[Amazon](https://amzn.to/3b7X2lC)]
  10. (4x) M3.5 - 0.6 x 20mm Screws
  11. (3x) M2 - 0.6 x 15mm Bolts
  12. (6x) M5 - 0.8 x 25mm Bolts
