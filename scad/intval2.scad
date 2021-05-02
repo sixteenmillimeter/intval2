@@ -519,6 +519,38 @@ module motor_key (half = false, DECOYS = false, sides = 1, ALT = false) {
     }
 }
 
+module motor_key_reinforced () {
+    intersection () {
+        motor_key();
+        translate([one_to_one_x, one_to_one_y, 4]) union () {
+            cylinder(r = 16 / 2, h = 25, center = true);
+            translate([0, 0, 10]) cube([20, 12, 5], center = true);
+            translate([0, 0, 10]) cube([12, 20, 5], center = true);
+            translate([-(12 / 2) - (4 / 2), -(12 / 2) - (4 / 2), 10]) difference () {
+		    	cube([4, 4, 5], center = true);
+		    	rotate([0, 0, -45]) translate([0, -4, 0]) cube([8, 8, 5 + 1], center = true);
+		    }
+        }
+    } 
+}
+
+module motor_key_reinforced_roller () {
+    difference () {
+        motor_key();
+        translate([one_to_one_x, one_to_one_y, 4]) union () {
+            cylinder(r = 16 / 2, h = 25, center = true);
+            translate([0, 0, 10]) cube([20.2, 12.2, 5.1], center = true);
+            translate([0, 0, 10]) cube([12.2, 20.2, 5.1], center = true);
+            translate([-(12 / 2) - (4 / 2), -(12 / 2) - (4 / 2), 10]) difference () {
+		    	cube([4, 4, 5], center = true);
+		    	rotate([0, 0, -45]) translate([0, -4.2, 0]) cube([8, 8, 5 + 1], center = true);
+		    }
+        }
+        
+    } 
+}
+
+
 module motor_key_120 (half = false, DECOYS = false, sides = 1, ALT = false) {
     innerD = 7.85;
 	outer_d = 27.5 + 2;
@@ -579,6 +611,42 @@ module motor_key_120 (half = false, DECOYS = false, sides = 1, ALT = false) {
     if (DECOYS) {
         translate([one_to_one_x, one_to_one_y, 20.5]) decoys(24);
     }
+}
+
+module motor_key_120_reinforced () {
+    intersection () {
+        motor_key_120();
+        translate([one_to_one_x, one_to_one_y, 4]) union () {
+            cylinder(r = 16 / 2, h = 25, center = true);
+            translate([0, 0, 10]) cube([20, 12, 5], center = true);
+            translate([0, 0, 10]) cube([12, 20, 5], center = true);
+            translate([-(12 / 2) - (4 / 2), -(12 / 2) - (4 / 2), 10]) difference () {
+		    	cube([4, 4, 5], center = true);
+		    	rotate([0, 0, -45]) translate([0, -4, 0]) cube([8, 8, 5 + 1], center = true);
+		    }
+        }
+    } 
+}
+
+module motor_key_120_reinforced_roller () {
+    difference () {
+        motor_key_120();
+        translate([one_to_one_x, one_to_one_y, 4]) union () {
+            cylinder(r = 16 / 2, h = 25, center = true);
+            translate([0, 0, 10]) cube([20.2, 12.2, 5.1], center = true);
+            translate([0, 0, 10]) cube([12.2, 20.2, 5.1], center = true);
+            translate([-(12 / 2) - (4 / 2), -(12 / 2) - (4 / 2), 10]) difference () {
+		    	cube([4, 4, 5], center = true);
+		    	rotate([0, 0, -45]) translate([0, -4.2, 0]) cube([8, 8, 5 + 1], center = true);
+		    }
+            hobbled_rod_120(40);
+            //nut
+            translate([5, 0, 0]) cube([2.5, 5.25, 42], center = true);
+            //half
+            //translate([0, 50, 0]) cube([100, 100, 100], center = true);
+        }
+        
+    } 
 }
 
 module motor_set_screw_120 () {
@@ -1152,7 +1220,7 @@ module exploded_view () {
     translate([0, 0, 60]) intval_laser_panel_cover(false, ALL_RED=true);
 }
 
-bolt_guide();
+//bolt_guide();
 
 //translate([-11, -36, 11.5]) rotate([0, 0, -90]) trinket_mount();
 //button_nuts_plate(true);
@@ -1237,7 +1305,11 @@ bolt_guide();
 //geared_motor_mount();
 //geared_motor_mount_120();
 //motor_key();
+//motor_key_reinforced();
+//motor_key_reinforced_roller();
 //motor_key_120();
+//motor_key_120_reinforced();
+motor_key_120_reinforced_roller();
 //plunger_plate();
 //motor_cap(false);
 //motor_cap_120(false);
