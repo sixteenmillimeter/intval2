@@ -641,7 +641,7 @@ module motor_key_120_reinforced_roller () {
 		    }
             hobbled_rod_120(40);
             //nut
-            translate([5, 0, 0]) cube([2.5, 5.25, 42], center = true);
+            translate([5, 0, 0]) cube([2.5 + .5, 5.25 + .5, 42], center = true);
             //half
             //translate([0, 50, 0]) cube([100, 100, 100], center = true);
         }
@@ -1132,6 +1132,19 @@ module key_cap () {
     //decoys(23, 7);
 }
 
+module bearing_reinforcement () {
+	$fn = 60;
+	outerD = 22.1;
+	fuzz = 0.1;
+    difference () {
+    	union () {
+        	cylinder(r = outerD / 2 + fuzz + 2, h = 4, center = true);
+        	translate([0, 0, -1]) cylinder(r = 30 / 2, h = 2, center = true);
+    	}
+        cylinder(r = outerD / 2, h = 16, center = true); 
+    }
+}
+
 module motor_cap (DECOYS = false, HALF = false) {
     $fn = 60;
 	base_d = 47;
@@ -1309,10 +1322,11 @@ module exploded_view () {
 //motor_key_reinforced_roller();
 //motor_key_120();
 //motor_key_120_reinforced();
-motor_key_120_reinforced_roller();
+//motor_key_120_reinforced_roller();
 //plunger_plate();
 //motor_cap(false);
 //motor_cap_120(false);
+bearing_reinforcement();
 
 //exploded_view();
 //stl_plate();
