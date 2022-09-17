@@ -661,10 +661,9 @@ module motor_set_screw_120_alt () {
 }
 
 module hobbled_rod_120 (h = 10) {
-            d = 4.00;
-        diff = 3.33;
+	d = 4.25;
+    diff = 3.33;
     difference () {
-        
         cylinder(r = d/2, h = h, center = true, $fn = 60);
         translate([d/2 + ((d/2) - (d - diff)), 0, 0]) cube([d, d, h + 1], center = true);
     }
@@ -1322,11 +1321,11 @@ module exploded_view () {
 //motor_key_reinforced_roller();
 //motor_key_120();
 //motor_key_120_reinforced();
-//motor_key_120_reinforced_roller();
+motor_key_120_reinforced_roller();
 //plunger_plate();
 //motor_cap(false);
 //motor_cap_120(false);
-bearing_reinforcement();
+//bearing_reinforcement();
 
 //exploded_view();
 //stl_plate();
