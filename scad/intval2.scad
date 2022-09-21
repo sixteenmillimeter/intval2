@@ -1134,14 +1134,20 @@ module key_cap () {
 module bearing_reinforcement () {
 	$fn = 60;
 	outerD = 22.1;
+    outerD2 = 30;
 	fuzz = 0.1;
     difference () {
     	union () {
         	cylinder(r = outerD / 2 + fuzz + 2, h = 4, center = true);
-        	translate([0, 0, -1]) cylinder(r = 30 / 2, h = 2, center = true);
+        	translate([0, 0, -1]) cylinder(r = outerD2 / 2, h = 2, center = true);
     	}
-        cylinder(r = outerD / 2, h = 16, center = true); 
+        cylinder(r = outerD / 2, h = 16, center = true);
+        
+        //make flush with front of panel
+        translate([outerD2 - 2.5, 0, 0 ]) cube([outerD2, outerD2, outerD2], center = true);
+        translate([2, -(outerD2 / 2) - 4, 0]) cylinder(r = 15 / 2, h = 20, center = true, $fn = 60);
     }
+    
 }
 
 module motor_cap (DECOYS = false, HALF = false) {
@@ -1230,6 +1236,7 @@ module exploded_view () {
     translate([one_to_one_x, one_to_one_y, 50]) geared_motor_mount();
     translate([one_to_one_x, one_to_one_y, 50]) motor_cap(false);
     translate([0, 0, 60]) intval_laser_panel_cover(false, ALL_RED=true);
+    translate([one_to_one_x, one_to_one_y, 0]) rotate([180, 0, 0]) bearing_reinforcement();
 }
 
 //bolt_guide();
@@ -1321,11 +1328,11 @@ module exploded_view () {
 //motor_key_reinforced_roller();
 //motor_key_120();
 //motor_key_120_reinforced();
-motor_key_120_reinforced_roller();
+//motor_key_120_reinforced_roller();
 //plunger_plate();
 //motor_cap(false);
 //motor_cap_120(false);
-//bearing_reinforcement();
+bearing_reinforcement();
 
 //exploded_view();
 //stl_plate();
