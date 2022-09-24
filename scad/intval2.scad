@@ -1210,6 +1210,18 @@ module bolt_guide () {
     }
 }
 
+module case_standoff_washer () {
+    H = 9;
+    $fn = 40;
+    difference () {
+        union() {
+            cylinder(r = 16 / 2, h = H / 2, center = true);
+            translate([0, 0, -H / 2]) cylinder(r = 8 / 2, h = H / 2, center = true);
+        }
+        cylinder(r = 4 / 2, h = H * 2, center = true);
+    }
+}
+
 module stl_plate () {
     //translate([0, 0, -0.5]) cube([150, 150, 1], center = true);
     translate([-38, 41, 7.5]) rotate([0, 180, 0]) intval_laser_standoffs_plate();
@@ -1332,7 +1344,9 @@ module exploded_view () {
 //plunger_plate();
 //motor_cap(false);
 //motor_cap_120(false);
-bearing_reinforcement();
+//bearing_reinforcement();
+case_standoff_washer();
+
 
 //exploded_view();
 //stl_plate();
