@@ -816,8 +816,8 @@ module motor_mount_bottom (DECOYS = false) {
 				translate([2.5, 19.5, 0]) cylinder(r=10/2, h = 60, center=true); // hole for panel bolt
 				translate([22.5, 19.5, 0]) cube([40, 40, 60], center = true); //remove front entirely
                 translate([-6.5, 0, 7.5]) {
-                    translate([0, screw_distance/2, 0]) sphere(r=screw_d, center = true);
-                    translate([0, -screw_distance/2, 0]) sphere(r=screw_d,  center = true);
+                    translate([0, screw_distance/2, 0]) sphere(r=screw_d);
+                    translate([0, -screw_distance/2, 0]) sphere(r=screw_d);
                 }
 			}
 			translate ([-one_to_one_x, -one_to_one_y, 0]) bolt_holder([mm_x[0], mm_y[0], -shelf_h / 2], mm_r[0], height - shelf_h, mm_l[0], tight = 0.2); //Bottom bolt holder
@@ -1109,7 +1109,7 @@ module button_nuts_plate (decoys = false) {
 }
 
 module intval_electronics_mount (TYPE = "TRINKET", MOD_Y = 5, MOD_MOUNT = 0) {
-    translate([-40 + 2, -1, 14]) rotate([0, 0, -13]) l289N_mount(MOD_MOUNT);
+    translate([-40 + 2, -1, 14]) rotate([0, 0, -13]) l289N_mount(MOD_MOUNT=MOD_MOUNT);
     if (TYPE == "TRINKET") {
         translate([-26 + 2, -19 - MOD_Y + 1, 11.25]) rotate([0, 0, -180 - 13]) trinket_mount();
     } else if (TYPE == "METRO") {
@@ -1283,7 +1283,6 @@ module exploded_view () {
 //translate([54.5, 12, 33.5]) {
     //geared_motor_mount();
 //}
-//intval_electronics_mount();
 
 //rotate([0, 180, 0]) motor_key(DECOYS = true);
 
@@ -1345,9 +1344,56 @@ module exploded_view () {
 //motor_cap(false);
 //motor_cap_120(false);
 //bearing_reinforcement();
-case_standoff_washer();
+//case_standoff_washer();
 
 
 //exploded_view();
 //stl_plate();
 //dxf_plate();
+
+PART = "motor_key_reinforced";
+
+//models
+
+if (PART == "plate") {
+	stl_plate();
+} else if (PART == "plunger_plate") {
+	plunger_plate();
+} else if (PART == "standoff_plate") {
+	intval_laser_standoffs_plate();
+} else if (PART == "motor_key_120") {
+	motor_key_120();
+} else if (PART == "motor_key_120_reinforced") {
+	motor_key_120_reinforced();
+} else if (PART == "motor_key_120_reinforced_roller") {
+	motor_key_reinforced_roller();
+} else if (PART == "motor_mount_bottom") {
+	motor_mount_bottom();
+} else if (PART == "motor_mount_top") {
+	geared_motor_mount();
+} else if (PART == "motor_mount_top_120") {
+	geared_motor_mount_120();
+} else if (PART == "electronics_mount") {
+	intval_electronics_mount();
+} else if (PART == "motor_cap") {
+	motor_cap(false);
+} else if (PART == "motor_cap_120") {
+	motor_cap_120(false);
+} else if (PART == "bolt_guide") {
+	bolt_guide();
+} else if (PART == "standoff") {
+	bolex_pin_laser(0, 0);
+}
+
+//laser
+if (PART == "laser_plate") {
+	dxf_plate();
+} else if (PART == "panel") {
+	projection() intval_panel_laser();
+} else if (PART == "panel_cover") {
+	intval_laser_panel_cover(true, ALL_RED=true);
+}
+
+//key_cap();
+//bearing_reinforcement();
+//case_standoff_washer();

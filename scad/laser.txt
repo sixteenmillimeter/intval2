@@ -1,0 +1,3 @@
+../dxf/intval2_laser_plate.dxf
+../dxf/intval2_panel.dxf
+../dxf/intval2_panel_cover.dxf
