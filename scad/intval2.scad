@@ -1251,105 +1251,7 @@ module exploded_view () {
     translate([one_to_one_x, one_to_one_y, 0]) rotate([180, 0, 0]) bearing_reinforcement();
 }
 
-//bolt_guide();
-
-//translate([-11, -36, 11.5]) rotate([0, 0, -90]) trinket_mount();
-//button_nuts_plate(true);
-//plunger_plate();
-
-//translate([-34, -8, 14]) l289N_mount();
-//translate([-15, 10, 0]) decoys(30, 11.5);
-
-//pcb_mount();
-//motor_mount();
-//translate([48.5, 12, 60]) geared_motor(-90);
-//translate([54.5, 12, 33.5]) {
-   //translate([0, 0, 11]) geared_motor_mount();
-//}
-//motor_cap(true);
-
-//motor_key();
-//motor_key(DECOYS= true);
-//intval_panel(); //OLD
-
-//projection() l289N_hole_test();
-
-//intval_laser_panel_cover(LASER=true, ALL_RED=true);
-//projection() intval_panel_laser();
-//intval_laser_standoffs();
-//translate([-40, 0, 14]) rotate([0, 0, -13]) l289N_mount();
-//translate([-40, -29, 11.5]) rotate([0, 0, -90 - 13]) trinket_mount();
-//translate([0, 0, 4]) motor_mount_bottom();
-//translate([54.5, 12, 33.5]) {
-    //geared_motor_mount();
-//}
-
-//rotate([0, 180, 0]) motor_key(DECOYS = true);
-
-//difference () {
-    //import("/Users/dev/Documents/3d/intval2/intval2_geared_motor_key.stl");
-    //translate([0, -25, 0]) cube([50, 50, 50], center = true);
-//}
-
-//translate([-15, -8, 0]) rotate([0, 0, -13]) panel_cover(true);
-//bearing (one_to_one_x, one_to_one_y, 5.5);
-//difference () {
-	//translate([one_to_one_x, one_to_one_y, 31]) motor_mount();
-	//translate([one_to_one_x, one_to_one_y, 0]) cube([200, 200, 200]);
-//}
-//translate([0, 0, 40]) geared_motor(45, 45);
-//motor_mount_bottom();
-
-//translate([one_to_one_x, one_to_one_y, 63]) rotate([0, 180, 0]) motor_12v();
-
-/* DEBUG */
-//projection() intval_panel_laser_debug ();
-//translate ([4, 12, 0]) translate([-74, 60, -25]) rotate([0, 0, -13 - 90]) import("/Users/dev/Downloads/UNO_R2_MOUNT.STL");
-
-
-//bearing_calibrate();
-
-
-/*
-
- INTVAL 2 LASER PARTS
-
-*/
-
-//bolex_pin_laser(0, 0);
-//intval_laser_standoffs_plate();
-/*intersection () {
-    intval_electronics_mount("TRINKET");
-    union () {
-        translate([1, -28, 0]) rotate([0, 0, -13]) translate([-22, 0, 10]) {
-            cube([50, 28, 20], center = true);
-            translate([-5, 4, 0]) cube([5, 28, 20], center = true);
-        }
-    }
-}*/
-
-//motor_mount_bottom();
-//projection() intval_panel_laser();
-//intval_laser_panel_cover(true, ALL_RED=true);
-//key_cap();
-//geared_motor_mount();
-//geared_motor_mount_120();
-//motor_key();
-//motor_key_reinforced();
-//motor_key_reinforced_roller();
-//motor_key_120();
-//motor_key_120_reinforced();
-//motor_key_120_reinforced_roller();
-//plunger_plate();
-//motor_cap(false);
-//motor_cap_120(false);
-//bearing_reinforcement();
-//case_standoff_washer();
-
-
 //exploded_view();
-//stl_plate();
-//dxf_plate();
 
 PART = "motor_key_reinforced";
 
@@ -1359,6 +1261,8 @@ if (PART == "plate") {
 	stl_plate();
 } else if (PART == "plunger_plate") {
 	plunger_plate();
+} else if (PART == "button_nuts_plate") {
+    button_nuts_plate(false);
 } else if (PART == "standoff_plate") {
 	intval_laser_standoffs_plate();
 } else if (PART == "motor_key_120") {
@@ -1383,6 +1287,16 @@ if (PART == "plate") {
 	bolt_guide();
 } else if (PART == "standoff") {
 	bolex_pin_laser(0, 0);
+} else if (PART == "bearing_reinforcement") {
+    bearing_reinforcement();
+} else if (PART == "key_cap") {
+    key_cap();
+} else if (PART == "case_standoff") {
+    case_standoff_washer();
+} else if (PART == "trinket_mount") {
+    trinket_mount();
+} else if (PART == "l289N_mount") {
+    l289N_mount();
 }
 
 //laser
@@ -1393,7 +1307,3 @@ if (PART == "laser_plate") {
 } else if (PART == "panel_cover") {
 	intval_laser_panel_cover(true, ALL_RED=true);
 }
-
-//key_cap();
-//bearing_reinforcement();
-//case_standoff_washer();

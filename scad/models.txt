@@ -8,6 +8,13 @@
 ../stl/intval2_motor_cap.stl
 ../stl/intval2_motor_cap_120.stl
 ../stl/intval2_bolt_guide.stl
+../stl/intval2_standoff.stl
+../stl/intval2_bearing_reinforcement.stl
+../stl/intval2_key_cap.stl
+../stl/intval2_case_standoff.stl
+../stl/intval2_trinket_mount.stl
+../stl/intval2_l298N_mount.stl
 ../stl/intval2_plate.stl
 ../stl/intval2_plunger_plate.stl
 ../stl/intval2_standoff_plate.stl
+../stl/intval2_button_nuts_plate.stl
