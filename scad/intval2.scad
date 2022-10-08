@@ -1211,12 +1211,12 @@ module bolt_guide () {
 }
 
 module case_standoff_washer () {
-    H = 9;
+    H = 10;
     $fn = 40;
     difference () {
         union() {
-            cylinder(r = 16 / 2, h = H / 2, center = true);
-            translate([0, 0, -H / 2]) cylinder(r = 8 / 2, h = H / 2, center = true);
+            cylinder(r = 16 / 2, h = (1 * H) / 4, center = true);
+            translate([0, 0, -H / 2]) cylinder(r = 8 / 2, h = (3 * H) / 4, center = true);
         }
         cylinder(r = 4 / 2, h = H * 2, center = true);
     }
