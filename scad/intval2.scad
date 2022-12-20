@@ -1257,6 +1257,13 @@ module case_standoff_washer () {
     }
 }
 
+module case_standoff_alt () {
+    difference () {
+        cylinder(r = 8/2, h = 22, center = true, $fn = 60);
+        cylinder(r = 4/2, h = 30, center = true, $fn = 40);
+    }
+}
+
 module stl_plate () {
     //translate([0, 0, -0.5]) cube([150, 150, 1], center = true);
     translate([-38, 41, 7.5]) rotate([0, 180, 0]) intval_laser_standoffs_plate();
@@ -1282,9 +1289,11 @@ module exploded_view () {
     translate([0, 0, 20]) motor_key();
     translate([one_to_one_x, one_to_one_y, 50]) geared_motor_mount();
     translate([one_to_one_x, one_to_one_y, 50]) motor_cap(false);
-    translate([0, 0, 60]) intval_laser_panel_cover(false, ALL_RED=true);
+    translate([0, 0, 0]) intval_laser_panel_cover(false, ALL_RED=true);
     translate([one_to_one_x, one_to_one_y, 0]) rotate([180, 0, 0]) bearing_reinforcement();
 }
+
+
 
 //exploded_view();
 
@@ -1314,7 +1323,6 @@ if (PART == "plate") {
 	geared_motor_mount_120();
 } else if (PART == "motor_mount_top_reinforced") {
 	geared_motor_mount_reinforced();
-    //translate([1, 1, -3.75/2]) geared_motor_mount();
 } else if (PART == "electronics_mount") {
 	intval_electronics_mount();
 } else if (PART == "motor_cap") {
