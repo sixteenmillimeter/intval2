@@ -794,6 +794,41 @@ module geared_motor_mount_120 (DECOYS = false) {
     }
 }
 
+module geared_motor_mount_reinforced () {
+    $fn = 60;
+	base_d = 45;
+	base_inner = 38;
+	base_thickness = 3+3.75;
+	hole_d = 12.5;
+	screw_d = 4;
+	height = 6+3.75;
+	difference () {
+		difference () {
+			translate([-6, 0, 2.5]) cylinder(r=base_d/2, h=height + 5, center = true); //outer cylinder
+			translate([-6, 0, base_thickness + 2.5]) cylinder(r=base_inner/2, h=height + 5, center = true); //inder cylinder
+		}
+		cylinder(r=hole_d/2, h=29, center = true); //center hole
+		//screw holes
+        translate([-6.5, 0, 0]) {
+            translate([0, screw_distance/2, 0]) {
+                cylinder(r=screw_d/2, h=29, center = true);
+                //countersink
+                translate([0, 0, -17]) cylinder(r=6/2, h=29, center = true);
+            }
+            translate([0, -screw_distance/2, 0]) {
+                cylinder(r=screw_d/2, h=29, center = true);
+                //countersink
+                translate([0, 0, -17])cylinder(r=6/2, h=29, center = true);
+            }
+        }
+        translate([2, 19, 0]) cylinder(r=5, h = 100, center = true); //hole for panel bolt access
+    }
+	//wings
+	translate ([-one_to_one_x, -one_to_one_y, 0]) bolt_holder([mm_x[0], mm_y[0], 0], mm_r[0], height, mm_l[0]);
+	translate ([-one_to_one_x, -one_to_one_y, 0]) bolt_holder([mm_x[1], mm_y[1], 0], mm_r[1], height, mm_l[1]);
+    
+    //translate([0, 0, -5]) cube([3.75, 3.75, 3.75], center = true);
+}
 
 module motor_mount_bottom (DECOYS = false) {
     $fn = 60;
@@ -1253,7 +1288,7 @@ module exploded_view () {
 
 //exploded_view();
 
-PART = "motor_key_reinforced";
+PART = "motor_mount_top_reinforced";
 
 //models
 
@@ -1277,6 +1312,9 @@ if (PART == "plate") {
 	geared_motor_mount();
 } else if (PART == "motor_mount_top_120") {
 	geared_motor_mount_120();
+} else if (PART == "motor_mount_top_reinforced") {
+	geared_motor_mount_reinforced();
+    //translate([1, 1, -3.75/2]) geared_motor_mount();
 } else if (PART == "electronics_mount") {
 	intval_electronics_mount();
 } else if (PART == "motor_cap") {
