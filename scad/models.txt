@@ -1,3 +1,6 @@
+../stl/intval2_motor_key.stl
+../stl/intval2_motor_key_reinforced.stl
+../stl/intval2_motor_key_reinforced_roller.stl
 ../stl/intval2_motor_key_120.stl
 ../stl/intval2_motor_key_120_reinforced.stl
 ../stl/intval2_motor_key_120_reinforced_roller.stl
