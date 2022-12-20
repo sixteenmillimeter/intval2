@@ -1,0 +1,8 @@
+27c27
+< const int PIN_MOTOR_FORWARD = 9;
+---
+> const int PIN_MOTOR_FORWARD = 12;
+29c29
+< const int PIN_MICRO = 19; //laser cut version
+---
+> const int PIN_MICRO = 7; //laser cut version
