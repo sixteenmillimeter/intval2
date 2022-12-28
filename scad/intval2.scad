@@ -458,14 +458,14 @@ module bearing (x, y, z, width= 8, hole = true, calval = 0) {
 		}
 	}
 }
-module motor_key (half = false, DECOYS = false, sides = 1, ALT = false) {
+module motor_key (half = false, DECOYS = false, sides = 1, ALT = false, extraH = 0) {
 	innerD = 7.85;
 	outer_d = 27.5 + 2;
 	notch_d = 10;
-	height = 7 + 5;
+	height = 7 + 5 + extraH;
 	diff = 14 + 2.5;
     $fn = 60;
-	difference () {
+	translate([0, 0, extraH / 2]) difference () {
 		union () {
 			translate([one_to_one_x, one_to_one_y, 12.1]) cylinder(r1 = 12 / 2, r2 = 12/2 + 4, h = 5, center = true);// padding against bearing
 			translate([one_to_one_x, one_to_one_y, diff + 1]) cylinder(r=outer_d/2, h= height -2, center= true, $fn=200); //large cylinder
@@ -536,17 +536,28 @@ module motor_key_reinforced () {
 
 module motor_key_reinforced_roller () {
     difference () {
-        motor_key();
+        motor_key(extraH = 4);
         translate([one_to_one_x, one_to_one_y, 4]) union () {
+            //eliminates key shaft
             cylinder(r = 16 / 2, h = 25, center = true);
+            //cuts cross for insert
             translate([0, 0, 10]) cube([20.2, 12.2, 5.1], center = true);
             translate([0, 0, 10]) cube([12.2, 20.2, 5.1], center = true);
+            //angles the corner
             translate([-(12 / 2) - (4 / 2), -(12 / 2) - (4 / 2), 10]) difference () {
 		    	cube([4, 4, 5], center = true);
 		    	rotate([0, 0, -45]) translate([0, -4.2, 0]) cube([8, 8, 5 + 1], center = true);
 		    }
+            //extend motor shaft void
+            translate([0, 0, 20]) difference () {
+                translate([0, 0, 0]) cylinder(r=3.1, h = 40, center = true, $fn = 24);
+                translate([5.4, 0, 0]) cube([6, 6, 40 + 1], center = true);
+            }
+            //m3 nut
+            translate([6, 0, 35]) cube([2.5 + .5, 5.25 + .5, 42], center = true);
+            //m3 set screw
+            translate([7.25, 0, 18]) rotate([0, 90, 0]) motor_set_screw_120_alt(H=15, H2 = 5);
         }
-        
     } 
 }
 
@@ -641,7 +652,7 @@ module motor_key_120_reinforced_roller () {
 		    }
             hobbled_rod_120(40);
             //nut
-            translate([5, 0, 0]) cube([2.5 + .5, 5.25 + .5, 42], center = true);
+            
             //half
             //translate([0, 50, 0]) cube([100, 100, 100], center = true);
         }
@@ -654,10 +665,10 @@ module motor_set_screw_120 () {
     translate([(10.19 / 2) - (2.56 / 2), 0, 0]) cube([2.56, 5.8, 5.8], center = true);    
 }
 
-module motor_set_screw_120_alt () {
+module motor_set_screw_120_alt (H = 10.19, H2 = 2.56) {
     $fn = 60;
-    cylinder(r = 2.95 / 2, h = 10.19, center= true);
-    translate([0, 0, (10.19 / 2) - (2.56 / 2)]) cylinder(r = 5.8 / 2, h = 2.56, center = true);
+    cylinder(r = 2.95 / 2, h = H, center= true);
+    translate([0, 0, (H / 2) - (H2 / 2)]) cylinder(r = 5.8 / 2, h = H2, center = true);
 }
 
 module hobbled_rod_120 (h = 10) {
@@ -1297,7 +1308,7 @@ module exploded_view () {
 
 //exploded_view();
 
-PART = "motor_mount_top_reinforced";
+PART = "motor_key_reinforced_roller";
 
 //models
 
@@ -1309,12 +1320,18 @@ if (PART == "plate") {
     button_nuts_plate(false);
 } else if (PART == "standoff_plate") {
 	intval_laser_standoffs_plate();
+} else if (PART == "motor_key") {
+	motor_key();
+} else if (PART == "motor_key_reinforced") {
+	motor_key_reinforced();
+} else if (PART == "motor_key_reinforced_roller") {
+	motor_key_reinforced_roller();
 } else if (PART == "motor_key_120") {
 	motor_key_120();
 } else if (PART == "motor_key_120_reinforced") {
 	motor_key_120_reinforced();
 } else if (PART == "motor_key_120_reinforced_roller") {
-	motor_key_reinforced_roller();
+	motor_key_120_reinforced_roller();
 } else if (PART == "motor_mount_bottom") {
 	motor_mount_bottom();
 } else if (PART == "motor_mount_top") {
