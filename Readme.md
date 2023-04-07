@@ -3,6 +3,11 @@
 
 ![Photo of finished INTVAL](http://sixteenmillimeter.com/projects/imgs/intval2/intval2_complete.jpg)
 
+## [Project Home - git.sixteenmillimeter.com/16mm/intval2](https://git.sixteenmillimeter.com/16mm/intval2)
+
+* Github Mirror - [github.com/sixteenmillimeter/intval2](https://github.com/sixteenmillimeter/intval2)
+* Gitlab Mirror - [gitlab.com/16mm/intval2](https://gitlab.com/16mm/intval2)
+
 ----
 
  1. [Overview](#Overview)
