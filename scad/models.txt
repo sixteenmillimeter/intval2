@@ -22,3 +22,4 @@
 ../stl/intval2_plunger_plate.stl
 ../stl/intval2_standoff_plate.stl
 ../stl/intval2_button_nuts_plate.stl
+../stl/intval2_panel_printed.stl

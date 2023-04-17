@@ -25,44 +25,64 @@ bolt_inner = 2.55;
 
 screw_distance = 31;
 
-module intval_panel () {
-	difference () {
-		union () {
-			difference () {
-				translate ([0, 0, 8.5]) {
-					union () {
-						translate([22, -5, 0]) rotate([0, 0, -13]) rounded_cube([panel_2_x, panel_2_y, 2], d = 20, center = true);
-						//reinforces
-						translate([54, -12, -3]) rotate([0, 0, 89]) rounded_cube([110, 20, 4], 20, center = true);
-						translate([-17, 2, -3]) rotate([0, 0, 72]) rounded_cube([94, 13, 4], 13, center = true);
-					}
-				}
-				for (i = [0 : len(xArray) - 1]) {
-					bolex_pin_inner(xArray[i], yArray[i]);
-				}
-			}
-			onetoone(26, 10, 4.5);
-			//extends for onetoone
-			intval_pins();
-			for (i = [0 : len(mm_x) - 1]) {
-				translate([mm_x[i], mm_y[i], 6]) cylinder(r = 4, h = 5, center = true);
-			}
-
-		}
-		onetoone(9, 14, 8.5);
-		bearing(54.5, 12, 6, width= 18, hole=false);
-		//frame_counter_access(); //use the space
-		m_p_access();
-		remove_front();
-		translate([6, 18, 0]) rotate([0, 0, -13]) cube([15, 25, 40], center=true); //motor wind key hole
-
-		for (i = [0 : len(mm_x) - 1]) {
-			translate([mm_x[i], mm_y[i], 0]) cylinder(r = bolt_inner, h = 100, center = true);
-		}
-	}
+module m5_nut_void (pos = [0, 0, 0]) {
+    translate(pos) cylinder(r = 9.4 / 2, h = 4, $fn = 6, center = true);
 }
 
-module l289N_holes (r = 3/2 - .2, MOD_MOUNT = 0) {
+module m5_nut_seat (pos = [0, 0, 0]) {
+    $fn = 40;
+    H = 4;
+    translate(pos) difference () {
+        cylinder(r = 12 / 2, h = H, center = true);
+        cylinder(r = bolt_inner, h = H + 1, center = true);
+        rotate([0, 0, 30]) m5_nut_void([0, 0, -1]);
+    }
+}
+
+module m3_nut_void (pos = [0, 0, 0]) {
+    translate(pos) cylinder(r = 6.7 / 2, h=3, center=true, $fn=6);
+}
+
+module m3_nut_seat (pos = [0, 0, 0]) {
+    $fn = 40;
+    H = 3;
+    translate(pos) difference () {
+        cylinder(r = 8 / 2, h = H, center = true);
+        cylinder(r = 3.25 / 2, h = H + 1, center = true);
+        m3_nut_void([0, 0, -1]);
+    }
+}
+
+module l289N_nut_seats (r = 3/2 - .2, MOD_MOUNT = 0) {
+    DISTANCE = 36.5 + MOD_MOUNT;
+
+    m3_nut_seat([0, 0, 0]);
+    m3_nut_seat([DISTANCE, 0, 0]);
+    //m3_nut_seat([DISTANCE, DISTANCE, 0]);
+    m3_nut_seat([0, DISTANCE, 0]);
+}
+
+
+module intval_panel_printed () {
+	difference () {
+        union () {
+            intval_panel_laser();
+		    for (i = [0 : len(mm_x) - 1]) {
+                m5_nut_seat([mm_x[i], mm_y[i], 6]);
+            }
+            translate([-38, -1, 7]) rotate([0, 0, -13]) l289N_nut_seats();
+            translate([0, 0, -0.6]) intval_laser_standoffs();
+            translate([one_to_one_x, one_to_one_y, 5]) rotate([180, 0, 0]) bearing_reinforcement();
+        }
+        //onetoone(9, 14, 8.5);
+		bearing(54.5, 12, 6, width= 18, hole=false);
+		//frame_counter_access(); //use the space
+		remove_front();
+	}
+    
+}
+
+module l289N_bolt_voids (r = 3/2 - .2, MOD_MOUNT = 0) {
     $fn = 60;
     DISTANCE = 36.5 + MOD_MOUNT;
     H = 50;
@@ -96,25 +116,15 @@ module intval_panel_laser () {
                                 rounded_cube([panel_2_x + 20, panel_2_y, 25.4/8], d = 20, center = true);
                             }
                         }
-						//reinforces
-						//translate([54, -12, -3]) rotate([0, 0, 89]) rounded_cube([110, 20, 4], 20, center = true);
-						//translate([-17, 2, -3]) rotate([0, 0, 72]) rounded_cube([94, 13, 4], 13, center = true);
 					}
 				}
 				for (i = [0 : len(xArray) - 1]) {
 					bolex_pin_inner_laser(xArray[i], yArray[i]);
 				}
 			}
-			//onetoone(26, 10, 4.5);
-			//extends for onetoone
-			
-
 		}
-		//onetoone(9, 14, 8.5);
 		bearing_laser(54.5, 12, 6, width= 18, hole=false);
-        translate([-38, -1, 0]) rotate([0, 0, -13]) l289N_holes();
-        //translate ([6, -9, height + 3.5]) cylinder(r = bolt_inner, h = 50, center = true); //cover standoff hole
-		//frame_counter_access(); //use the space
+        translate([-38, -1, 0]) rotate([0, 0, -13]) l289N_bolt_voids();
 		m_p_access();
 		remove_front();
 		translate([6, 18, 0]) rotate([0, 0, -13]) cube([15, 25, 40], center=true); //motor wind key hole
@@ -122,7 +132,7 @@ module intval_panel_laser () {
 		for (i = [0 : len(mm_x) - 1]) {
 			translate([mm_x[i], mm_y[i], 0]) cylinder(r = bolt_inner, h = 100, center = true);
 		}
-        intval_laser_panel_cover();
+        translate([0, 0, 0.335]) intval_laser_panel_cover();
 	}
 }
 
@@ -154,7 +164,7 @@ module intval_panel_laser_debug () {
 		}
 		//onetoone(9, 14, 8.5);
 		bearing_laser(54.5, 12, 6, width= 18, hole=false);
-        translate([-38, -1, 0]) rotate([0, 0, -13]) l289N_holes();
+        translate([-38, -1, 0]) rotate([0, 0, -13]) l289N_bolt_voids();
         //translate ([6, -9, height + 3.5]) cylinder(r = bolt_inner, h = 50, center = true); //cover standoff hole
 		//frame_counter_access(); //use the space
 		m_p_access();
@@ -1308,7 +1318,7 @@ module exploded_view () {
 
 //exploded_view();
 
-PART = "motor_key_reinforced_roller";
+PART = "printed_panel";
 
 //models
 
@@ -1360,6 +1370,8 @@ if (PART == "plate") {
     trinket_mount();
 } else if (PART == "l289N_mount") {
     l289N_mount();
+} else if (PART == "printed_panel") {
+    intval_panel_printed();
 }
 
 //laser
