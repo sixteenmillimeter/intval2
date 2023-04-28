@@ -243,7 +243,7 @@ module bearing_laser (x, y, z, width= 8, hole = true) {
 	}
 }
 
-module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, PCB = false) {
+module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, PCB = false, buttons = true) {
     $fn = 60;
     cover_h = 16 + 3 + 4 + 15;
     MATERIAL = 25.4 / 8;
@@ -266,17 +266,19 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
             translate ([8, -9, height + 3.5]) cylinder(r = bolt_inner - .5, h = 50, center = true); //standoff hole
             
             //buttons
-            translate ([-44, -23, 0]) {
-                rotate ([0, 0, 90-13]) {
-                    if (ALL_RED) {
-                        translate([7, -32, 8]) cylinder(r = 3.5, h = 190, center = true);
-                        translate([7, -19, 8]) cylinder(r = 3.5, h = 190, center = true);
-                    } else {
-                        translate([7, -32, 8]) cylinder(r = 3.1, h = 190, center = true);
-                        translate([7, -19, 8]) cylinder(r = 3.1, h = 190, center = true);
+            if (buttons) {
+                translate ([-44, -23, 0]) {
+                    rotate ([0, 0, 90-13]) {
+                        if (ALL_RED) {
+                            translate([7, -32, 8]) cylinder(r = 3.5, h = 190, center = true);
+                            translate([7, -19, 8]) cylinder(r = 3.5, h = 190, center = true);
+                        } else {
+                            translate([7, -32, 8]) cylinder(r = 3.1, h = 190, center = true);
+                            translate([7, -19, 8]) cylinder(r = 3.1, h = 190, center = true);
+                        }
+                        
+                        translate([7, -5, 8]) cylinder(r = 3.5, h = 190, center = true);
                     }
-                    
-                    translate([7, -5, 8]) cylinder(r = 3.5, h = 190, center = true);
                 }
             }
         } 
@@ -340,7 +342,7 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
         translate([0, 80 + 10, 0]) rotate([0, 0, -13]) projection() top_side();
         translate([0, -80 - 10, 0])  rotate([0, 0, -13]) projection() bottom_side();
     } else {
-        translate([0, 0, height + cover_h]) top();
+        translate([0, 0, height + cover_h + 0.325]) top();
         if (!DEBUG) {
             translate([-44, 8, height + (cover_h / 2 ) - 4.25]) rotate([0, 0, -13]) rotate([0, 90, 0]) back_side();
         }
@@ -851,7 +853,7 @@ module geared_motor_mount_reinforced () {
     //translate([0, 0, -5]) cube([3.75, 3.75, 3.75], center = true);
 }
 
-module motor_mount_bottom (DECOYS = false) {
+module motor_mount_bottom () {
     $fn = 60;
 	mount_d = 45;
 	base_d = 45;
@@ -860,6 +862,7 @@ module motor_mount_bottom (DECOYS = false) {
 	bolt_h = 22.3;
 	shelf_h = 6; //match to motor_mount
     screw_d = 4;
+    panel_h = 19 + 3.5 + 4 + 20;
 	module motor_mount_core () {
 		translate ([one_to_one_x, one_to_one_y, (height / 2 ) + 5.75]) {
 			difference() {
@@ -911,24 +914,17 @@ module motor_mount_bottom (DECOYS = false) {
 	module panel_attachment () {
             difference () {
                 union() {
-                    translate([0, 0, 2]) cylinder(r = 7/2, h = height - shelf_h, center = true);
-                    translate([3.5, 0, 0]) cube([7, 7, height - shelf_h - 4], center = true);
+                    translate([0, 0, 2]) cylinder(r = 10/2, h = panel_h - shelf_h, center = true);
+                    translate([3.5, 0, -10]) cube([7, 7, height - shelf_h - 4], center = true);
                 }
-                cylinder(r = 3.2/2, h = height, center = true);
+                cylinder(r = 3.2/2, h = panel_h, center = true);
             }
     }
-    translate([8, -9, (height - shelf_h) / 2 + 3.75]) panel_attachment();
+    translate([8, -9, (panel_h - shelf_h) / 2 + 3.75]) panel_attachment();
 	motor_mount_core();
 	microswitch_holder();
 	bolt_holder([mm_x[2], mm_y[2], ((height - shelf_h)/ 2) + 3.75], 0, height - shelf_h - 4, 6); //bottom left mount
 	bolt_holder([mm_x[3], mm_y[3], ((height - shelf_h)/ 2) + 3.75], 180, height - shelf_h - 4, 6); //bottom right mount
-    if (DECOYS) {
-        difference () {
-            translate([35, 0 , 0]) decoys(44, 8, 6);
-        }
-        translate([0, 0, 8]) cube([4, 4, 4], center = true);
-        translate([40, 55, 8]) cube([4, 4, 4], center = true);
-    }
 }
 module bolt_holder (position = [0, 0, 0], rotate_z = 0, h = 17, length = 4.5, hole = true, tight = 0) {
     bolt_r = 6; 
@@ -1095,49 +1091,13 @@ module metro_mount (decoys = false) {
     }
 }
 
-module panel_cover (DECOYS = false) { 
-    $fn = 60;
-    HEIGHT = 85;
-    WIDTH = 37;
-    z = 25 + 8 + 5;
-    translate([0, 0, (z/2) + 9.5])  {
-        difference () {
-            union () {
-                difference () {
-                    rounded_cube([WIDTH, HEIGHT, z], d = 20, center = true); //main body of case
-                    translate([0, 0, -1]) rounded_cube([WIDTH - 4, HEIGHT - 4, z-2], d = 18, center = true);
-                    translate([-5, 35, 5]) rotate([0, 0, 15]) cube([50, 25, 400],  center = true); //heatsink
-                    translate([-10, 12, -9]) rotate([0, 0, 13]) cube([70, 40, 20],  center = true); //L289N hole
-                    translate([13, -36, -15]) rotate([0, 0, 13])cube([24, 45, 8], center = true); //trinket
-                    //buttons
-                    translate([7, -32, 8]) cylinder(r = 3.1, h = 190, center = true);
-                    translate([7, -19, 8]) cylinder(r = 3.1, h = 190, center = true);
-                    translate([7, -5, 8]) cylinder(r = 3.1, h = 190, center = true);
-                    
-                    translate([-20, -30, 0]) rotate([90, 0, 90]) cylinder(r = 1.75, h = 10, center = true); //hole for trigger cable
-                    translate([-20, -30, -19]) cube([15, 0.5, 40], center = true);
-                    translate([-15, -20, 0]) rotate([90, 0, 90]) cylinder(r = 3.1, h = 19, center = true); //power
-                    
-                    translate([-5, -12, 7]) cylinder(r= 2, h = z + 5, center= true); //LED
-                }
-               // translate([-5, -26.5, 0]) cylinder(r = 5, h = z, center = true);
-            }
-            translate([-5, -26.5, 0]) cylinder(r = 4, h = z + 10, center = true); //access hole for
-        }
-        
-    }
-    
-    //decoys
-    if (DECOYS){
-        DECOY_H = 40.5;
-        DECOY_W = 28;
-        translate([DECOY_W, 33, DECOY_H]) cube([4, 4, 4], center = true);
-        translate([DECOY_W, -40, DECOY_H]) cube([4, 4, 4], center = true);
-        translate([-DECOY_W, 20, DECOY_H]) cube([4, 4, 4], center = true);
-        translate([-DECOY_W, -40, DECOY_H]) cube([4, 4, 4], center = true);
-        translate([-DECOY_W, -10, DECOY_H]) cube([4, 4, 4], center = true);
-        translate([DECOY_W, -10, DECOY_H]) cube([4, 4, 4], center = true);
-    }
+
+module printed_panel_cover () {
+    intval_laser_panel_cover(buttons = false);
+}
+
+module printed_panel_cover_buttons () {
+    intval_laser_panel_cover(buttons = true);
 }
 
 module button_nuts () {
@@ -1165,7 +1125,7 @@ module button_nuts_plate (decoys = false) {
 }
 
 module intval_electronics_mount (TYPE = "TRINKET", MOD_Y = 5, MOD_MOUNT = 0) {
-    translate([-40 + 2, -1, 14]) rotate([0, 0, -13]) l289N_mount(MOD_MOUNT=MOD_MOUNT);
+    translate([-40 + 2, -1, 14]) rotate([0, 0, -13]) l289N_mount();
     if (TYPE == "TRINKET") {
         translate([-26 + 2, -19 - MOD_Y + 1, 11.25]) rotate([0, 0, -180 - 13]) trinket_mount();
     } else if (TYPE == "METRO") {
@@ -1318,7 +1278,7 @@ module exploded_view () {
 
 //exploded_view();
 
-PART = "printed_panel";
+PART = "printed_panel_cover_buttons";
 
 //models
 
@@ -1372,6 +1332,12 @@ if (PART == "plate") {
     l289N_mount();
 } else if (PART == "printed_panel") {
     intval_panel_printed();
+} else if (PART == "printed_panel_cover") {
+    printed_panel_cover();
+} else if (PART == "printed_panel_cover_buttons") {
+    printed_panel_cover_buttons();
+} else if (PART == "debug") {
+    exploded_view();
 }
 
 //laser
