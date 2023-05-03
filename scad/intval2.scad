@@ -62,6 +62,41 @@ module l289N_nut_seats (r = 3/2 - .2, MOD_MOUNT = 0) {
     m3_nut_seat([0, DISTANCE, 0]);
 }
 
+module arduino_nano_mount (pos = [0, 0, 0]) {
+    X = 18.2;
+    Y = 43.9;
+    Z = 10.5;
+    BOARD_Z = 1.5;
+    translate(pos) {
+        difference () {
+            //outer
+            cube([X + 6, Y + 6, Z], center = true);
+            //inner void minus corners
+            difference () {
+                cube([X - 1, Y - 1, Z + 1], center = true);
+                translate([(X / 2) - 1, (Y / 2) - 1, -BOARD_Z]) cylinder(r = (2 / 2), h = Z + 1, center = true, $fn = 20);
+                translate([(-X / 2) + 1, (Y / 2) - 1, -BOARD_Z]) cylinder(r = (2 / 2), h = Z + 1, center = true, $fn = 20);
+                translate([(X / 2) - 1, (-Y / 2) + 1, -BOARD_Z]) cylinder(r = (2 / 2), h = Z + 1, center = true, $fn = 20);
+                translate([(-X / 2) + 1, (-Y / 2) + 1, -BOARD_Z]) cylinder(r = (2 / 2), h = Z + 1, center = true, $fn = 20);
+            }
+            //board void
+            translate([0, 0, (Z / 2) - (BOARD_Z / 2)]) cube([X, Y, BOARD_Z], center = true);
+            //usb void
+            translate([0, Y / 2, (Z / 2) - (6 / 2) + 0.01]) cube([8, 10, 6], center = true);
+            translate([0, -30, 0]) cube([30, 20, 20], center = true);
+        }
+        translate([0, -(Y/2)+4.5, -2]) cube([X+5, 5, 2], center = true);
+    }
+}
+
+module usb_mini_void (pos = [0, 0, 0]) {
+    translate(pos) {
+        translate([0, 25, 2]) {
+            cube([8, 10, 5], center = true);
+            translate([0, 5, 0]) cube([12, 10, 8], center = true);
+        }
+    }
+}
 
 module intval_panel_printed () {
 	difference () {
@@ -951,7 +986,7 @@ module microswitch (position = [0, 0, 0], rotation = [0, 0, 0]) {
 		}
 	}
 }
-module l289N_mount () {
+module l289N_mount (pos = [0, 0, 0]) {
     $fn = 60;
 	DISTANCE = 36.5;
 	H = 4;
@@ -959,20 +994,22 @@ module l289N_mount () {
 	module stand () {
 		difference () {
 			cylinder(r1 = 4, r2 = 3, h = H, center = true);
-			cylinder(r = 1.5, h = H, center = true);
+			cylinder(r = 1.5, h = H + 1, center = true);
 		}
 	}
-	translate([0, 0, 0]) stand();
-	translate([DISTANCE, 0, 0]) stand();
-	translate([DISTANCE, DISTANCE, 0]) stand();
-	translate([0, DISTANCE, 0]) stand();
-    difference () {
-        translate([DISTANCE/2, DISTANCE/2, -3]) rounded_cube([DISTANCE + 8, DISTANCE + 8, THICKNESS], 8, center = true); //base
-        translate([DISTANCE/2, DISTANCE/2, -3]) rounded_cube([DISTANCE - 5, DISTANCE - 5, THICKNESS], 10, center = true); //base
-        translate([0, 0, 0]) cylinder(r = 1.5, h = H * 5, center = true);
-        translate([DISTANCE, 0, 0]) cylinder(r = 1.5, h = H * 5, center = true);
-        translate([DISTANCE, DISTANCE, 0]) cylinder(r = 1.5, h = H * 5, center = true);
-        translate([0, DISTANCE, 0]) cylinder(r = 1.5, h = H * 5, center = true);
+    translate(pos) {
+        translate([0, 0, 0]) stand();
+        translate([DISTANCE, 0, 0]) stand();
+        translate([DISTANCE, DISTANCE, 0]) stand();
+        translate([0, DISTANCE, 0]) stand();
+        difference () {
+            translate([DISTANCE/2, DISTANCE/2, -3]) rounded_cube([DISTANCE + 8, DISTANCE + 8, THICKNESS], 8, center = true); //base
+            translate([DISTANCE/2, DISTANCE/2, -3]) rounded_cube([DISTANCE - 5, DISTANCE - 5, THICKNESS + 1], 10, center = true); //base
+            translate([0, 0, 0]) cylinder(r = 1.5, h = H * 5, center = true);
+            translate([DISTANCE, 0, 0]) cylinder(r = 1.5, h = H * 5, center = true);
+            translate([DISTANCE, DISTANCE, 0]) cylinder(r = 1.5, h = H * 5, center = true);
+            translate([0, DISTANCE, 0]) cylinder(r = 1.5, h = H * 5, center = true);
+        }
     }
 }
 module pcb_mount () {
@@ -1245,6 +1282,18 @@ module case_standoff_alt () {
     }
 }
 
+module arduino_nano_electronics_mount (pos = [0, 0, 0]) {
+    RemoveBottom = 2;
+    translate(pos) {
+        l289N_mount();
+        translate([19, -16, 0.75 - RemoveBottom]) rotate([0, 0, 90]) difference() {
+            arduino_nano_mount();
+            translate([0, 0, -(RemoveBottom / 2)-3.25]) cube([30, 60, RemoveBottom], center = true);
+            translate([45-19, -15 + 16, -0.75 + RemoveBottom]) cube([20, 30, 20], center = true);
+        }
+    }
+}
+
 module stl_plate () {
     //translate([0, 0, -0.5]) cube([150, 150, 1], center = true);
     translate([-38, 41, 7.5]) rotate([0, 180, 0]) intval_laser_standoffs_plate();
@@ -1265,20 +1314,21 @@ module dxf_plate () {
 
 module exploded_view () {
     intval_panel_laser();
-    translate([0, 0, 5]) intval_electronics_mount();
+    //translate([0, 0, 5]) intval_electronics_mount();
     translate([0, 0, 5]) motor_mount_bottom();
     translate([0, 0, 20]) motor_key();
     translate([one_to_one_x, one_to_one_y, 50]) geared_motor_mount();
     translate([one_to_one_x, one_to_one_y, 50]) motor_cap(false);
-    translate([0, 0, 0]) intval_laser_panel_cover(false, ALL_RED=true);
+    //translate([0, 0, 0]) intval_laser_panel_cover(false, ALL_RED=true);
     translate([one_to_one_x, one_to_one_y, 0]) rotate([180, 0, 0]) bearing_reinforcement();
+    translate([-38, -1, 15]) rotate([0, 0, -13]) arduino_nano_electronics_mount();
 }
 
 
 
 //exploded_view();
 
-PART = "printed_panel_cover_buttons";
+PART = "arduino_nano_electronics_mount";
 
 //models
 
@@ -1330,6 +1380,11 @@ if (PART == "plate") {
     trinket_mount();
 } else if (PART == "l289N_mount") {
     l289N_mount();
+} else if (PART == "arduino_nano_electronics_mount") {
+    //translate([-38, -1, 15]) rotate([0, 0, -13]) 
+    arduino_nano_electronics_mount();
+    //intval_panel_printed();
+    //printed_panel_cover();
 } else if (PART == "printed_panel") {
     intval_panel_printed();
 } else if (PART == "printed_panel_cover") {
