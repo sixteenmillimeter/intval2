@@ -1381,10 +1381,7 @@ if (PART == "plate") {
 } else if (PART == "l289N_mount") {
     l289N_mount();
 } else if (PART == "arduino_nano_electronics_mount") {
-    //translate([-38, -1, 15]) rotate([0, 0, -13]) 
     arduino_nano_electronics_mount();
-    //intval_panel_printed();
-    //printed_panel_cover();
 } else if (PART == "printed_panel") {
     intval_panel_printed();
 } else if (PART == "printed_panel_cover") {
