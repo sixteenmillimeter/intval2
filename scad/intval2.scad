@@ -1243,6 +1243,24 @@ module motor_cap_120 (HALF = false) {
     }
 }
 
+module motor_cap_alt (DECOYS = false, HALF = false) {
+    $fn = 120;
+	base_d = 47;
+    H = 50 + 12;
+    difference () {
+        translate([-6, 0, H - 10]) cylinder(r = base_d/2, h = H + 2, center = true);
+        translate([-6, 0, -5.75]) cylinder(r = base_d/2 - 1, h = H, center = true);
+        translate([-6, 0, H - 10 - 1]) cylinder(r = base_d/2 - 3, h = H, center = true);
+        translate([-25, 0, (H / 2) - 6]) cube([10, 10, 15], center = true); //wire access
+        if (HALF){
+            translate([100, 0, 0]) cube([200, 200, 200], center = true);
+        }
+    }
+    if (DECOYS) {
+        translate([-6, 0, 0]) decoys(32, 64);
+    }
+}
+
 module bearing_calibrate (val = 0) {
     mat = 25.4/8;
     difference () {
@@ -1328,7 +1346,7 @@ module exploded_view () {
 
 //exploded_view();
 
-PART = "arduino_nano_electronics_mount";
+PART = "motor_cap_alt";
 
 //models
 
@@ -1364,6 +1382,8 @@ if (PART == "plate") {
 	intval_electronics_mount();
 } else if (PART == "motor_cap") {
 	motor_cap(false);
+} else if (PART == "motor_cap_alt") {
+	motor_cap_alt(false);
 } else if (PART == "motor_cap_120") {
 	motor_cap_120(false);
 } else if (PART == "bolt_guide") {
