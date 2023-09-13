@@ -1342,11 +1342,20 @@ module exploded_view () {
     translate([-38, -1, 15]) rotate([0, 0, -13]) arduino_nano_electronics_mount();
 }
 
+module logo () {
+    $fn = 40;
+    scale([0.9, 0.9, 1]) difference () {
+        translate([0, 0, -.25]) rounded_cube([43, 12, 1.5], d = 3, center = true);
+        scale([0.8, 1, 1]) linear_extrude(1) {
+            text("intval2.1", font = "Nimbus Sans:style=Italic", halign="center", valign="center");  
+        }    
+    }
+}
 
 
 //exploded_view();
 
-PART = "motor_cap_alt";
+PART = "logo";
 
 //models
 
@@ -1408,6 +1417,8 @@ if (PART == "plate") {
     printed_panel_cover();
 } else if (PART == "printed_panel_cover_buttons") {
     printed_panel_cover_buttons();
+} else if (PART == "logo"){
+    logo();
 } else if (PART == "debug") {
     exploded_view();
 }
