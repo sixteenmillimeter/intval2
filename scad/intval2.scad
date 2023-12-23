@@ -82,7 +82,7 @@ module arduino_nano_mount (pos = [0, 0, 0]) {
             //board void
             translate([0, 0, (Z / 2) - (BOARD_Z / 2)]) cube([X, Y, BOARD_Z], center = true);
             //usb void
-            translate([0, Y / 2, (Z / 2) - (6 / 2) + 0.01]) cube([8, 10, 6], center = true);
+            translate([0, Y / 2, (Z / 2) - (6 / 2) + 0.01]) cube([12, 10, 6], center = true);
             translate([0, -30, 0]) cube([30, 20, 20], center = true);
         }
         translate([0, -(Y/2)+4.5, -2]) cube([X+5, 5, 2], center = true);
@@ -278,7 +278,7 @@ module bearing_laser (x, y, z, width= 8, hole = true) {
 	}
 }
 
-module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, PCB = false, buttons = true) {
+module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, PCB = false, buttons = true, logo = false, DC_D = 10.9) {
     $fn = 60;
     cover_h = 16 + 3 + 4 + 15;
     MATERIAL = 25.4 / 8;
@@ -316,8 +316,14 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
                     }
                 }
             }
+            if (logo) {
+                letter_size = 5;
+                letter_height = 2;
+                translate([18, -32, 1]) linear_extrude(height = letter_height) {
+                    text("intval 2.2", size = letter_size, font = "Liberation Sans", halign = "center", valign = "center", $fn = 16);
+                }
+            }
         } 
-        
     }
     module back_side () {
         difference () {
@@ -359,7 +365,7 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
                 translate([25, 4, 0]) cylinder(r = 11.8/2, h = 20, center = true); //hole for female DC power jack, 12vdc
             } else {
                 translate([-15, 1, 0]) cylinder(r = 6/2, h = 50, center = true); //hole for audio jack -> add countersink
-                translate([9, 1, 0]) cylinder(r = 8/2, h = 20, center = true); //hole for female DC power jack, 12vdc
+                translate([9, 1, 0]) cylinder(r = DC_D/2, h = 20, center = true); //hole for female DC power jack, 12vdc
             }
             
             translate([-33.5, 17.3, 0]) cube([MATERIAL, 17.5, MATERIAL], center = true);
@@ -1134,7 +1140,7 @@ module printed_panel_cover () {
 }
 
 module printed_panel_cover_buttons () {
-    intval_laser_panel_cover(buttons = true);
+    intval_laser_panel_cover(buttons = true, ALL_RED = true, logo = true);
 }
 
 module button_nuts () {
@@ -1355,7 +1361,7 @@ module logo () {
 
 //exploded_view();
 
-PART = "logo";
+PART = "arduino_nano_electronics_mount";
 
 //models
 
