@@ -1429,11 +1429,13 @@ if (PART == "plate") {
     exploded_view();
 }
 
+LASER = "";
+
 //laser
-if (PART == "laser_plate") {
+if (LASER == "laser_plate") {
 	dxf_plate();
-} else if (PART == "panel") {
+} else if (LASER == "panel") {
 	projection() intval_panel_laser();
-} else if (PART == "panel_cover") {
+} else if (LASER == "panel_cover") {
 	intval_laser_panel_cover(true, ALL_RED=true);
 }
