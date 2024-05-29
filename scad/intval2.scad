@@ -53,7 +53,7 @@ module m3_nut_seat (pos = [0, 0, 0]) {
     }
 }
 
-module l289N_nut_seats (r = 3/2 - .2, MOD_MOUNT = 0) {
+module l298N_nut_seats (r = 3/2 - .2, MOD_MOUNT = 0) {
     DISTANCE = 36.5 + MOD_MOUNT;
 
     m3_nut_seat([0, 0, 0]);
@@ -105,7 +105,7 @@ module intval_panel_printed () {
 		    for (i = [0 : len(mm_x) - 1]) {
                 m5_nut_seat([mm_x[i], mm_y[i], 6]);
             }
-            translate([-38, -1, 7]) rotate([0, 0, -13]) l289N_nut_seats();
+            translate([-38, -1, 7]) rotate([0, 0, -13]) l298N_nut_seats();
             translate([0, 0, -0.6]) intval_laser_standoffs();
             translate([one_to_one_x, one_to_one_y, 5]) rotate([180, 0, 0]) bearing_reinforcement();
         }
@@ -117,7 +117,7 @@ module intval_panel_printed () {
     
 }
 
-module l289N_bolt_voids (r = 3/2 - .2, MOD_MOUNT = 0) {
+module l298N_bolt_voids (r = 3/2 - .2, MOD_MOUNT = 0) {
     $fn = 60;
     DISTANCE = 36.5 + MOD_MOUNT;
     H = 50;
@@ -127,7 +127,7 @@ module l289N_bolt_voids (r = 3/2 - .2, MOD_MOUNT = 0) {
     translate([0, DISTANCE, 0]) cylinder(r = r, h = H * 5, center = true);
 }
 
-module l289N_hole_test () {
+module l298N_hole_test () {
     $fn = 40;
     difference () {
         cube([140, 40, 3], center = true);
@@ -159,7 +159,7 @@ module intval_panel_laser () {
 			}
 		}
 		bearing_laser(54.5, 12, 6, width= 18, hole=false);
-        translate([-38, -1, 0]) rotate([0, 0, -13]) l289N_bolt_voids();
+        translate([-38, -1, 0]) rotate([0, 0, -13]) l298N_bolt_voids();
 		m_p_access();
 		remove_front();
 		translate([6, 18, 0]) rotate([0, 0, -13]) cube([15, 25, 40], center=true); //motor wind key hole
@@ -199,7 +199,7 @@ module intval_panel_laser_debug () {
 		}
 		//onetoone(9, 14, 8.5);
 		bearing_laser(54.5, 12, 6, width= 18, hole=false);
-        translate([-38, -1, 0]) rotate([0, 0, -13]) l289N_bolt_voids();
+        translate([-38, -1, 0]) rotate([0, 0, -13]) l298N_bolt_voids();
         //translate ([6, -9, height + 3.5]) cylinder(r = bolt_inner, h = 50, center = true); //cover standoff hole
 		//frame_counter_access(); //use the space
 		m_p_access();
@@ -992,7 +992,7 @@ module microswitch (position = [0, 0, 0], rotation = [0, 0, 0]) {
 		}
 	}
 }
-module l289N_mount (pos = [0, 0, 0]) {
+module l298N_mount (pos = [0, 0, 0]) {
     $fn = 60;
 	DISTANCE = 36.5;
 	H = 4;
@@ -1168,7 +1168,7 @@ module button_nuts_plate (decoys = false) {
 }
 
 module intval_electronics_mount (TYPE = "TRINKET", MOD_Y = 5, MOD_MOUNT = 0) {
-    translate([-40 + 2, -1, 14]) rotate([0, 0, -13]) l289N_mount();
+    translate([-40 + 2, -1, 14]) rotate([0, 0, -13]) l298N_mount();
     if (TYPE == "TRINKET") {
         translate([-26 + 2, -19 - MOD_Y + 1, 11.25]) rotate([0, 0, -180 - 13]) trinket_mount();
     } else if (TYPE == "METRO") {
@@ -1309,7 +1309,7 @@ module case_standoff_alt () {
 module arduino_nano_electronics_mount (pos = [0, 0, 0]) {
     RemoveBottom = 2;
     translate(pos) {
-        l289N_mount();
+        l298N_mount();
         translate([19, -16, 0.75 - RemoveBottom]) rotate([0, 0, 90]) difference() {
             arduino_nano_mount();
             translate([0, 0, -(RemoveBottom / 2)-3.25]) cube([30, 60, RemoveBottom], center = true);
@@ -1413,8 +1413,8 @@ if (PART == "plate") {
     case_standoff_washer();
 } else if (PART == "trinket_mount") {
     trinket_mount();
-} else if (PART == "l289N_mount") {
-    l289N_mount();
+} else if (PART == "l298N_mount") {
+    l298N_mount();
 } else if (PART == "arduino_nano_electronics_mount") {
     arduino_nano_electronics_mount();
 } else if (PART == "printed_panel") {
