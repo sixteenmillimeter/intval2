@@ -11,14 +11,16 @@ listLaser () {
 
 renderPart () {
 	part="${1}"
+	echo "renderPart ${part}"
 	stl="stl/${SCRIPT_NAME}_${part}.stl"
-	openscad --export-format asciistl -o "${stl}" -D "PART=\"${part}\";" "${SCAD}"
+	openscad --export-format asciistl -o "${stl}" -D "LASER=\"\";" -D "PART=\"${part}\";" "${SCAD}"
 }
 
 renderLaser() {
 	laser="${1}"
+	echo "renderLaser ${laser}"
 	dxf="dxf/${SCRIPT_NAME}_${laser}.dxf"
-	openscad -o "${dxf}" "LASER=\"${laser}\";" "${SCAD}"
+	openscad -o "${dxf}" -D "PART=\"\";" -D "LASER=\"${laser}\";" "${SCAD}"
 }
 
 allParts () {
@@ -27,9 +29,9 @@ allParts () {
 		renderPart "${part}" 
 	done
 
-	LASERs=($(listLaser "${SCAD}"))
+	LASERS=($(listLaser "${SCAD}"))
 	for laser in "${LASERS[@]}"; do
-		renderLaser
+		renderLaser "${laser}"
 	done
 }
 

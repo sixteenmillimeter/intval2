@@ -1361,7 +1361,7 @@ module logo () {
 
 //exploded_view();
 
-PART = "arduino_nano_electronics_mount";
+PART = "";
 
 //models
 
@@ -1429,7 +1429,7 @@ if (PART == "plate") {
     exploded_view();
 }
 
-LASER = "";
+LASER = "panel_cover";
 
 //laser
 if (LASER == "laser_plate") {
