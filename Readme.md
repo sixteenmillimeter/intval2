@@ -1,7 +1,7 @@
 # INTVAL 2.0
 ##### Intervalometer for Bolex 16mm Cameras
 
-![Photo of finished INTVAL](./imgs/intval2/intval2_complete.jpg)
+![Photo of finished INTVAL](./imgs/intval2_complete.jpg)
 
 ## [Project Home - git.sixteenmillimeter.com/16mm/intval2](https://git.sixteenmillimeter.com/16mm/intval2)
 
