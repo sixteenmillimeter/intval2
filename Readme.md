@@ -1,7 +1,7 @@
 # INTVAL 2.0
 ##### Intervalometer for Bolex 16mm Cameras
 
-![Photo of finished INTVAL](http://sixteenmillimeter.com/projects/imgs/intval2/intval2_complete.jpg)
+![Photo of finished INTVAL](./imgs/intval2/intval2_complete.jpg)
 
 ## [Project Home - git.sixteenmillimeter.com/16mm/intval2](https://git.sixteenmillimeter.com/16mm/intval2)
 
@@ -80,7 +80,7 @@ laser cutting and .STL files for 3D printing. The .INO file contains the source 
 
 #### A. 3D Printing
 
-![Plate of all 3D printed components](http://sixteenmillimeter.com/projects/imgs/intval2/plate_render.png)
+![Plate of all 3D printed components](./img/plate_render.png)
 
 The most time-consuming part of this build *should* be 3D printing the parts for the INTVAL 2.0. Depending on the size of your printing bed it is most likely possible to print all parts in one convenient plate. As will be addressed later, the laser-cuttable elements can also be 3D printed if you lack access to a laser cutter. 
 
@@ -90,7 +90,7 @@ The most delicate and integral piece to be fabricated on a 3D printer is the ``m
 
 #### B. Laser Cutting
 
-![Plate of all laser cut components](http://sixteenmillimeter.com/projects/imgs/intval2/dxf_plate_render.png)
+![Plate of all laser cut components](./img/dxf_plate_render.png)
 
 The INTVAL 2.0 has a flat panel on which all parts and electronics are mounted. For this reason, and to reduce production time, a laser cutting component has been added. See the much earlier--and now deprecated--attempt to have an entirely printable model in the original [INTVAL](https://github.com/sixteenmillimeter/INTVAL) (or [INTVAL Next](http://www.thingiverse.com/thing:151944) as I had taken to calling it on [Thingiverse](http://thingiverse.com)). Printing the flat base of this version took upwards of 3 hours on my modest printer, and with the accessibility of laser cutters at hacker/maker spaces becoming more common I decided this was feasible to include in my design.
 
@@ -136,43 +136,43 @@ Additionally you'll need wire and solder of your choosing.
 
 #### D. Assembly
 
-![Photo of exploded view](http://sixteenmillimeter.com/projects/imgs/intval2/exploded_view.png)
+![Photo of exploded view](./img/exploded_view.png)
 
 Assembling the INTVAL 2.0 can be done in an hour or so, much quicker if practiced. As mentioned, the largest amount of time should be in fabricating the parts or acquiring electronics/parts. There are 2 things I don't like about this design that I'll be addressing in subsequent builds: complexity of the electronics and crowding inside the case.
 
 ##### **Mounting the electronics**
 
-![Photo of L298N mounted to panel](http://sixteenmillimeter.com/projects/imgs/intval2/L298N_mounted.jpg)
+![Photo of L298N mounted to panel](./img/L298N_mounted.jpg)
 
 The L298N is attached to the panel via the three M2 bolts. The space cut in the panel where the fourth would go is to prevent the Bolex's handle from rubbing against the panel. At this point I usually flash the Arduino Trinket Pro with the latest firmware, as in the ["Programming"](#Programming) section, prior to soldering and mounting. It can be done after, though, and can be reprogrammed after it is built.
 
 ##### **Attaching the bearing**
 
-![Photo of panel with bearing attached](http://sixteenmillimeter.com/projects/imgs/intval2/bearing_mounted.jpg)
+![Photo of panel with bearing attached](./img/bearing_mounted.jpg)
 
 ##### **Mounting the motor's base and microswitch**
 
-![Photo of Microswitch and modification made to it](http://sixteenmillimeter.com/projects/imgs/intval2/microswitch_modified.jpg)
+![Photo of Microswitch and modification made to it](./img/microswitch_modified.jpg)
 
 Modify the microswitch as shown in the photos. Be careful not to break the tab by over-exerting it at the bend. At this point, I usually solder leads onto the two tabs as shown below to save a cramped soldering job later. Insert the microswitch into the ``motor_mount_bottom`` and line the piece up with the 6 holes cut in the panel according to the pictures and rendering. It then gets attached to the panel with 4 of the M5 bolts and attached on the bottom with the corresponding M5 nuts.
 
-![Photo of panel with motor mount bottom attached](http://sixteenmillimeter.com/projects/imgs/intval2/motor_bottom_mounted.jpg)
+![Photo of panel with motor mount bottom attached](./img/motor_bottom_mounted.jpg)
 
 ##### **Mounting the motor**
 
-![Photo of motor ready to mount on panel](http://sixteenmillimeter.com/projects/imgs/intval2/motor_mounted.jpg)
+![Photo of motor ready to mount on panel](./img/motor_mounted.jpg)
 
 The motor should fit snugly into the ``motor_mount`` piece and can be attached with 2 screws that usually accompany the motor (when bought from Amazon). At this point, I usually solder 2 leads onto the top of the motor and cap it so that the fragile tabs wont break off. I use red and black wires so that I can easily switch their position in the L298N if the intervalometer is functioning backwards.
 
 ##### **Attach buttons**
 
-![Photo of buttons attached to panel cover](http://sixteenmillimeter.com/projects/imgs/intval2/buttons_attached.jpg)
+![Photo of buttons attached to panel cover](./img/buttons_attached.jpg)
 
 Three of the buttons are attached to the corresponding holes in the panel. The size of these holes might have to be modified depending on the type of momentary buttons you settle on. When cutting the panel cover, I will also add an etched-in label for each specifying (left to right) that they control ``direction``, ``speed``, and ``delay``.
 
 ##### **Attaching the DC and 3.5mm sockets**
 
-![Photo of DC and 3.5mm sockets on](http://sixteenmillimeter.com/projects/imgs/intval2/dc_audio_mounted.jpg)
+![Photo of DC and 3.5mm sockets on](./img/dc_audio_mounted.jpg)
 
 Attach the 2.1mm DC socket and the 3.5mm audio socket to the bottom panel of the board, using the bolts to secure them. 
 
@@ -191,7 +191,7 @@ Digital pin utilization is as follows:
 - **PIN 13** - LED indicator (built in to Trinket Pro)
 - **PIN 19** - Microswitch (aka A5)
 
-[![Fritzing schematic](http://sixteenmillimeter.com/projects/imgs/intval2/intval2_schem_512.png)](http://sixteenmillimeter.com/projects/imgs/intval2/intval2_schem.png)
+[![Fritzing schematic](./img/intval2_schem_512.png)](./img/intval2_schem.png)
 
 The Fritzing project requires the following libraries:
 
