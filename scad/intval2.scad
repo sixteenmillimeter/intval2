@@ -322,6 +322,15 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
                 translate([18, -32, 1]) linear_extrude(height = letter_height) {
                     text("intval 2.2", size = letter_size, font = "Liberation Sans", halign = "center", valign = "center", $fn = 16);
                 }
+                translate([-34, -6, 1]) rotate([0, 0, 60]) linear_extrude(height = letter_height) {
+                    text("DIR", size = 4, font = "Liberation Sans", halign = "center", valign = "center", $fn = 16);
+                }
+                translate([-20, -8, 1]) rotate([0, 0, 60]) linear_extrude(height = letter_height) {
+                    text("EXP", size = 4, font = "Liberation Sans", halign = "center", valign = "center", $fn = 16);
+                }
+                translate([-6, -11, 1]) rotate([0, 0, 60]) linear_extrude(height = letter_height) {
+                    text("DEL", size = 4, font = "Liberation Sans", halign = "center", valign = "center", $fn = 16);
+                }
             }
         } 
     }
@@ -511,7 +520,7 @@ module bearing (x, y, z, width= 8, hole = true, calval = 0) {
 		}
 	}
 }
-module motor_key (half = false, DECOYS = false, sides = 1, ALT = false, extraH = 0) {
+module motor_key (half = false, DECOYS = false, sides = 1, ALT = false, extraH = 0, set_screw = true) {
 	innerD = 7.85;
 	outer_d = 27.5 + 2;
 	notch_d = 10;
@@ -534,7 +543,17 @@ module motor_key (half = false, DECOYS = false, sides = 1, ALT = false, extraH =
 		translate([one_to_one_x, one_to_one_y, diff]) {
 			translate ([-outer_d/2  -.5, -3.5, 0]) rotate([0, 0, 100]) cube([15, 5, height], center = true); // smooth notch
 			translate ([-outer_d/2  -.5, 3.5, 0]) rotate([0, 0, -100]) cube([15, 5, height], center = true); // smooth notch
+             
 		}
+        
+        if (set_screw) {
+            translate([one_to_one_x, one_to_one_y, 0]) {
+                //m3 set screw nut
+                translate([6, 0, 35]) cube([2.5 + .5, 5.25 + .5, 42], center = true);
+                //m3 set screw
+                translate([7.25, 0, 18]) rotate([0, 90, 0]) motor_set_screw_120_alt(H=15, H2 = 5);
+            }
+        }
         
         if (sides == 2) {
             //2 notch
@@ -1361,7 +1380,7 @@ module logo () {
 
 //exploded_view();
 
-PART = "";
+PART = "motor_key";
 
 //models
 
@@ -1429,7 +1448,7 @@ if (PART == "plate") {
     exploded_view();
 }
 
-LASER = "panel_cover";
+LASER = "";
 
 //laser
 if (LASER == "laser_plate") {
