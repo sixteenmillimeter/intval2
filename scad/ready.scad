@@ -1,6 +1,19 @@
 //!OpenSCAD
 /* preprocessor */
 
+IN = 25.4;
+MM = 1;
+
+function R (diameter) = diameter / 2.0;
+
+function IN2MM(in) = in * IN;
+
+function MM2IN(mm) = mm / IN;
+
+module hex (diag = 10, h = 1) {
+  cylinder(r = diag / 2, h = h, center = true, $fn = 6);
+}
+
 module tube(o = 1, i = 0, h = 1, center = false, $fn = 12) {
 	$fn = $fn;
 	union () {
