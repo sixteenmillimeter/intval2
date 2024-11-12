@@ -23,3 +23,5 @@
 ../stl/intval2_standoff_plate.stl
 ../stl/intval2_button_nuts_plate.stl
 ../stl/intval2_panel_printed.stl
+../stl/intval2_printed_panel_cover_buttons.stl
+../stl/intval2_printed_panel_cover.stl
