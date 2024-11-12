@@ -1502,7 +1502,7 @@ if (PART == "plate") {
 } else if (PART == "arduino_nano_electronics_mount") {
     arduino_nano_electronics_mount();
 } else if (PART == "printed_panel") {
-    intval_panel_printed();
+    rotate([180, 0, 0]) rotate([0, 0, 13]) intval_panel_printed();
 } else if (PART == "printed_panel_cover") {
     printed_panel_cover();
 } else if (PART == "printed_panel_cover_buttons") {
