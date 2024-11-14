@@ -277,7 +277,7 @@ module bearing_laser (x, y, z, width= 8, hole = true) {
 	}
 }
 
-module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, PCB = false, buttons = true, logo = false, DC_D = 10.9, PAD = 0, BOLTS = true) {
+module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, PCB = false, buttons = true, logo = false, DC_D = 10.9, PAD = 0, BOLTS = true, printed = false) {
     $fn = 60;
     cover_h = 38; //16 + 3 + 4 + 15;
     MATERIAL = IN / 8;
@@ -290,9 +290,9 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
             translate([53, 12, 0]) cylinder(r = R(60), h = 60, center = true); //hole for motor mount
             translate([22, 20, 0]) cylinder(r = R(16), h = 60, center = true); // hole for moto mount bolt holder
             translate([53, 42, 0]) cylinder(r = R(30), h = 60, center = true); //removes pointy part
-            translate([-44, 8, -(cover_h / 2 ) - MATERIAL - 1])  rotate([0, 0, -13]) rotate([0, 90, 0]) back_side();
-            translate([2, 49, -(cover_h / 2 ) - MATERIAL - 1]) rotate([0, 0, -13]) rotate([90, 0, 0]) top_side();
-            translate([-22, -45, -(cover_h / 2 ) - MATERIAL - 1]) rotate([0, 0, -13]) rotate([90, 0, 0]) bottom_side();
+            if (!printed) translate([-44, 8, -(cover_h / 2 ) - MATERIAL - 1])  rotate([0, 0, -13]) rotate([0, 90, 0]) back_side();
+            if (!printed) translate([2, 49, -(cover_h / 2 ) - MATERIAL - 1]) rotate([0, 0, -13]) rotate([90, 0, 0]) top_side();
+            if (!printed) translate([-22, -45, -(cover_h / 2 ) - MATERIAL - 1]) rotate([0, 0, -13]) rotate([90, 0, 0]) bottom_side();
             for (i = [0 : len(xArray) - 1]) {
                 translate([xArray[i], yArray[i], 0]) cylinder(r = R(7), h = height * 20, center = true); //Access for screwdriver
             }
@@ -338,15 +338,15 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
         difference () {
             translate([0, 1.75, 0]) cube([cover_h + (MATERIAL * 2) + 6, panel_2_y - 10, MATERIAL + PAD], center = true);
             //top
-            translate([-23.6, -20, 0]) cube([MATERIAL, 20, MATERIAL + PAD + 1], center = true);
-            translate([-23.6, 20, 0]) cube([MATERIAL, 20, MATERIAL + PAD + 1], center = true);
+            if (!printed) translate([-23.6, -20, 0]) cube([MATERIAL, 20, MATERIAL + PAD + 1], center = true);
+            if (!printed) translate([-23.6, 20, 0]) cube([MATERIAL, 20, MATERIAL + PAD + 1], center = true);
             //bottom
             translate([23.6, -20, 0]) cube([MATERIAL, 20 - PAD, MATERIAL + PAD + 1], center = true);
             translate([23.6, 20, 0]) cube([MATERIAL, 20 - PAD, MATERIAL + PAD + 1], center = true);
             //access for usb
             translate([17.5, -22, 0]) cube([10, 15, 30], center = true); 
-            translate([0, 50.5, 0]) cube([17.5, MATERIAL, MATERIAL + PAD], center = true);
-            translate([0, -50.5 + (1.75 / 2) + MATERIAL - 0.25, 0]) cube([17.5, MATERIAL, MATERIAL + PAD], center = true);
+            if (!printed) translate([0, 50.5, 0]) cube([17.5, MATERIAL, MATERIAL + PAD], center = true);
+            if (!printed) translate([0, -50.5 + (1.75 / 2) + MATERIAL - 0.25, 0]) cube([17.5, MATERIAL, MATERIAL + PAD], center = true);
         }
     }
     
@@ -355,13 +355,13 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
             translate([-2.5, 0, 0]) cube([ panel_2_x - 41, cover_h + 2 + (MATERIAL * 2) + 1  + 3, MATERIAL + PAD], center = true);
             //top
             translate([28, -23.6, 0]) cube([25, MATERIAL, MATERIAL + PAD + 1], center = true);
-            translate([28, 23.6, 0]) cube([25, MATERIAL, MATERIAL + PAD + 1], center = true);
+            if (!printed) translate([28, 23.6, 0]) cube([25, MATERIAL, MATERIAL + PAD + 1], center = true);
             //bottom
             translate([-28, -23.6, 0]) cube([25 - PAD, MATERIAL, MATERIAL + PAD + 1], center = true);
-            translate([-28, 23.6, 0]) cube([25 - PAD, MATERIAL, MATERIAL + PAD + 1], center = true);
+            if (!printed) translate([-28, 23.6, 0]) cube([25 - PAD, MATERIAL, MATERIAL + PAD + 1], center = true);
             
-            translate([-35.5, -21.1, 0]) cube([MATERIAL, 25, MATERIAL + PAD + 1], center = true); //side tabs
-            translate([-35.5, 21.1, 0]) cube([MATERIAL, 25, MATERIAL + PAD + 1], center = true); //side tabs
+            if (!printed) translate([-35.5, -21.1, 0]) cube([MATERIAL, 25, MATERIAL + PAD + 1], center = true); //side tabs
+            if (!printed) translate([-35.5, 21.1, 0]) cube([MATERIAL, 25, MATERIAL + PAD + 1], center = true); //side tabs
        }
     }
     
@@ -370,10 +370,10 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
             translate([.25, 0, 0]) cube([ panel_2_x - 39.5, cover_h + 2 + (MATERIAL * 2) + 1  + 3, MATERIAL + PAD], center = true);
             
             translate([25, -23.6, 0]) cube([25, MATERIAL, MATERIAL + PAD + 1], center = true);
-            translate([30, 23.6, 0]) cube([25, MATERIAL, MATERIAL + PAD + 1], center = true);
+            if (!printed) translate([30, 23.6, 0]) cube([25, MATERIAL, MATERIAL + PAD + 1], center = true);
 
             translate([-25, -23.6, 0]) cube([25, MATERIAL, MATERIAL + PAD + 1], center = true);
-            translate([-30, 23.6, 0]) cube([25, MATERIAL, MATERIAL + PAD + 1], center = true);
+            if (!printed) translate([-30, 23.6, 0]) cube([25, MATERIAL, MATERIAL + PAD + 1], center = true);
             
             if (PCB) {
                 translate([12, 6, 0]) cylinder(r = R(6), h = 50, center = true); //hole for audio jack -> add countersink
@@ -383,8 +383,8 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
                 translate([9, 1, 0]) cylinder(r = R(DC_D), h = 20, center = true); //hole for female DC power jack, 12vdc
             }
             
-            translate([-33.5, 17.3, 0]) cube([MATERIAL, 17.5, MATERIAL + PAD + 1], center = true);
-            translate([-33.5, -17.3, 0]) cube([MATERIAL, 17.5, MATERIAL + PAD + 1], center = true);
+            if (!printed) translate([-33.5, 17.3, 0]) cube([MATERIAL, 17.5, MATERIAL + PAD + 1], center = true);
+            if (!printed) translate([-33.5, -17.3, 0]) cube([MATERIAL, 17.5, MATERIAL + PAD + 1], center = true);
         }
     }
 
@@ -410,15 +410,15 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
     if (LASER) {
         projection() top();
         if (!DEBUG) {
-            translate([-75 - 10, 0, 0]) rotate([0, 0, -13]) projection() back_side();
+            translate([-85, 0, 0]) rotate([0, 0, -13]) projection() back_side();
         }
         translate([0, 80 + 10, 0]) rotate([0, 0, -13]) projection() top_side();
         translate([0, -80 - 10, 0])  rotate([0, 0, -13]) projection() bottom_side();
     } else {
-        if (BOLTS) {
+        if (printed && BOLTS) {
             bolts([0, 0, height + (cover_h / 2 ) - 4.25]);
         }
-        translate([0, 0, height + cover_h + 0.325]) top();
+        translate([0, 0, height + cover_h + 0.35]) top();
         if (!DEBUG) {
             translate([-44, 8, height + (cover_h / 2 ) - 4.25]) rotate([0, 0, -13]) rotate([0, 90, 0]) back_side(PAD);
         }
@@ -1219,11 +1219,11 @@ module printed_panel_bolts (pos = [0, 0, 0]) {
     
 
 module printed_panel_cover () {
-    intval_laser_panel_cover(buttons = false);
+    intval_laser_panel_cover(buttons = false, printed = true);
 }
 
 module printed_panel_cover_buttons () {
-    intval_laser_panel_cover(buttons = true, ALL_RED = true, logo = true);
+    intval_laser_panel_cover(buttons = true, ALL_RED = true, logo = true, printed = true);
 }
 
 module button_nuts () {
@@ -1443,7 +1443,7 @@ module logo () {
     }
 }
 
-PART = "printed_panel_cover";
+PART = "motor_cap_alt";
 
 //models
 
@@ -1504,9 +1504,9 @@ if (PART == "plate") {
 } else if (PART == "printed_panel") {
     rotate([180, 0, 0]) rotate([0, 0, 13]) intval_panel_printed();
 } else if (PART == "printed_panel_cover") {
-    printed_panel_cover();
+    rotate([180, 0, 0]) rotate([0, 0, 13]) printed_panel_cover();
 } else if (PART == "printed_panel_cover_buttons") {
-    printed_panel_cover_buttons();
+    rotate([180, 0, 0]) rotate([0, 0, 13]) printed_panel_cover_buttons();
 } else if (PART == "logo"){
     logo();
 } else {
