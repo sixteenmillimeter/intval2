@@ -293,7 +293,7 @@ module intval_laser_panel_cover (LASER = false, DEBUG = false, ALL_RED = false, 
             if (!printed) translate([-44, 8, -(cover_h / 2 ) - MATERIAL - 1])  rotate([0, 0, -13]) rotate([0, 90, 0]) back_side();
             if (!printed) translate([2, 49, -(cover_h / 2 ) - MATERIAL - 1]) rotate([0, 0, -13]) rotate([90, 0, 0]) top_side();
             if (!printed) translate([-22, -45, -(cover_h / 2 ) - MATERIAL - 1]) rotate([0, 0, -13]) rotate([90, 0, 0]) bottom_side();
-            for (i = [0 : len(xArray) - 1]) {
+            for (i = [0 : len(xArray) - 2]) {
                 translate([xArray[i], yArray[i], 0]) cylinder(r = R(7), h = height * 20, center = true); //Access for screwdriver
             }
             translate([-13.5, 26, 0]) rotate([0, 0, -13]) cube([28, 24, 60], center = true); //heatsink hole
@@ -1443,7 +1443,7 @@ module logo () {
     }
 }
 
-PART = "motor_cap_alt";
+PART = "printed_panel_cover";
 
 //models
 

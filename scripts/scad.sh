@@ -13,7 +13,8 @@ renderPart () {
 	part="${1}"
 	echo "renderPart ${part}"
 	stl="stl/${SCRIPT_NAME}_${part}.stl"
-	openscad --export-format asciistl -o "${stl}" -D "LASER=\"\";" -D "PART=\"${part}\";" "${SCAD}"
+	openscad --export-format asciistl  --enable manifold -o "${stl}" -D "LASER=\"\";" -D "PART=\"${part}\";" "${SCAD}"
+	python3 scad/c14n_stl.py "${stl}"
 }
 
 renderLaser() {
