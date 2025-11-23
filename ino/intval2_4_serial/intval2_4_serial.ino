@@ -30,6 +30,9 @@ const int PIN_MICRO = 19;
 //1, 2, 3
 const int BUTTON[4] = {3, 4, 5, 6};  //trigger, delay, speed, direction
 
+const float FWD_OPEN = 0.4;
+const float BWD_OPEN = 0.7;
+
 /* ------------------------------------------------
  *  loop
  * ------------------------------------------------*/
@@ -59,11 +62,13 @@ unsigned long delay_start = 0;
 
 String timed_str = "600";
 unsigned long timed_val = 600;
-unsigned long timed_open = 300; //ms after start_frame to pause
+unsigned long timed_open = 100; //ms after start_frame to pause
 volatile boolean timed_paused = false;
 unsigned long timed_delay = 0;
 unsigned long timed_last = 0;
+
 unsigned long timed_avg = 600;
+unsigned long i_avg = 600;
 
 volatile int fwd_speed = FAST_PWM;
 volatile int bwd_speed = FAST_PWM;
@@ -88,6 +93,7 @@ void loop() {
   cmd(cmd_char);
 
   timer = millis();
+  timed_open = OpenTiming();
   
   Button(0);
   Button(1);
@@ -136,8 +142,9 @@ void CameraExposure () {
     timed_val = 600;
     timed_str = "600";
     timed = false;
+    timed_open = OpenTiming();
   } else {
-    timed_delay = timed_val - BOLEX_C;
+    //timed_delay = timed_val - BOLEX_C;
     timed = true;
   }
   mc.confirm(mc.CAMERA_EXPOSURE);
@@ -205,11 +212,11 @@ void ButtonEnd (int index, long buttontime) {
     }
   }  else if (index == 2) { // set speed
     if (buttontime >= 1000) {
-      timed_delay = buttontime - BOLEX_C;
+      //timed_delay = buttontime - BOLEX_C;
       timed = true;
       Output(2, 250);
     } else if (buttontime < 1000) {
-      timed_delay = 0;
+      //timed_delay = 0;
       timed = false;
       Output(1, 500);    
     }
@@ -255,6 +262,10 @@ void Camera () {
   micro_primed = false;
 }
 
+long OpenTiming () {
+  return cam_dir ? (long) (FWD_OPEN * i_avg) : (long) (BWD_OPEN * i_avg);
+}
+
 void CameraOpen () {
   if (cam_dir) {
     analogWrite(PIN_MOTOR_FORWARD, fwd_speed);
@@ -266,7 +277,7 @@ void CameraOpen () {
   running = true;
   micro_primed = false;
   
-  delay(timed_open);
+  delay(OpenTiming());
 
   analogWrite(PIN_MOTOR_FORWARD, 0);
   analogWrite(PIN_MOTOR_BACKWARD, 0);
@@ -393,7 +404,11 @@ void Stop () {
   }
 
   timed_last = timer - frame_start;
-  timed_avg = (timed_avg + timed_last) / 2;
+  if (timed) {
+    timed_avg = round((timed_avg + timed_last) / 2);
+  } else {
+    i_avg = round((i_avg + timed_last) / 2);
+  }
 
   mc.confirm(mc.CAMERA);
   mc.log("Camera completed");
@@ -407,11 +422,11 @@ void Stop () {
 void CameraDirection (boolean state) {
   cam_dir = state;
   if (state) {
-    timed_open = 300;
+    timed_open = OpenTiming();
     mc.confirm(mc.CAMERA_FORWARD);
     mc.log("camera_direction(true)");
   } else {
-    timed_open = 400;
+    timed_open = OpenTiming();
     mc.confirm(mc.CAMERA_FORWARD);
     mc.log("camera_direction(false)");
   }
@@ -420,7 +435,11 @@ void CameraDirection (boolean state) {
 void State () {
   String stateString = String(mc.STATE);
   stateString += String(mc.CAMERA_EXPOSURE);
-  stateString += String(timed_avg);
+  if (timed) {
+    stateString += String(timed_avg);
+  } else {
+    stateString += String(i_avg);
+  }
   stateString += String(mc.STATE);
   mc.sendString(stateString);
 }
