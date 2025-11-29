@@ -31,12 +31,14 @@ void loop () {
   }
 
   if (open_running && !intval2.IsOpening()) {
-
+    mc.confirm(mc.CAMERA_OPEN);
+    mc.log("camera_open()");
   	open_running = false;
   }
 
   if (close_running && !intval2.IsClosing()) {
-
+    mc.confirm(mc.CAMERA_CLOSE);
+    mc.log("camera_close()");
   	close_running = false;
   }
 }
@@ -52,10 +54,10 @@ void cmd (char val) {
     SetDirection(false);
   } else if (val == mc.CAMERA_OPEN) {
   	open_running = true;
-    //CameraOpen();
+    intval2.Open();
   } else if (val == mc.CAMERA_CLOSE) {
   	close_running = true;
-    //CameraClose();
+    intval2.Close();
   } else if (val == mc.CAMERA_EXPOSURE) {
     SetExposure();  
   } else if (val == mc.STATE) {
