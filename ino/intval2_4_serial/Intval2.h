@@ -29,9 +29,14 @@ class Intval2 {
 	volatile boolean running = false;
 	volatile boolean timelapse = false;
 	volatile boolean timed_exposure = false;
+	volatile boolean opening = false;
+	volatile boolean closing = false;
 	volatile boolean delaying = false;
-	volatile boolean open = false; //is the shutter open
+	volatile boolean open = false;
+	volatile boolean closed = true;
 	volatile boolean timed_exposure_open = false; //is the shutter open only during a timed exposure
+	volatile boolean timed_exposure_opening = false;
+	volatile boolean timed_exposure_closing = false;
 	volatile uint8_t microswitch_position = 0;
 	volatile boolean microswitch_primed = false;
 
@@ -44,37 +49,53 @@ class Intval2 {
 	volatile unsigned long timer;
 	volatile unsigned long frame_start = 0;
 	volatile unsigned long delay_start = 0;
+	volatile unsigned long open_start = 0;
+	volatile unsigned long close_start = 0;
 
 	volatile unsigned long timelapse_delay = 42; //time between frames during timelapse
 
-	volatile String timed_exposure_str = "600";
-	volatile unsigned long timed_exposure_val = 600;
-	volatile unsigned long timed_open = 100; //ms after start_frame to pause
-	volatile unsigned long timed_delay = 0;
+	volatile unsigned long timed_exposure_ms = 0;
+
+	volatile unsigned long open_stop = 100; //ms to stop when camera is opened
+	volatile unsigned long timed_exposure_delay = 0; //ms to delay once camera is open
 	
 	volatile unsigned long exposure = 0;
 
 	volatile unsigned long avg = 600;
 	volatile unsigned long timed_exposure_avg = 600;
+	volatile unsigned long open_avg = 300;
+	volatile unsigned long close_avg = 300;
 
 	void PinsInit();
 	void ButtonsInit();
 	void Button (uint8_t index);
 	void ButtonEnd (uint8_t index, long time);
-	boolean WatchMicroswitchDelay();
+
 	void TimelapseWatchDelay();
+	void OpeningWatchDelay();
+
 	void ReadMicroswitch();
-	void TimedExposureReadMicroswitch();
-	void TimedExposureStart();
+
+	void TimedExposureWatch();
 	void TimedExposurePause();
+	void TimedExposureClose();
+
 	void Stop();
+	void OpeningStop();
+	void ClosingStop();
 	void Output(uint8_t number, uint16_t len);
 	void Indicator(boolean state);
+	void MotorStart();
+	void MotorStop();
 
 	public:
 	void begin();
 	void loop();
 	void Camera();
+	void Open();
+	void Close();
+	void Direction(boolean state);
+	void Exposure(unsigned long ms);
 	String State();
 
 };
