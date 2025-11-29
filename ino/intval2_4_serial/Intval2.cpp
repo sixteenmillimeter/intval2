@@ -91,9 +91,7 @@ void Intval2::Exposure (unsigned long ms) {
 	if (ms < 600) {
 		timed_exposure_ms = 0;
     	timed_exposure = false;
-    	//timed_open = OpenTiming();
 	} else {
-		//timed_delay = timed_exposure_val - BOLEX_C;
 		timed_exposure_ms = ms;
 		timed_exposure = true;
 	}
@@ -106,12 +104,11 @@ void Intval2::Camera () {
 		timed_exposure_opening = true;
 		open_start = millis();
 		if (direction) {
-			open_stop = round((float) avg * MOTOR_OPEN_FORWARD);
-			timed_exposure_delay = 0;
+			open_stop = round( (float) avg * MOTOR_OPEN_FORWARD );
 		} else {
 			open_stop = round((float) avg * MOTOR_OPEN_BACKWARD);
-			timed_exposure_delay = 0;//
 		}
+		timed_exposure_delay = timed_exposure_ms - round( (float) avg * MOTOR_OPEN_ANGLE );
 	}
 	MotorStart();
 	running = true;
@@ -230,6 +227,8 @@ void Intval2::TimedExposurePause () {
 	open_avg = round(((timer - open_start) + open_avg) / 2);
 }
 
+
+
 void Intval2::TimedExposureWatch () {
 	if (timed_exposure_opening) {
 		if (timer - frame_start >= open_stop) {
@@ -327,4 +326,16 @@ String Intval2::State () {
 		return String(timed_exposure_avg);
 	}
 	return String(avg);
+}
+
+boolean Intval2::IsOpening() {
+	return opening;
+}
+	
+boolean Intval2::IsClosing() {
+	return closing;
+}
+	
+boolean Intval2::IsRunning() {
+	return running;
 }

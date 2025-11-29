@@ -22,12 +22,30 @@ void loop () {
   cmd(cmd_char);
 
   intval2.loop();
+
+  if (camera_running && !intval2.IsRunning()) {
+  	mc.confirm(mc.CAMERA);
+  	mc.log("Camera completed");
+  	//mc.log(String(timed_exposure_last));
+  	camera_running = false;
+  }
+
+  if (open_running && !intval2.IsOpening()) {
+
+  	open_running = false;
+  }
+
+  if (close_running && !intval2.IsClosing()) {
+
+  	close_running = false;
+  }
 }
 
 void cmd (char val) {
   if (val == mc.CAMERA) {
   	camera_running = true;
     intval2.Camera();
+    camera_running = true;
   } else if (val == mc.CAMERA_FORWARD) {
     SetDirection(true);
   } else if (val == mc.CAMERA_BACKWARD) {

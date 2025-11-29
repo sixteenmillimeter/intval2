@@ -17,6 +17,7 @@ class Intval2 {
 	const uint16_t MOTOR_RPM = 120; 
 	const float MOTOR_OPEN_FORWARD = 0.25;
 	const float MOTOR_OPEN_BACKWARD = 0.75;
+	const float MOTOR_OPEN_ANGLE = 0.3694; // 133deg
 	const uint8_t MOTOR_PWM = 255; // Not varying this for now
 	const uint16_t MICROSWITCH_DELAY = 50;
 
@@ -97,6 +98,10 @@ class Intval2 {
 	void Direction(boolean state);
 	void Exposure(unsigned long ms);
 	String State();
+	boolean IsOpening();
+	boolean IsClosing();
+	boolean IsRunning();
+
 
 };
 
