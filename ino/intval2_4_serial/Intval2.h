@@ -15,8 +15,8 @@ class Intval2 {
 
 	//MOTOR CONST
 	const uint16_t MOTOR_RPM = 120; 
-	const float MOTOR_OPEN_FORWARD = 0.25;
-	const float MOTOR_OPEN_BACKWARD = 0.75;
+	const float MOTOR_OPEN_FORWARD = 0.275; // 99deg
+	const float MOTOR_OPEN_BACKWARD = 0.675; //243deg
 	const float MOTOR_OPEN_ANGLE = 0.3694; // 133deg
 	const uint8_t MOTOR_PWM = 255; // Not varying this for now
 	const uint16_t MICROSWITCH_DELAY = 50;
