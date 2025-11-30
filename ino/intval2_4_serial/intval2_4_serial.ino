@@ -5,9 +5,10 @@ McopySerial mc;
 Intval2 intval2;
 volatile char cmd_char = 'z';
 
-volatile boolean camera_running;
-volatile boolean open_running;
-volatile boolean close_running;
+volatile boolean camera_running = false;
+volatile boolean open_running = false;
+volatile boolean close_running = false;
+volatile boolean debug = false;
 
 String timed_exposure_str = "0";
 volatile unsigned long timed_exposure_ms = 0;
@@ -62,6 +63,8 @@ void cmd (char val) {
     SetExposure();  
   } else if (val == mc.STATE) {
     State();
+  } else if (val == mc.DEBUG) {
+    debug = !debug;
   }
 }
 
@@ -79,7 +82,7 @@ void SetDirection (boolean state) {
     mc.confirm(mc.CAMERA_FORWARD);
     mc.log("camera_direction(true)");
   } else {
-    mc.confirm(mc.CAMERA_FORWARD);
+    mc.confirm(mc.CAMERA_BACKWARD);
     mc.log("camera_direction(false)");
   }
 }

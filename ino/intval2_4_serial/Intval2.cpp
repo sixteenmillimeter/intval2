@@ -1,6 +1,9 @@
 
 #include "Intval2.h"
 
+/**
+ * 
+ **/
 
 void Intval2::begin () {
 	PinsInit();
@@ -320,6 +323,8 @@ void Intval2::Indicator (boolean state) {
 		digitalWrite(PIN_INDICATOR, LOW);
 	}
 }
+
+
 
 String Intval2::State () {
 	if (timed_exposure) {
