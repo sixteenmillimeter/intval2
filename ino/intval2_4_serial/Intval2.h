@@ -97,12 +97,14 @@ class Intval2 {
 	void Close();
 	void Direction(boolean state);
 	void Exposure(unsigned long ms);
+
 	String State();
+
 	boolean IsOpening();
 	boolean IsClosing();
 	boolean IsRunning();
 
-
+	unsigned long GetExposure();
 };
 
 #endif

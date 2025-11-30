@@ -2,7 +2,8 @@
 #include "Intval2.h"
 
 /**
- * 
+ * Method to run in setup() function in main sketch.
+ * Initializes all intval2 hardware.
  **/
 
 void Intval2::begin () {
@@ -67,16 +68,16 @@ void Intval2::TimelapseWatchDelay () {
 void Intval2::ReadMicroswitch () {
 	if (timer - frame_start >= MICROSWITCH_DELAY) {
 		microswitch_position = digitalRead(PIN_MICROSWITCH);
-    	if (microswitch_position == LOW && !microswitch_primed) {
+		if (microswitch_position == LOW && !microswitch_primed) {
 			microswitch_primed = true;
-    	} else if (microswitch_position == HIGH && microswitch_primed) {
-    		if (running) {
-    			Stop();
-    		} else if (closing) {
+		} else if (microswitch_position == HIGH && microswitch_primed) {
+			if (running) {
+				Stop();
+			} else if (closing) {
 				ClosingStop();
 			}
-    	}
-    	delay(2); //smooths out signal
+		}
+		delay(2); //smooths out signal
 	}
 }
 
@@ -93,7 +94,7 @@ void Intval2::Direction (boolean state) {
 void Intval2::Exposure (unsigned long ms) {
 	if (ms < 600) {
 		timed_exposure_ms = 0;
-    	timed_exposure = false;
+		timed_exposure = false;
 	} else {
 		timed_exposure_ms = ms;
 		timed_exposure = true;
@@ -202,10 +203,10 @@ void Intval2::ClosingStop () {
 void Intval2::MotorStart () {
 	if (direction) {
 		analogWrite(PIN_MOTOR_FORWARD, MOTOR_PWM);
-    	analogWrite(PIN_MOTOR_BACKWARD, 0);
+		analogWrite(PIN_MOTOR_BACKWARD, 0);
 	} else {
-    	analogWrite(PIN_MOTOR_BACKWARD, MOTOR_PWM);
-    	analogWrite(PIN_MOTOR_FORWARD, 0);
+		analogWrite(PIN_MOTOR_BACKWARD, MOTOR_PWM);
+		analogWrite(PIN_MOTOR_FORWARD, 0);
 	} 
 }
 
@@ -293,7 +294,7 @@ void Intval2::ButtonEnd (uint8_t index, long time) {
 		} else if (time < 1000) {
 			//timed_delay = 0;
 			timed_exposure = false;
-			Output(1, 500);    
+			Output(1, 500);	
 		}
 	} else if (index == 3) { //set direction
 		if (time < 1000) {
@@ -343,4 +344,8 @@ boolean Intval2::IsClosing() {
 	
 boolean Intval2::IsRunning() {
 	return running;
+}
+
+unsigned long Intval2::GetExposure () {
+	return exposure;
 }
