@@ -13,6 +13,13 @@ class Intval2 {
 	const uint8_t PIN_MICROSWITCH = 19; //A5
 	const uint8_t BUTTONS[4] = {3, 4, 5, 6};  //trigger, delay, speed, direction
 
+	const uint16_t OUTPUT_SHORT = 75;
+	const uint16_t OUTPUT_MEDIUM = 250;
+	const uint16_t OUTPUT_LONG = 500;
+
+	const uint8_t OUTPUT_ONE = 1;
+	const uint8_t OUTPUT_TWO = 2;
+
 	//MOTOR CONST
 	const uint16_t MOTOR_RPM = 120; 
 	const float MOTOR_OPEN_FORWARD = 0.275; // 99deg
@@ -35,9 +42,11 @@ class Intval2 {
 	volatile boolean delaying = false;
 	volatile boolean open = false;
 	volatile boolean closed = true;
+
 	volatile boolean timed_exposure_open = false; //is the shutter open only during a timed exposure
 	volatile boolean timed_exposure_opening = false;
 	volatile boolean timed_exposure_closing = false;
+
 	volatile uint8_t microswitch_position = 0;
 	volatile boolean microswitch_primed = false;
 
@@ -52,16 +61,11 @@ class Intval2 {
 	volatile unsigned long delay_start = 0;
 	volatile unsigned long open_start = 0;
 	volatile unsigned long close_start = 0;
-
 	volatile unsigned long timelapse_delay = 42; //time between frames during timelapse
-
 	volatile unsigned long timed_exposure_ms = 0;
-
 	volatile unsigned long open_stop = 100; //ms to stop when camera is opened
 	volatile unsigned long timed_exposure_delay = 0; //ms to delay once camera is open
-	
 	volatile unsigned long exposure = 0;
-
 	volatile unsigned long avg = 600;
 	volatile unsigned long timed_exposure_avg = 600;
 	volatile unsigned long open_avg = 300;

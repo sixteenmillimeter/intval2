@@ -12,6 +12,11 @@ void Intval2::begin () {
 	//timed_open = OpenTiming();
 }
 
+/***
+ * 
+ * 
+ **/
+
 void Intval2::loop () {
 	timer = millis();
   
@@ -231,8 +236,6 @@ void Intval2::TimedExposurePause () {
 	open_avg = round(((timer - open_start) + open_avg) / 2);
 }
 
-
-
 void Intval2::TimedExposureWatch () {
 	if (timed_exposure_opening) {
 		if (timer - frame_start >= open_stop) {
@@ -267,7 +270,7 @@ void Intval2::ButtonEnd (uint8_t index, long time) {
 		if (time > 1000) {
 			if (!timelapse && !running) {
 				timelapse = true;
-				Output(2, 75);
+				Output(OUTPUT_TWO, OUTPUT_SHORT);
 				Camera();
 			}
 		} else {
@@ -281,28 +284,28 @@ void Intval2::ButtonEnd (uint8_t index, long time) {
 	} else if (index == 1) { //set delay
 		if (time < 42) {
 			timelapse_delay = 42;
-			Output(1, 500);
+			Output(OUTPUT_ONE, OUTPUT_LONG);
 		} else {
 			timelapse_delay = time;
-			Output(2, 250);
+			Output(OUTPUT_TWO, OUTPUT_MEDIUM);
 		}
 	}  else if (index == 2) { // set speed
 		if (time >= 1000) {
 			//timed_delay = time - BOLEX_C;
 			timed_exposure = true;
-			Output(2, 250);
+			Output(OUTPUT_TWO, OUTPUT_MEDIUM);
 		} else if (time < 1000) {
 			//timed_delay = 0;
 			timed_exposure = false;
-			Output(1, 500);	
+			Output(OUTPUT_ONE, OUTPUT_LONG);	
 		}
 	} else if (index == 3) { //set direction
 		if (time < 1000) {
 			direction = true;
-			Output(1, 500);
+			Output(OUTPUT_ONE, OUTPUT_LONG);
 		} else if (time > 1000) {
 			direction = false;
-			Output(2, 250);
+			Output(OUTPUT_TWO, OUTPUT_MEDIUM);
 		}
 	}
 	//time = 0;
