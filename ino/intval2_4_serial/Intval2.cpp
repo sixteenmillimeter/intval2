@@ -20,10 +20,10 @@ void Intval2::begin () {
 void Intval2::loop () {
 	timer = millis();
   
-	Button(0);
-	Button(1);
-	Button(2);
-	Button(3);
+	Button(TRIGGER);
+	Button(DIRECTION);
+	Button(SPEED);
+	Button(DELAY);
 
 	if (timelapse && delaying) {
 		TimelapseWatchDelay();
@@ -97,12 +97,13 @@ void Intval2::Direction (boolean state) {
 }
 
 void Intval2::Exposure (unsigned long ms) {
-	if (ms < 600) {
+	if (ms < TIMED_EXPOSURE_CUTOFF) {
 		timed_exposure_ms = 0;
 		timed_exposure = false;
 	} else {
-		timed_exposure_ms = ms;
+		timed_exposure_ms = ms + 379;
 		timed_exposure = true;
+		timed_exposure_avg = ms + 379;
 	}
 }
 
@@ -256,6 +257,7 @@ void Intval2::Button (uint8_t index) {
 		if (val == LOW) {
 			// pressed
 			button_times[index] = millis();
+			ButtonStart(index);
 		} else if (val == HIGH) { 
 			// not pressed
 			button_time = millis() - button_times[index]; //time?
@@ -265,23 +267,46 @@ void Intval2::Button (uint8_t index) {
 	button_states[index] = val;
 }
 
+void Intval2::ButtonStart (uint8_t index) {
+	if (index == TRIGGER) {
+		if (bulb && !bulb_running) {
+			bulb_running = true;
+			Open();
+		}
+	} else if (index == SPEED) {
+		if (millis() - button_times[index] < 1000) {
+			bulb = true;
+			Output(OUTPUT_ONE, OUTPUT_LONG);
+		} else {
+			bulb = false;
+		}
+	}
+}
+
 void Intval2::ButtonEnd (uint8_t index, long time) {
-	if (index == 0) {
+	if (index == TRIGGER) {
 		if (time > 1000) {
-			if (!timelapse && !running) {
+			if (!bulb && !timelapse && !running) {
 				timelapse = true;
 				Output(OUTPUT_TWO, OUTPUT_SHORT);
 				Camera();
+			} else if (bulb && bulb_running) {
+				Close();
+				bulb_running = false;
 			}
 		} else {
 			if (timelapse) {
 				timelapse = false;
 				//Output(2, 75);
 			} else {
-				Camera();
+				if (bulb) {
+					Close();
+				} else {
+					Camera();
+				}
 			}
 		}
-	} else if (index == 1) { //set delay
+	} else if (index == DELAY) { //set delay
 		if (time < 42) {
 			timelapse_delay = 42;
 			Output(OUTPUT_ONE, OUTPUT_LONG);
@@ -289,17 +314,14 @@ void Intval2::ButtonEnd (uint8_t index, long time) {
 			timelapse_delay = time;
 			Output(OUTPUT_TWO, OUTPUT_MEDIUM);
 		}
-	}  else if (index == 2) { // set speed
-		if (time >= 1000) {
-			//timed_delay = time - BOLEX_C;
-			timed_exposure = true;
+	}  else if (index == SPEED) { // set speed
+		Exposure(time);
+		if (time >= TIMED_EXPOSURE_CUTOFF) {
 			Output(OUTPUT_TWO, OUTPUT_MEDIUM);
-		} else if (time < 1000) {
-			//timed_delay = 0;
-			timed_exposure = false;
-			Output(OUTPUT_ONE, OUTPUT_LONG);	
+		} else {
+			Output(OUTPUT_ONE, OUTPUT_LONG);
 		}
-	} else if (index == 3) { //set direction
+	} else if (index == DIRECTION) { //set direction
 		if (time < 1000) {
 			direction = true;
 			Output(OUTPUT_ONE, OUTPUT_LONG);
@@ -327,8 +349,6 @@ void Intval2::Indicator (boolean state) {
 		digitalWrite(PIN_INDICATOR, LOW);
 	}
 }
-
-
 
 String Intval2::State () {
 	if (timed_exposure) {

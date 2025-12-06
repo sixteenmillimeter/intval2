@@ -12,6 +12,10 @@ class Intval2 {
 	const uint8_t PIN_MOTOR_BACKWARD = 10;
 	const uint8_t PIN_MICROSWITCH = 19; //A5
 	const uint8_t BUTTONS[4] = {3, 4, 5, 6};  //trigger, delay, speed, direction
+	const uint8_t TRIGGER = 0;
+	const uint8_t DELAY = 1;
+	const uint8_t SPEED = 2;
+	const uint8_t DIRECTION = 3;
 
 	const uint16_t OUTPUT_SHORT = 75;
 	const uint16_t OUTPUT_MEDIUM = 250;
@@ -19,6 +23,8 @@ class Intval2 {
 
 	const uint8_t OUTPUT_ONE = 1;
 	const uint8_t OUTPUT_TWO = 2;
+
+	const unsigned long TIMED_EXPOSURE_CUTOFF = 1000;
 
 	//MOTOR CONST
 	const uint16_t MOTOR_RPM = 120; 
@@ -42,6 +48,8 @@ class Intval2 {
 	volatile boolean delaying = false;
 	volatile boolean open = false;
 	volatile boolean closed = true;
+	volatile boolean bulb = false;
+	volatile boolean bulb_running = false;
 
 	volatile boolean timed_exposure_open = false; //is the shutter open only during a timed exposure
 	volatile boolean timed_exposure_opening = false;
@@ -50,30 +58,34 @@ class Intval2 {
 	volatile uint8_t microswitch_position = 0;
 	volatile boolean microswitch_primed = false;
 
+
 	//BUTTON VAR
-	volatile int button_states[4] = {1, 1, 1, 1};
-	volatile long button_times[4] = {0, 0, 0, 0};
-	volatile long button_time = 0;
+	volatile uint8_t button_states[4] = {1, 1, 1, 1};
+	volatile unsigned long button_times[4] = {0, 0, 0, 0};
+	volatile unsigned long button_time = 0;
 
 	//TIME VAR
 	volatile unsigned long timer;
 	volatile unsigned long frame_start = 0;
 	volatile unsigned long delay_start = 0;
 	volatile unsigned long open_start = 0;
+	volatile unsigned long open_stop = 100; //ms to stop running after when camera is fully-opened
+	volatile unsigned long open_avg = 300;
 	volatile unsigned long close_start = 0;
+	volatile unsigned long close_avg = 300;
 	volatile unsigned long timelapse_delay = 42; //time between frames during timelapse
 	volatile unsigned long timed_exposure_ms = 0;
-	volatile unsigned long open_stop = 100; //ms to stop when camera is opened
 	volatile unsigned long timed_exposure_delay = 0; //ms to delay once camera is open
+	volatile unsigned long timed_exposure_avg = 600;
 	volatile unsigned long exposure = 0;
 	volatile unsigned long avg = 600;
-	volatile unsigned long timed_exposure_avg = 600;
-	volatile unsigned long open_avg = 300;
-	volatile unsigned long close_avg = 300;
+	
+
 
 	void PinsInit();
 	void ButtonsInit();
 	void Button (uint8_t index);
+	void ButtonStart (uint8_t index);
 	void ButtonEnd (uint8_t index, long time);
 
 	void TimelapseWatchDelay();
