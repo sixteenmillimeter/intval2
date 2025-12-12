@@ -104,6 +104,8 @@ class Intval2 {
 	void Indicator(boolean state);
 	void MotorStart();
 	void MotorStop();
+	void BulbStart();
+	void BulbStop();
 
 	public:
 	void begin();

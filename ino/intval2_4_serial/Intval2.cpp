@@ -251,6 +251,16 @@ void Intval2::TimedExposureWatch () {
 	}
 }
 
+void Intval2::BulbStart () {
+	bulb_running = true;
+	Open();
+}
+
+void Intval2::BulbStop () {
+	Close();
+	bulb_running = false;
+}
+
 void Intval2::Button (uint8_t index) {
 	int val = digitalRead(BUTTONS[index]); // ;)
 	if (val != button_states[index]) {
@@ -270,8 +280,7 @@ void Intval2::Button (uint8_t index) {
 void Intval2::ButtonStart (uint8_t index) {
 	if (index == TRIGGER) {
 		if (bulb && !bulb_running) {
-			bulb_running = true;
-			Open();
+			BulbStart();
 		}
 	} else if (index == SPEED) {
 		if (millis() - button_times[index] < 1000) {
@@ -291,19 +300,18 @@ void Intval2::ButtonEnd (uint8_t index, long time) {
 				Output(OUTPUT_TWO, OUTPUT_SHORT);
 				Camera();
 			} else if (bulb && bulb_running) {
-				Close();
-				bulb_running = false;
+				BulbStop();
 			}
 		} else {
 			if (timelapse) {
 				timelapse = false;
 				//Output(2, 75);
-			} else {
-				if (bulb) {
-					Close();
-				} else {
-					Camera();
-				}
+			}
+			if (bulb && bulb_running) {
+				BulbStop();
+			}
+			if (!running && !bulb) {
+				Camera();
 			}
 		}
 	} else if (index == DELAY) { //set delay
@@ -372,3 +380,4 @@ boolean Intval2::IsRunning() {
 unsigned long Intval2::GetExposure () {
 	return exposure;
 }
+
