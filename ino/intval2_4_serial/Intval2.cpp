@@ -190,7 +190,6 @@ void Intval2::Close () {
 	open = false;
 	closed = false;
 	close_start = millis();
-	frame_start = millis();
 
 	if (!closed) {
 		MotorStart();
@@ -204,6 +203,9 @@ void Intval2::ClosingStop () {
 	closing = false;
 	closed = true;
 	close_avg = round(((timer - close_start) + close_avg) / 2);
+	if (bulb) {
+		timed_exposure_avg = round( ((timer - frame_start) + timed_exposure_avg) / 2);
+	}
 }
 
 void Intval2::MotorStart () {
@@ -272,6 +274,7 @@ void Intval2::Button (uint8_t index) {
 			// not pressed
 			button_time = millis() - button_times[index]; //time?
 			ButtonEnd(index, button_time);
+			button_last[index] = millis();
 		}
 	}
 	button_states[index] = val;
@@ -283,7 +286,7 @@ void Intval2::ButtonStart (uint8_t index) {
 			BulbStart();
 		}
 	} else if (index == SPEED) {
-		if (millis() - button_times[index] < 1000) {
+		if (millis() - button_last[index] < 1000) {
 			bulb = true;
 			Output(OUTPUT_ONE, OUTPUT_LONG);
 		} else {
