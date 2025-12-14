@@ -65,13 +65,6 @@ class Intval2 {
 	volatile unsigned long button_last[4] = {0, 0, 0, 0};
 	volatile unsigned long button_time = 0;
 
-	//OUTPUT VAR
-	volatile boolean output = false;
-	volatile boolean output_blink = false;
-	volatile uint16_t output_ms = 0;
-	volatile unsigned long output_time = 0;
-	volatile uint8_t output_count = 0;
-	volatile uint8_t output_i = 0;
 
 	//TIME VAR
 	volatile unsigned long timer;
